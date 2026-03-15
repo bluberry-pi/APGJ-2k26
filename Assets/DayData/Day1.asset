@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76161f442c78f3e42868c77a350ab73d, type: 3}
+  m_Name: Day1
+  m_EditorClassIdentifier: 
+  dayNumber: 1
+  maxPatientsToAdmit: 3
+  flavourText: Doc can only treat 3 patients today.
+  patientsThisDay:
+  - {fileID: 11400000, guid: a48715bcd5e1a66429964f9511e15dc8, type: 2}
+  - {fileID: 11400000, guid: 591fb650df3873a49ade85369c8cdca3, type: 2}
+  - {fileID: 11400000, guid: 0abc5f6f91688884ebc5136b88330c00, type: 2}
+  - {fileID: 11400000, guid: fedb718fc3f10af4dab170951ba45e43, type: 2}

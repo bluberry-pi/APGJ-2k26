@@ -1,0 +1,26 @@
+using UnityEngine;
+
+public enum PatientTier { Tier1, Tier2, Tier3 }
+
+[CreateAssetMenu(fileName = "NewPatient", menuName = "Hospital/PatientData")]
+public class PatientData : ScriptableObject
+{
+    [Header("Basic Info")]
+    public string patientName;
+    public int age;
+    public string condition;
+    [TextArea(3, 6)]
+    public string bio;
+    public Sprite portrait;
+
+    [Header("Tier & Reward")]
+    public PatientTier tier;
+    public int rewardMoney;
+
+    [Header("Health")]
+    public int maxHealth = 100;
+    public int deteriorationPerDay = 20; // how much health lost per day
+
+    [Header("Resources")]
+    public int resourceCost;
+}
