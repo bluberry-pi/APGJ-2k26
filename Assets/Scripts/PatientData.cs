@@ -19,8 +19,11 @@ public class PatientData : ScriptableObject
 
     [Header("Health")]
     public int maxHealth = 100;
-    public int deteriorationPerDay = 20; // how much health lost per day
+    public int deteriorationPerDay = 20;
 
     [Header("Resources")]
     public int resourceCost;
+
+    [Header("Dialogue")]
+    public DialogueData dialogue; // drag this patient's DialogueData asset here
 }

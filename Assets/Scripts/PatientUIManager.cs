@@ -32,31 +32,35 @@ public class PatientUIManager : MonoBehaviour
     public void ShowPatient(PatientData data)
     {
         currentPatient = data;
-        // store the controller so buttons can call ResumeWalking on the right NPC
         currentPatientController = FindCurrentPatientController();
 
         nameText.text = "Name: " + data.patientName;
         ageText.text = "Age: " + data.age;
         conditionText.text = "Condition: " + data.condition;
-        bioText.text = "BioData: " + data.bio;
+        bioText.text = "Bio: " + data.bio;
         resourceCostText.text = "Resources required: " + data.resourceCost;
 
         if (portrait != null && data.portrait != null)
             portrait.sprite = data.portrait;
 
+        // Lock buttons during opening dialogue
+        SetButtonsInteractable(false);
+
+        // Play opening dialogue, unlock buttons when done
+        DialogueManager.Instance.PlaySequence(
+            data.dialogue,
+            "onOpen",
+            onComplete: () => SetButtonsInteractable(true)
+        );
+
         admitButton.interactable = HospitalManager.Instance.CanAfford(data.resourceCost);
     }
 
-    PatientController FindCurrentPatientController()
+    public void SetButtonsInteractable(bool state)
     {
-        // Finds the NPC that is currently in Waiting state
-        foreach (PatientController pc in Object.FindObjectsByType<PatientController>(FindObjectsSortMode.None))
-        {
-            TopDownNPC npc = pc.GetComponent<TopDownNPC>();
-            if (npc != null && npc.currentState == TopDownNPC.State.Waiting)
-                return pc;
-        }
-        return null;
+        admitButton.interactable = state && HospitalManager.Instance.CanAfford(currentPatient.resourceCost);
+        denyButton.interactable = state;
+        cancelButton.interactable = state;
     }
 
     public void HideInterface()
@@ -64,5 +68,16 @@ public class PatientUIManager : MonoBehaviour
         yourInterface.SetActive(false);
         currentPatient = null;
         currentPatientController = null;
+    }
+
+    PatientController FindCurrentPatientController()
+    {
+        foreach (PatientController pc in Object.FindObjectsByType<PatientController>(FindObjectsSortMode.None))
+        {
+            TopDownNPC npc = pc.GetComponent<TopDownNPC>();
+            if (npc != null && npc.currentState == TopDownNPC.State.Waiting)
+                return pc;
+        }
+        return null;
     }
 }

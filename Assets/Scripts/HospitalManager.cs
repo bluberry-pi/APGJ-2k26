@@ -79,6 +79,19 @@ public class HospitalManager : MonoBehaviour
             return;
         }
 
+        // Lock buttons during dialogue
+        PatientUIManager.Instance.SetButtonsInteractable(false);
+
+        // Play admit dialogue, THEN do the actual admit
+        DialogueManager.Instance.PlaySequence(
+            p.dialogue,
+            "onAdmit",
+            onComplete: () => CompleteAdmit(p)
+        );
+    }
+
+    void CompleteAdmit(PatientData p)
+    {
         currentResources -= p.resourceCost;
         AddMoney(p.rewardMoney);
 
@@ -89,17 +102,44 @@ public class HospitalManager : MonoBehaviour
         PatientUIManager.Instance.HideInterface();
         Destroy(patientObj);
 
-        Debug.Log($"Admitted {p.patientName}. Earned ${p.rewardMoney}. Resources left: {currentResources}");
+        Debug.Log($"Admitted {p.patientName}. Earned ${p.rewardMoney}.");
     }
 
     // =============================================
-    // DENY BUTTON
+    // DENY BUTTON — patient argues, may need multiple presses
     // =============================================
+    private int denyPressCount = 0;
+
     public void OnDenyPressed()
     {
-        PatientUIManager.Instance.currentPatientController?.ResumeWalking();
-        PatientUIManager.Instance.HideInterface();
-        Debug.Log("Patient denied.");
+        PatientData p = PatientUIManager.Instance.currentPatient;
+        if (p == null) return;
+
+        PatientUIManager.Instance.SetButtonsInteractable(false);
+
+        // First deny press plays "onDeny", second press plays "onDenyFinal"
+        string sequenceID = denyPressCount == 0 ? "onDeny" : "onDenyFinal";
+        denyPressCount++;
+
+        DialogueManager.Instance.PlaySequence(
+            p.dialogue,
+            sequenceID,
+            onComplete: () =>
+            {
+                if (sequenceID == "onDenyFinal")
+                {
+                    // Patient gives up and leaves
+                    denyPressCount = 0;
+                    PatientUIManager.Instance.currentPatientController?.ResumeWalking();
+                    PatientUIManager.Instance.HideInterface();
+                }
+                else
+                {
+                    // Patient argued, re-enable buttons so player can decide again
+                    PatientUIManager.Instance.SetButtonsInteractable(true);
+                }
+            }
+        );
     }
 
     // =============================================
@@ -107,6 +147,7 @@ public class HospitalManager : MonoBehaviour
     // =============================================
     public void OnCancelPressed()
     {
+        denyPressCount = 0;
         PatientUIManager.Instance.currentPatientController?.ResumeWalking();
         PatientUIManager.Instance.HideInterface();
         Debug.Log("Cancelled.");
