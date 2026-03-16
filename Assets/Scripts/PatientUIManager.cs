@@ -43,13 +43,18 @@ public class PatientUIManager : MonoBehaviour
         if (portrait != null && data.portrait != null)
             portrait.sprite = data.portrait;
 
-        // Lock buttons during opening dialogue
         SetButtonsInteractable(false);
 
-        // Play opening dialogue, unlock buttons when done
+        // Build sequence ID based on current day
+        string daySequenceID = "onOpen_Day" + (DayManager.Instance.currentDayIndex + 1);
+
+        // Try day-specific dialogue first, fall back to generic onOpen if not found
+        DialogueSequence seq = data.dialogue?.GetSequence(daySequenceID);
+        string sequenceToPlay = seq != null ? daySequenceID : "onOpen";
+
         DialogueManager.Instance.PlaySequence(
             data.dialogue,
-            "onOpen",
+            sequenceToPlay,
             onComplete: () => SetButtonsInteractable(true)
         );
 

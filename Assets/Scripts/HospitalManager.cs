@@ -117,25 +117,31 @@ public class HospitalManager : MonoBehaviour
 
         PatientUIManager.Instance.SetButtonsInteractable(false);
 
-        // First deny press plays "onDeny", second press plays "onDenyFinal"
-        string sequenceID = denyPressCount == 0 ? "onDeny" : "onDenyFinal";
+        string day = (DayManager.Instance.currentDayIndex + 1).ToString();
+
+        // Build day-specific IDs first, fall back to generic
+        string denyID = denyPressCount == 0 ? "onDeny" : "onDenyFinal";
+        string dayDenyID = denyPressCount == 0 ? "onDeny_Day" + day : "onDenyFinal_Day" + day;
+
+        // Check if day-specific version exists, use it, otherwise use generic
+        DialogueSequence seq = p.dialogue?.GetSequence(dayDenyID);
+        string sequenceToPlay = seq != null ? dayDenyID : denyID;
+
         denyPressCount++;
 
         DialogueManager.Instance.PlaySequence(
             p.dialogue,
-            sequenceID,
+            sequenceToPlay,
             onComplete: () =>
             {
-                if (sequenceID == "onDenyFinal")
+                if (denyID == "onDenyFinal")
                 {
-                    // Patient gives up and leaves
                     denyPressCount = 0;
                     PatientUIManager.Instance.currentPatientController?.ResumeWalking();
                     PatientUIManager.Instance.HideInterface();
                 }
                 else
                 {
-                    // Patient argued, re-enable buttons so player can decide again
                     PatientUIManager.Instance.SetButtonsInteractable(true);
                 }
             }
