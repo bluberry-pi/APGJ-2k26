@@ -15,7 +15,5 @@ MonoBehaviour:
   dayNumber: 1
   maxPatientsToAdmit: 3
   flavourLines:
-  - Its the first day of my work.
-  - and the doc is alrady being a d*ck
-  - 'he says he dosent wanna treat '
-  - any more than 3 patients today
+  - line: THe doc can only treat 3 patients
+    pauseAfter: 1

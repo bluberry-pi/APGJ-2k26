@@ -32,7 +32,6 @@ public class PatientUIManager : MonoBehaviour
 
     public void ShowPatient(PatientData data)
     {
-        tierText.text = "Tier: " + ((int)data.tier + 1).ToString();
         currentPatient = data;
         currentPatientController = FindCurrentPatientController();
 
@@ -41,16 +40,13 @@ public class PatientUIManager : MonoBehaviour
         conditionText.text = "Condition: " + data.condition;
         bioText.text = "Bio: " + data.bio;
         resourceCostText.text = "Resources required: " + data.resourceCost;
+        tierText.text = "Tier: " + ((int)data.tier + 1).ToString();
 
-        if (portrait != null && data.portrait != null)
-            portrait.sprite = data.portrait;
+        // portrait removed — handled by DialogueManager per line
 
         SetButtonsInteractable(false);
 
-        // Build sequence ID based on current day
         string daySequenceID = "onOpen_Day" + (DayManager.Instance.currentDayIndex + 1);
-
-        // Try day-specific dialogue first, fall back to generic onOpen if not found
         DialogueSequence seq = data.dialogue?.GetSequence(daySequenceID);
         string sequenceToPlay = seq != null ? daySequenceID : "onOpen";
 
@@ -59,8 +55,6 @@ public class PatientUIManager : MonoBehaviour
             sequenceToPlay,
             onComplete: () => SetButtonsInteractable(true)
         );
-
-        admitButton.interactable = HospitalManager.Instance.CanAfford(data.resourceCost);
     }
 
     public void SetButtonsInteractable(bool state)

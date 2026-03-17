@@ -16,11 +16,19 @@ MonoBehaviour:
   sequences:
   - sequenceID: onOpen_Day1
     lines:
-    - My Chest Hurts
-    - I have fever too
-  - sequenceID: onDeny_Day1
-    lines:
-    - You Dont understand how serious this is...
+    - line: hi! is the right place to check in?
+      portrait: {fileID: 4606157284126940538, guid: 3c261d927024d074698abaf402e4f252, type: 3}
+    - line: i've had a cough since last week
+      portrait: {fileID: 7376015192825665178, guid: 5ea7cf2900529fb499cbbb261331f7be, type: 3}
+    - line: and its not going away...
+      portrait: {fileID: 7376015192825665178, guid: 5ea7cf2900529fb499cbbb261331f7be, type: 3}
+    - line: almost everyone in my campus caught it
+      portrait: {fileID: 4606157284126940538, guid: 3c261d927024d074698abaf402e4f252, type: 3}
   - sequenceID: onDenyFinal_Day1
     lines:
-    - Fuck you bitch!
+    - line: no rush...i understand its busy
+      portrait: {fileID: 4606157284126940538, guid: 3c261d927024d074698abaf402e4f252, type: 3}
+  - sequenceID: onAdmit
+    lines:
+    - line: Alright, thank you.
+      portrait: {fileID: -6640888067693855264, guid: 7c235e3cac496984ba49b401e079a95a, type: 3}

@@ -11,7 +11,6 @@ public class PatientData : ScriptableObject
     public string condition;
     [TextArea(3, 6)]
     public string bio;
-    public Sprite portrait;
 
     [Header("Tier & Reward")]
     public PatientTier tier;
@@ -25,5 +24,5 @@ public class PatientData : ScriptableObject
     public int resourceCost;
 
     [Header("Dialogue")]
-    public DialogueData dialogue; // drag this patient's DialogueData asset here
+    public DialogueData dialogue;
 }

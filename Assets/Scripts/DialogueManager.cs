@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
+using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -10,18 +10,16 @@ public class DialogueManager : MonoBehaviour
     [Header("UI")]
     public GameObject dialogueBox;
     public TextMeshProUGUI dialogueText;
-    public GameObject nextArrow; // the arrow indicator
+    public GameObject nextArrow;
+    public Image portraitImage; // drag the portrait Image here
 
     [Header("Typewriter Settings")]
-    public float typewriterSpeed = 0.03f; // seconds per character
+    public float typewriterSpeed = 0.03f;
 
-    // Internal state
-    private string[] currentLines;
+    private DialogueLine[] currentLines;
     private int currentLineIndex = 0;
     private bool isTyping = false;
     private bool dialogueActive = false;
-
-    // Callbacks — what to do after sequence finishes
     private System.Action onDialogueComplete;
 
     void Awake() => Instance = this;
@@ -32,10 +30,9 @@ public class DialogueManager : MonoBehaviour
         nextArrow.SetActive(false);
     }
 
-    // Call this to start any dialogue sequence
     public void PlaySequence(DialogueData data, string sequenceID, System.Action onComplete = null)
     {
-        if (data == null) 
+        if (data == null)
         {
             onComplete?.Invoke();
             return;
@@ -45,7 +42,6 @@ public class DialogueManager : MonoBehaviour
 
         if (seq == null || seq.lines.Length == 0)
         {
-            // No dialogue for this sequence, just fire callback
             onComplete?.Invoke();
             return;
         }
@@ -58,19 +54,27 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.SetActive(true);
         nextArrow.SetActive(false);
 
-        StartCoroutine(TypeLine(currentLines[currentLineIndex]));
+        ShowLine(currentLineIndex);
     }
 
-    // Player clicks the arrow to advance
+    void ShowLine(int index)
+    {
+        // Change portrait first, then type the line
+        if (portraitImage != null && currentLines[index].portrait != null)
+            portraitImage.sprite = currentLines[index].portrait;
+
+        StartCoroutine(TypeLine(currentLines[index].line));
+    }
+
     public void OnNextPressed()
     {
         if (!dialogueActive) return;
 
         if (isTyping)
         {
-            // Skip typewriter — show full line instantly
+            // Skip typewriter
             StopAllCoroutines();
-            dialogueText.text = currentLines[currentLineIndex];
+            dialogueText.text = currentLines[currentLineIndex].line;
             isTyping = false;
             nextArrow.SetActive(true);
             return;
@@ -81,11 +85,10 @@ public class DialogueManager : MonoBehaviour
         if (currentLineIndex < currentLines.Length)
         {
             nextArrow.SetActive(false);
-            StartCoroutine(TypeLine(currentLines[currentLineIndex]));
+            ShowLine(currentLineIndex);
         }
         else
         {
-            // All lines done
             FinishDialogue();
         }
     }
@@ -111,8 +114,6 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.SetActive(false);
         nextArrow.SetActive(false);
         currentLines = null;
-        onDialogueComplete?.Invoke(); // fire whatever comes next
+        onDialogueComplete?.Invoke();
     }
-
-    public bool IsDialogueActive() => dialogueActive;
 }

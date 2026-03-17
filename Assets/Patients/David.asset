@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: David
   m_EditorClassIdentifier: 
   patientName: David
-  age: 24
-  condition: dead
-  bio: is a student
+  age: 29
+  condition: idk he is feeling funny
+  bio: is a university student
   portrait: {fileID: -1764511902321084317, guid: 079d9a3da0b50a7489635576317019ff, type: 3}
-  tier: 0
-  rewardMoney: 5
-  maxHealth: 100
-  deteriorationPerDay: 20
+  tier: 1
+  rewardMoney: 10
+  maxHealth: 10
+  deteriorationPerDay: 40
   resourceCost: 40
   dialogue: {fileID: 0}

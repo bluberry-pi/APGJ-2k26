@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 
 public class HospitalManager : MonoBehaviour
 {
+    [Header("Admit Settings")]
     public static HospitalManager Instance;
 
     [Header("Money")]
@@ -79,13 +81,17 @@ public class HospitalManager : MonoBehaviour
             return;
         }
 
-        // Lock buttons during dialogue
+        // Lock buttons so player cant press again
         PatientUIManager.Instance.SetButtonsInteractable(false);
 
-        // Play admit dialogue, THEN do the actual admit
+        // Play onAdmit dialogue, THEN complete the admit after delay
+        string dayAdmitID = "onAdmit_Day" + (DayManager.Instance.currentDayIndex + 1);
+        DialogueSequence seq = p.dialogue?.GetSequence(dayAdmitID);
+        string sequenceToPlay = seq != null ? dayAdmitID : "onAdmit";
+
         DialogueManager.Instance.PlaySequence(
             p.dialogue,
-            "onAdmit",
+            sequenceToPlay,
             onComplete: () => CompleteAdmit(p)
         );
     }
@@ -95,12 +101,17 @@ public class HospitalManager : MonoBehaviour
         currentResources -= p.resourceCost;
         AddMoney(p.rewardMoney);
 
-        GameObject patientObj = PatientUIManager.Instance.currentPatientController.gameObject;
-        DayManager.Instance.RemovePatient(patientObj);
-        DayManager.Instance.PatientAdmitted();
+        GameObject patientObj = PatientUIManager.Instance.currentPatientController?.gameObject;
 
         PatientUIManager.Instance.HideInterface();
-        Destroy(patientObj);
+
+        if (patientObj != null)
+        {
+            DayManager.Instance.RemovePatient(patientObj);
+            Destroy(patientObj);
+        }
+
+        DayManager.Instance.PatientAdmitted();
 
         Debug.Log($"Admitted {p.patientName}. Earned ${p.rewardMoney}.");
     }

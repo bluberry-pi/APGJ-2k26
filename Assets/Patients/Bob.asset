@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Bob
   m_EditorClassIdentifier: 
   patientName: Bob
-  age: 25
-  condition: efef
-  bio: efefe
+  age: 20
+  condition: Persistent cough
+  bio: is a university student
   portrait: {fileID: 21300000, guid: c2da0c5d536d3874d8aa28e2437c1597, type: 3}
-  tier: 0
+  tier: 1
   rewardMoney: 10
   maxHealth: 50
   deteriorationPerDay: 20
-  resourceCost: 5
+  resourceCost: 20
   dialogue: {fileID: 11400000, guid: 12b77e76eb1867448b25042d194b39ad, type: 2}
