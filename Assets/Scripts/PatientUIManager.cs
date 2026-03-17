@@ -15,6 +15,7 @@ public class PatientUIManager : MonoBehaviour
     public TextMeshProUGUI conditionText;
     public TextMeshProUGUI bioText;
     public TextMeshProUGUI resourceCostText;
+    public TextMeshProUGUI tierText;
 
     [Header("Portrait")]
     public Image portrait;
@@ -31,6 +32,7 @@ public class PatientUIManager : MonoBehaviour
 
     public void ShowPatient(PatientData data)
     {
+        tierText.text = "Tier: " + ((int)data.tier + 1).ToString();
         currentPatient = data;
         currentPatientController = FindCurrentPatientController();
 
@@ -63,9 +65,9 @@ public class PatientUIManager : MonoBehaviour
 
     public void SetButtonsInteractable(bool state)
     {
-        admitButton.interactable = state && HospitalManager.Instance.CanAfford(currentPatient.resourceCost);
-        denyButton.interactable = state;
-        cancelButton.interactable = state;
+        admitButton.interactable = true && HospitalManager.Instance.CanAfford(currentPatient.resourceCost);
+        denyButton.interactable = true;
+        cancelButton.interactable = true;
     }
 
     public void HideInterface()

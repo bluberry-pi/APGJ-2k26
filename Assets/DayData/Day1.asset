@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dayNumber: 1
   maxPatientsToAdmit: 3
-  flavourText: Doc can only treat 3 patients today.
-  patientsThisDay:
-  - {fileID: 11400000, guid: a48715bcd5e1a66429964f9511e15dc8, type: 2}
-  - {fileID: 11400000, guid: 591fb650df3873a49ade85369c8cdca3, type: 2}
-  - {fileID: 11400000, guid: 0abc5f6f91688884ebc5136b88330c00, type: 2}
-  - {fileID: 11400000, guid: fedb718fc3f10af4dab170951ba45e43, type: 2}
+  flavourLines:
+  - Its the first day of my work.
+  - and the doc is alrady being a d*ck
+  - 'he says he dosent wanna treat any more than 3 patients today '

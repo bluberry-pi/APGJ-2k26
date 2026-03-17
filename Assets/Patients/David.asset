@@ -16,5 +16,10 @@ MonoBehaviour:
   age: 24
   condition: dead
   bio: is a student
-  resourceCost: 40
   portrait: {fileID: -1764511902321084317, guid: 079d9a3da0b50a7489635576317019ff, type: 3}
+  tier: 0
+  rewardMoney: 5
+  maxHealth: 100
+  deteriorationPerDay: 20
+  resourceCost: 40
+  dialogue: {fileID: 0}

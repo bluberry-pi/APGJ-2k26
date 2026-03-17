@@ -15,10 +15,13 @@ public class DayManager : MonoBehaviour
     public GameObject dayStartCanvas;
     public TextMeshProUGUI dayTitleText;
     public TextMeshProUGUI dayFlavourText;
-    public float dayStartScreenDuration = 3f;
+
+    [Header("Typewriter Settings")]
+    public float typewriterSpeed = 0.03f;
+    public float linePauseTime = 1.5f; // pause between lines automatically
 
     [Header("Patient Groups per Day")]
-    public GameObject[] dayPatientGroups; // drag Day1Patients, Day2Patients etc in order
+    public GameObject[] dayPatientGroups;
 
     [Header("Patient Tracking")]
     public List<GameObject> activePatients = new List<GameObject>();
@@ -28,7 +31,6 @@ public class DayManager : MonoBehaviour
 
     void Start()
     {
-        // Disable all day groups first
         foreach (GameObject group in dayPatientGroups)
             group.SetActive(false);
 
@@ -45,7 +47,6 @@ public class DayManager : MonoBehaviour
     public void PatientAdmitted()
     {
         patientsAdmittedToday++;
-
         if (patientsAdmittedToday >= CurrentDay.maxPatientsToAdmit)
             StartCoroutine(DelayedEndDay());
     }
@@ -64,11 +65,9 @@ public class DayManager : MonoBehaviour
 
     public void EndDay()
     {
-        // Deteriorate all waiting patients
         foreach (GameObject p in activePatients)
             p.GetComponent<PatientHealth>()?.Deteriorate();
 
-        // Clean up dead patients
         activePatients.RemoveAll(p => p == null);
 
         FamilyManager.Instance.EndOfDayUpdate();
@@ -88,14 +87,26 @@ public class DayManager : MonoBehaviour
     IEnumerator StartDay()
     {
         dayStartCanvas.SetActive(true);
-        dayTitleText.text = "Day " + (currentDayIndex + 1);
-        dayFlavourText.text = CurrentDay.flavourText;
 
-        yield return new WaitForSeconds(dayStartScreenDuration);
+        // Type day title
+        dayTitleText.text = "";
+        string title = "Day " + (currentDayIndex + 1);
+        yield return StartCoroutine(TypeText(dayTitleText, title));
 
+        yield return new WaitForSeconds(0.5f);
+
+        // Type each flavour line one by one with pause between
+        foreach (string line in CurrentDay.flavourLines)
+        {
+            dayFlavourText.text = "";
+            yield return StartCoroutine(TypeText(dayFlavourText, line));
+            yield return new WaitForSeconds(linePauseTime);
+        }
+
+        // Auto close after last line
+        yield return new WaitForSeconds(1f);
         dayStartCanvas.SetActive(false);
 
-        // Add daily resources and money
         HospitalManager.Instance.AddDailyIncome();
 
         // Enable this day's patients
@@ -110,6 +121,16 @@ public class DayManager : MonoBehaviour
                 if (pc != null && !activePatients.Contains(child.gameObject))
                     activePatients.Add(child.gameObject);
             }
+        }
+    }
+    
+    IEnumerator TypeText(TextMeshProUGUI textField, string line)
+    {
+        textField.text = "";
+        foreach (char c in line)
+        {
+            textField.text += c;
+            yield return new WaitForSeconds(typewriterSpeed);
         }
     }
 

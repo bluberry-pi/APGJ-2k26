@@ -18,7 +18,7 @@ MonoBehaviour:
   bio: efefe
   portrait: {fileID: 21300000, guid: c2da0c5d536d3874d8aa28e2437c1597, type: 3}
   tier: 0
-  rewardMoney: 0
+  rewardMoney: 10
   maxHealth: 50
   deteriorationPerDay: 20
   resourceCost: 5
