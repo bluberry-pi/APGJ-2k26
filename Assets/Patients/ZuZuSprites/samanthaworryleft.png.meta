@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d93fa16f8c0c24b4999c1193741d8872
+guid: 02d24e36f9498bf4ca5592597000f66a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7290859714105507748
-    second: photo_2026-03-17_23-40-12_0
+      213: -8962363664761059841
+    second: samanthaworryleft_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: photo_2026-03-17_23-40-12_0
+      name: samanthaworryleft_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1280
-        height: 720
+        width: 937
+        height: 554
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4aff67608465e2560800000000000000
-      internalID: 7290859714105507748
+      spriteID: ff58c064bb94f9380800000000000000
+      internalID: -8962363664761059841
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      photo_2026-03-17_23-40-12_0: 7290859714105507748
+      samanthaworryleft_0: -8962363664761059841
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

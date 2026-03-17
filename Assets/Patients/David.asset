@@ -16,10 +16,9 @@ MonoBehaviour:
   age: 29
   condition: idk he is feeling funny
   bio: is a university student
-  portrait: {fileID: -1764511902321084317, guid: 079d9a3da0b50a7489635576317019ff, type: 3}
   tier: 1
   rewardMoney: 10
   maxHealth: 10
   deteriorationPerDay: 40
   resourceCost: 40
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 11400000, guid: 9ad31dd732497ac4bab1afdb05b0bc8a, type: 2}

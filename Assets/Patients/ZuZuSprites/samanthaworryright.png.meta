@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3c261d927024d074698abaf402e4f252
+guid: 096afda84e7523449a699548b60e1c9b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4606157284126940538
-    second: normal_0
+      213: 3256418576102314640
+    second: samanthaworryright_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: normal_0
+      name: samanthaworryright_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a7dd6fb35ab5cef30800000000000000
-      internalID: 4606157284126940538
+      spriteID: 092df84117f113d20800000000000000
+      internalID: 3256418576102314640
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      normal_0: 4606157284126940538
+      samanthaworryright_0: 3256418576102314640
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

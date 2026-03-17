@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e40345eded6216428dedef27879861a, type: 3}
-  m_Name: Samantha
+  m_Name: ZuZu
   m_EditorClassIdentifier: 
-  patientName: 
-  age: 0
-  condition: 
-  bio: 
-  portrait: {fileID: 21300000, guid: c2da0c5d536d3874d8aa28e2437c1597, type: 3}
+  patientName: ZuZu
+  age: 25
+  condition: zaminchi
+  bio: za pipi
   tier: 0
   rewardMoney: 5
-  maxHealth: 100
+  maxHealth: 50
   deteriorationPerDay: 20
-  resourceCost: 10
+  resourceCost: 15
   dialogue: {fileID: 0}

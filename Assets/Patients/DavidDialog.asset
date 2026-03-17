@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88d9c26c071469419d3a276e7805658, type: 3}
+  m_Name: DavidDialog
+  m_EditorClassIdentifier: 
+  personalityNote: 
+  sequences:
+  - sequenceID: onOpen_Day1
+    lines:
+    - line: So ya, my gf just coughed on me
+      portrait: {fileID: -4914427551776496226, guid: 49bcf2961be082e4d9041ff9a06a7f37, type: 3}
+    - line: i feel fine tho
+      portrait: {fileID: -4914427551776496226, guid: 49bcf2961be082e4d9041ff9a06a7f37, type: 3}
+  - sequenceID: onDenyDay1
+    lines:
+    - line: I hate to admit it but ya i kinda liked it
+      portrait: {fileID: 3325785250731403120, guid: a932c23053014b94980ac301373a152f, type: 3}
+    - line: i feel fine tho
+      portrait: {fileID: -4914427551776496226, guid: 49bcf2961be082e4d9041ff9a06a7f37, type: 3}
+  - sequenceID: onAdmit
+    lines:
+    - line: I hate to admit it but ya i kinda liked it
+      portrait: {fileID: 3325785250731403120, guid: a932c23053014b94980ac301373a152f, type: 3}
