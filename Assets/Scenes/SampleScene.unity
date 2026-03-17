@@ -2593,7 +2593,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Doc can only treat 3 patients today.
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 028c245f03387184481aeba2725267af, type: 2}
   m_sharedMaterial: {fileID: 3076079344859298802, guid: 028c245f03387184481aeba2725267af, type: 2}

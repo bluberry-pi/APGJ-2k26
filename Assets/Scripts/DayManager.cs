@@ -15,10 +15,10 @@ public class DayManager : MonoBehaviour
     public GameObject dayStartCanvas;
     public TextMeshProUGUI dayTitleText;
     public TextMeshProUGUI dayFlavourText;
+    public TextMeshProUGUI timerText; // shows countdown
 
     [Header("Typewriter Settings")]
     public float typewriterSpeed = 0.03f;
-    public float linePauseTime = 1.5f; // pause between lines automatically
 
     [Header("Patient Groups per Day")]
     public GameObject[] dayPatientGroups;
@@ -88,28 +88,23 @@ public class DayManager : MonoBehaviour
     {
         dayStartCanvas.SetActive(true);
 
-        // Type day title
         dayTitleText.text = "";
-        string title = "Day " + (currentDayIndex + 1);
-        yield return StartCoroutine(TypeText(dayTitleText, title));
+        yield return StartCoroutine(TypeText(dayTitleText, "Day " + (currentDayIndex + 1)));
 
         yield return new WaitForSeconds(0.5f);
 
-        // Type each flavour line one by one with pause between
-        foreach (string line in CurrentDay.flavourLines)
+        foreach (DayFlavourLine flavour in CurrentDay.flavourLines)
         {
             dayFlavourText.text = "";
-            yield return StartCoroutine(TypeText(dayFlavourText, line));
-            yield return new WaitForSeconds(linePauseTime);
+            yield return StartCoroutine(TypeText(dayFlavourText, flavour.line));
+            yield return new WaitForSeconds(flavour.pauseAfter); // invisible pause
         }
 
-        // Auto close after last line
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         dayStartCanvas.SetActive(false);
 
         HospitalManager.Instance.AddDailyIncome();
 
-        // Enable this day's patients
         if (currentDayIndex < dayPatientGroups.Length)
         {
             GameObject group = dayPatientGroups[currentDayIndex];
@@ -123,7 +118,24 @@ public class DayManager : MonoBehaviour
             }
         }
     }
-    
+
+    IEnumerator CountDown(float duration)
+    {
+        float remaining = duration;
+
+        while (remaining > 0f)
+        {
+            if (timerText != null)
+                timerText.text = Mathf.Ceil(remaining).ToString();
+
+            remaining -= Time.deltaTime;
+            yield return null;
+        }
+
+        if (timerText != null)
+            timerText.text = "";
+    }
+
     IEnumerator TypeText(TextMeshProUGUI textField, string line)
     {
         textField.text = "";
