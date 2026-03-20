@@ -102,6 +102,10 @@ public class DayManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         dayStartCanvas.SetActive(false);
+        foreach (FamilySicknessEvent e in CurrentDay.familySicknessOverrides)
+        {
+            FamilyManager.Instance.ForceSetSick(e.memberName, e.forceSick);
+        }
 
         HospitalManager.Instance.AddDailyIncome();
 

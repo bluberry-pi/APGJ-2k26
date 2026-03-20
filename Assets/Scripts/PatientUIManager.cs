@@ -23,7 +23,7 @@ public class PatientUIManager : MonoBehaviour
     [Header("Buttons")]
     public Button admitButton;
     public Button denyButton;
-    public Button cancelButton;
+    //public Button cancelButton;
 
     [HideInInspector] public PatientData currentPatient;
     [HideInInspector] public PatientController currentPatientController;
@@ -61,7 +61,7 @@ public class PatientUIManager : MonoBehaviour
     {
         admitButton.interactable = true && HospitalManager.Instance.CanAfford(currentPatient.resourceCost);
         denyButton.interactable = true;
-        cancelButton.interactable = true;
+        //cancelButton.interactable = true;
     }
 
     public void HideInterface()

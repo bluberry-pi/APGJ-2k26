@@ -34,7 +34,7 @@ public class TopDownNPC : MonoBehaviour
 
     // ── Juice settings ──────────────────────────────────────────────────
     [Header("Juice – Cartoon Tilt")]
-    public float tiltAngle    = 15f;   // degrees to snap left/right
+    public float tiltAngle = 15f;   // degrees to snap left/right
     public float stepInterval = 0.18f; // seconds per "step" (how fast it alternates)
 
     [Header("Juice – Flip Turn")]
@@ -47,9 +47,9 @@ public class TopDownNPC : MonoBehaviour
     private bool isClickMoving = false;
 
     // Juice state
-    private float stepTimer  = 0f;
-    private int   stepFrame  = 0;      // alternates 0 / 1
-    private bool isFlipping  = false;
+    private float stepTimer = 0f;
+    private int stepFrame = 0;      // alternates 0 / 1
+    private bool isFlipping = false;
     private Vector3 baseScale;
 
     // ═══════════════════════════════════════════════════════════════
@@ -58,7 +58,7 @@ public class TopDownNPC : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
 
-        if (mainCamera == null)   mainCamera   = Camera.main;
+        if (mainCamera == null) mainCamera = Camera.main;
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
 
         baseScale = transform.localScale;
@@ -117,7 +117,7 @@ public class TopDownNPC : MonoBehaviour
             t += Time.deltaTime;
             float p = t / flipSquishTime;
             float squishX = Mathf.Lerp(1f, 0.15f, p);   // squeeze to sliver
-            float squishY = Mathf.Lerp(1f, 1.2f,  p);   // compensating stretch
+            float squishY = Mathf.Lerp(1f, 1.2f, p);   // compensating stretch
             transform.localScale = new Vector3(
                 baseScale.x * squishX * (isFacingRight ? 1f : -1f),
                 baseScale.y * squishY,
@@ -139,7 +139,7 @@ public class TopDownNPC : MonoBehaviour
             float elastic = 1f + Mathf.Sin(p * Mathf.PI) * 0.25f;
             transform.localScale = new Vector3(
                 baseScale.x * Mathf.Lerp(0.15f, 1f, p) * elastic * (isFacingRight ? 1f : -1f),
-                baseScale.y * Mathf.Lerp(1.2f,  1f, p),
+                baseScale.y * Mathf.Lerp(1.2f, 1f, p),
                 baseScale.z
             );
             yield return null;
@@ -164,7 +164,7 @@ public class TopDownNPC : MonoBehaviour
 
     void UpdateFacingDirection()
     {
-        if (currentDirection.x >  0.05f) SetFacing(true);
+        if (currentDirection.x > 0.05f) SetFacing(true);
         else if (currentDirection.x < -0.05f) SetFacing(false);
     }
 
@@ -175,7 +175,7 @@ public class TopDownNPC : MonoBehaviour
         {
             Vector2 direction = (clickMoveTarget - rb.position).normalized;
 
-            if      (direction.x >  0.05f) SetFacing(true);
+            if (direction.x > 0.05f) SetFacing(true);
             else if (direction.x < -0.05f) SetFacing(false);
 
             Vector2 newPos = Vector2.MoveTowards(rb.position, clickMoveTarget, moveSpeed * Time.fixedDeltaTime);
@@ -184,7 +184,7 @@ public class TopDownNPC : MonoBehaviour
             if (Vector2.Distance(rb.position, clickMoveTarget) < 0.05f)
             {
                 movingToTarget = false;
-                isClickMoving  = false;
+                isClickMoving = false;
             }
         }
         else if (currentState == State.Walking)
@@ -222,12 +222,12 @@ public class TopDownNPC : MonoBehaviour
         if (mainCamera == null) return;
 
         float camHeight = mainCamera.orthographicSize;
-        float camWidth  = mainCamera.orthographicSize * mainCamera.aspect;
-        Vector2 camPos  = mainCamera.transform.position;
-        Vector2 pos     = transform.position;
+        float camWidth = mainCamera.orthographicSize * mainCamera.aspect;
+        Vector2 camPos = mainCamera.transform.position;
+        Vector2 pos = transform.position;
 
-        float minX = camPos.x - camWidth  + boundsPadding;
-        float maxX = camPos.x + camWidth  - boundsPadding;
+        float minX = camPos.x - camWidth + boundsPadding;
+        float maxX = camPos.x + camWidth - boundsPadding;
         float minY = camPos.y - camHeight + boundsPadding;
         float maxY = camPos.y + camHeight - boundsPadding;
 
@@ -241,8 +241,9 @@ public class TopDownNPC : MonoBehaviour
     void OnMouseDown()
     {
         if (currentState == State.Waiting) return;
+        if (PatientUIManager.Instance != null && PatientUIManager.Instance.yourInterface.activeSelf) return;
         movingToTarget = true;
-        isClickMoving  = true;
+        isClickMoving = true;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -263,7 +264,7 @@ public class TopDownNPC : MonoBehaviour
         awayDirection += Random.insideUnitCircle * 0.4f;
         currentDirection = awayDirection.normalized;
         movingToTarget = false;
-        isClickMoving  = false;
+        isClickMoving = false;
         UpdateFacingDirection();
     }
 
@@ -275,7 +276,7 @@ public class TopDownNPC : MonoBehaviour
             if (isClickMoving)
             {
                 movingToTarget = false;
-                isClickMoving  = false;
+                isClickMoving = false;
                 rb.linearVelocity = Vector2.zero;
                 currentState = State.Waiting;
 
@@ -316,23 +317,23 @@ public class TopDownNPC : MonoBehaviour
 
     bool AreFacingEachOther(TopDownNPC otherNPC)
     {
-        float myX    = transform.position.x;
+        float myX = transform.position.x;
         float theirX = otherNPC.transform.position.x;
-        bool amILookingAtThem    = isFacingRight ? (theirX > myX) : (theirX < myX);
-        bool areTheyLookingAtMe  = otherNPC.isFacingRight ? (myX > theirX) : (myX < theirX);
+        bool amILookingAtThem = isFacingRight ? (theirX > myX) : (theirX < myX);
+        bool areTheyLookingAtMe = otherNPC.isFacingRight ? (myX > theirX) : (myX < theirX);
         return amILookingAtThem && areTheyLookingAtMe;
     }
 
     public IEnumerator TalkRoutine(TopDownNPC partner)
     {
-        currentState         = State.Talking;
+        currentState = State.Talking;
         partner.currentState = State.Talking;
-        rb.linearVelocity         = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
         partner.rb.linearVelocity = Vector2.zero;
 
         yield return new WaitForSeconds(talkDuration);
 
-        currentState         = State.Walking;
+        currentState = State.Walking;
         partner.currentState = State.Walking;
         PickRandomDirection();
         partner.PickRandomDirection();

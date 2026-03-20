@@ -16,10 +16,9 @@ MonoBehaviour:
   age: 30
   condition: constant fatigue
   bio: is a truck driver;delivers resources
-  portrait: {fileID: 21300000, guid: c2da0c5d536d3874d8aa28e2437c1597, type: 3}
   tier: 0
   rewardMoney: 15
   maxHealth: 80
   deteriorationPerDay: 20
   resourceCost: 10
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 11400000, guid: 8e458c8e04457134897571a7ae1c7f49, type: 2}

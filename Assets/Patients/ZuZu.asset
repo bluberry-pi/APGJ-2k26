@@ -21,4 +21,4 @@ MonoBehaviour:
   maxHealth: 50
   deteriorationPerDay: 20
   resourceCost: 15
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 11400000, guid: a5a5b6406e58bf34389f8ec1ea1cb2cb, type: 2}
