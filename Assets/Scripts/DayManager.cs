@@ -65,8 +65,14 @@ public class DayManager : MonoBehaviour
 
     public void EndDay()
     {
-        foreach (GameObject p in activePatients)
-            p.GetComponent<PatientHealth>()?.Deteriorate();
+        // iterate over a copy so removals don't break the loop
+        List<GameObject> patientsCopy = new List<GameObject>(activePatients);
+
+        foreach (GameObject p in patientsCopy)
+        {
+            if (p != null)
+                p.GetComponent<PatientHealth>()?.Deteriorate();
+        }
 
         activePatients.RemoveAll(p => p == null);
 
