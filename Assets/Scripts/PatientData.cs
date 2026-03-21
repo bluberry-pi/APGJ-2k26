@@ -20,6 +20,9 @@ public class PatientData : ScriptableObject
     public int maxHealth = 100;
     public int deteriorationPerDay = 20;
 
+    [Header("Sprites")]
+    public Sprite deadSprite; // only need this
+
     [Header("Resources")]
     public int resourceCost;
 

@@ -15,11 +15,11 @@ MonoBehaviour:
   patientName: Bob
   age: 20
   condition: Persistent cough
-  bio: is a university student
-  portrait: {fileID: 21300000, guid: c2da0c5d536d3874d8aa28e2437c1597, type: 3}
+  bio: Engineering Student.
   tier: 1
   rewardMoney: 10
   maxHealth: 50
   deteriorationPerDay: 20
+  deadSprite: {fileID: 0}
   resourceCost: 20
   dialogue: {fileID: 11400000, guid: 12b77e76eb1867448b25042d194b39ad, type: 2}

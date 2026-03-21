@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e40345eded6216428dedef27879861a, type: 3}
-  m_Name: ZuZu
+  m_Name: Scientist
   m_EditorClassIdentifier: 
-  patientName: ZuZu
-  age: 25
-  condition: zaminchi
-  bio: za pipi
-  tier: 2
-  rewardMoney: 5
+  patientName: Dr. Aris
+  age: 35
+  condition: 'Unknown poisoning '
+  bio: Works in national nikara research center, rumoured to be the epicenter of
+    the pandemic.
+  tier: 0
+  rewardMoney: 15
   maxHealth: 50
   deteriorationPerDay: 20
-  deadSprite: {fileID: 0}
-  resourceCost: 15
-  dialogue: {fileID: 11400000, guid: a5a5b6406e58bf34389f8ec1ea1cb2cb, type: 2}
+  deadSprite: {fileID: -898703876391037096, guid: b498cff8e4908894899ccd1eee2ce341, type: 3}
+  resourceCost: 20
+  dialogue: {fileID: 11400000, guid: 3be11f9f7c1460d42862dee67bb24023, type: 2}
