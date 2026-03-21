@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88d9c26c071469419d3a276e7805658, type: 3}
+  m_Name: BeggarDialog
+  m_EditorClassIdentifier: 
+  personalityNote: 
+  sequences:
+  - sequenceID: onOpen_Day1
+    lines:
+    - line: '*cough* *cough*'
+      portrait: {fileID: 3104457392942357135, guid: ceaa2857c50f3964e811152f5e7676ac, type: 3}
+    - line: You require money do you?
+      portrait: {fileID: 4878049849927775485, guid: d543a7fdc1beeed46b8a4641e72cbaec, type: 3}
+    - line: Here you go
+      portrait: {fileID: 6085446420299918530, guid: 0a8559139ab0ebc4cb1f5ecd0e55970b, type: 3}
+    - line: Now shut up and admit me
+      portrait: {fileID: 2943602449079829810, guid: e2789c5646210174597666802210644c, type: 3}
+  - sequenceID: onDeny_Day1
+    lines:
+    - line: I give a second chance to reconsider
+      portrait: {fileID: 4878049849927775485, guid: d543a7fdc1beeed46b8a4641e72cbaec, type: 3}
+    - line: You will regret this fucker
+      portrait: {fileID: 2943602449079829810, guid: e2789c5646210174597666802210644c, type: 3}
+  - sequenceID: onAdmit
+    lines:
+    - line: good choice.
+      portrait: {fileID: 4878049849927775485, guid: d543a7fdc1beeed46b8a4641e72cbaec, type: 3}

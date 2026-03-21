@@ -21,7 +21,7 @@ public class PatientData : ScriptableObject
     public int deteriorationPerDay = 20;
 
     [Header("Sprites")]
-    public Sprite deadSprite; // only need this
+    public Sprite deadSprite;
 
     [Header("Resources")]
     public int resourceCost;
