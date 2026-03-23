@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: f187c15fc09f4654a985562fd840bc45
+guid: 649b2f5f0307bca44bacf28a3e6a2cd1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5199177558571983074
-    second: oldmandead_0
-  - first:
-      213: 5224876772087833887
-    second: oldmandead_1
+      213: -6717295020654715596
+    second: catright_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -116,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: oldmandead_0
+      name: catright_0
       rect:
         serializedVersion: 2
-        x: 61
-        y: 112
-        width: 374
-        height: 183
+        x: 0
+        y: 0
+        width: 937
+        height: 554
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,30 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e1f52219e8fc8d7b0800000000000000
-      internalID: -5199177558571983074
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: oldmandead_1
-      rect:
-        serializedVersion: 2
-        x: 273
-        y: 251
-        width: 92
-        height: 91
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f152c7bddbd728840800000000000000
-      internalID: 5224876772087833887
+      spriteID: 43d106ab4cf57c2a0800000000000000
+      internalID: -6717295020654715596
       vertices: []
       indices: 
       edges: []
@@ -163,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -173,8 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      oldmandead_0: -5199177558571983074
-      oldmandead_1: 5224876772087833887
+      catright_0: -6717295020654715596
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

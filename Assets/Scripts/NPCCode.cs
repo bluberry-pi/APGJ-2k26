@@ -51,7 +51,6 @@ public class TopDownNPC : MonoBehaviour
     private int stepFrame = 0;      // alternates 0 / 1
     private bool isFlipping = false;
     private Vector3 baseScale;
-
     // ═══════════════════════════════════════════════════════════════
     void Start()
     {
@@ -219,25 +218,17 @@ public class TopDownNPC : MonoBehaviour
 
     void CheckBounds()
     {
-        if (mainCamera == null) return;
+        if (WalkAreaBounds.Instance == null) return;
+        if (currentState != State.Walking || movingToTarget) return;
 
-        float camHeight = mainCamera.orthographicSize;
-        float camWidth = mainCamera.orthographicSize * mainCamera.aspect;
-        Vector2 camPos = mainCamera.transform.position;
         Vector2 pos = transform.position;
 
-        float minX = camPos.x - camWidth + boundsPadding;
-        float maxX = camPos.x + camWidth - boundsPadding;
-        float minY = camPos.y - camHeight + boundsPadding;
-        float maxY = camPos.y + camHeight - boundsPadding;
-
-        if (pos.x < minX || pos.x > maxX || pos.y < minY || pos.y > maxY)
+        if (!WalkAreaBounds.Instance.IsInsideBounds(pos))
         {
-            currentDirection = (camPos - pos).normalized;
+            currentDirection = ((Vector2)WalkAreaBounds.Instance.GetCenter() - pos).normalized;
             UpdateFacingDirection();
         }
     }
-
     void OnMouseDown()
     {
         if (currentState == State.Waiting) return;

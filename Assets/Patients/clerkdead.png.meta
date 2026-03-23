@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f7102a94425b22e49bd78671487b5ecf
+guid: 689c3fffe91b595468b5f9cdfda16aa1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8740214915614056134
-    second: beggar dead_0
+      213: 4833843845999113723
+    second: clerkdead_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: beggar dead_0
+      name: clerkdead_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 90
-        width: 481
-        height: 234
+        x: 0
+        y: 55
+        width: 500
+        height: 273
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a31e04687d484b680800000000000000
-      internalID: -8740214915614056134
+      spriteID: bf53c7cfd53451340800000000000000
+      internalID: 4833843845999113723
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      beggar dead_0: -8740214915614056134
+      clerkdead_0: 4833843845999113723
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

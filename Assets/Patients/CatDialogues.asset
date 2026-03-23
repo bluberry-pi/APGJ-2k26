@@ -17,6 +17,6 @@ MonoBehaviour:
   - sequenceID: onOpen_Day1
     lines:
     - line: bhaw.
-      portrait: {fileID: 0}
+      portrait: {fileID: -2593510312278039686, guid: 1a2dba01554cb19409a6a2602bc63dde, type: 3}
     - line: bhaw...bhaw.
-      portrait: {fileID: 0}
+      portrait: {fileID: -6717295020654715596, guid: 649b2f5f0307bca44bacf28a3e6a2cd1, type: 3}

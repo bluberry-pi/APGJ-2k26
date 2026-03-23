@@ -20,6 +20,6 @@ MonoBehaviour:
   rewardMoney: 5
   maxHealth: 50
   deteriorationPerDay: 20
-  deadSprite: {fileID: 0}
+  deadSprite: {fileID: -3712039407280440724, guid: 5617cefcca172c441b7e987b127032cd, type: 3}
   resourceCost: 15
   dialogue: {fileID: 11400000, guid: a5a5b6406e58bf34389f8ec1ea1cb2cb, type: 2}

@@ -17,25 +17,25 @@ MonoBehaviour:
   - sequenceID: onOpen_Day1
     lines:
     - line: "Spinal injury\u2026 that\u2019s what they said."
-      portrait: {fileID: 0}
+      portrait: {fileID: 2767511075820430995, guid: 4b874dd21bd79a44280dfad2a5ba738b, type: 3}
     - line: convenient, considering I passed out.
-      portrait: {fileID: 0}
+      portrait: {fileID: 5161694994509901157, guid: c39aca68d368fd641a234595bcdc5968, type: 3}
     - line: that factory never felt right
-      portrait: {fileID: 0}
+      portrait: {fileID: 5161694994509901157, guid: c39aca68d368fd641a234595bcdc5968, type: 3}
     - line: They said my tier would be demoted
-      portrait: {fileID: 0}
+      portrait: {fileID: -47796579202056098, guid: da49546b1aa4b4c4d81bd83806fd11e0, type: 3}
     - line: As i can no longer walk...
-      portrait: {fileID: 0}
+      portrait: {fileID: -47796579202056098, guid: da49546b1aa4b4c4d81bd83806fd11e0, type: 3}
   - sequenceID: onDeny_Day1
     lines:
     - line: Consider it again, i dont wanna die like this.
-      portrait: {fileID: 0}
+      portrait: {fileID: -5665405108467540286, guid: 82a75d6dc6d54aa40a70e9e7489f72ca, type: 3}
   - sequenceID: onDeny_Day1
     lines:
     - line: Carful warden, the system only keeps its monsters until it runs out of
         meat
-      portrait: {fileID: 0}
+      portrait: {fileID: -47796579202056098, guid: da49546b1aa4b4c4d81bd83806fd11e0, type: 3}
   - sequenceID: onAdmit
     lines:
     - line: I hope i survive long enough to discover my truth
-      portrait: {fileID: 0}
+      portrait: {fileID: 2767511075820430995, guid: 4b874dd21bd79a44280dfad2a5ba738b, type: 3}
