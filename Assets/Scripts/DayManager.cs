@@ -22,7 +22,9 @@ public class DayManager : MonoBehaviour
     [Header("Stats UI")]
     public GameObject statsGroup;
     public TextMeshProUGUI ResText;
+    public TextMeshProUGUI resDeltaText;
     public TextMeshProUGUI moneyText;
+    public TextMeshProUGUI moneyDeltaText;
 
     [Header("Flavour UI")]
     public TextMeshProUGUI dayFlavourText;
@@ -32,6 +34,7 @@ public class DayManager : MonoBehaviour
     public float fadeDuration = 0.8f;
     public float statsPauseDuration = 2f;
     public float statsFadeDuration = 0.5f;
+    public float deltaFadeDuration = 0.5f;
 
     [Header("Patient Groups per Day")]
     public GameObject[] dayPatientGroups;
@@ -39,6 +42,7 @@ public class DayManager : MonoBehaviour
     [Header("Patient Tracking")]
     public List<GameObject> activePatients = new List<GameObject>();
     private int patientsAdmittedToday = 0;
+
     [Header("Debug")]
     public bool skipDayCanvas = false;
 
@@ -117,6 +121,7 @@ public class DayManager : MonoBehaviour
 
         yield return StartCoroutine(StartDay());
     }
+
     IEnumerator StartDay()
     {
         if (!skipDayCanvas)
@@ -130,41 +135,64 @@ public class DayManager : MonoBehaviour
                 dayFlavourText.text = "";
             }
 
-            // stats phase
-            int currentRes = HospitalManager.Instance.currentRes;
-            int currentMoney = HospitalManager.Instance.currentMoney;
-            int resourceIncome = HospitalManager.Instance.ResPerDay;
-            int rationCost = FamilyManager.Instance.dailyRationCost;
+            // Apply economy for this day
+            HospitalManager.Instance.ApplyDayEconomy(CurrentDay.economy);
 
+            int currentRes = HospitalManager.Instance.currentResources;
+            int currentMoney = HospitalManager.Instance.currentMoney;
+            DayEconomy economy = CurrentDay.economy;
+
+            // Clear all texts
             dayTitleText.text = "";
             ResText.text = "";
+            resDeltaText.text = "";
             moneyText.text = "";
+            moneyDeltaText.text = "";
 
+            // Make deltas invisible and hide on day 1
+            resDeltaText.gameObject.SetActive(currentDayIndex > 0);
+            moneyDeltaText.gameObject.SetActive(currentDayIndex > 0);
+
+            if (currentDayIndex > 0)
+            {
+                Color invisible = resDeltaText.color;
+                invisible.a = 0f;
+                resDeltaText.color = invisible;
+                moneyDeltaText.color = invisible;
+            }
+
+            // Type day title
             yield return StartCoroutine(TypeText(dayTitleText, "Day " + (currentDayIndex + 1)));
             yield return new WaitForSeconds(0.3f);
 
-            if (currentDayIndex == 0)
+            // Type resources then fade in delta
+            yield return StartCoroutine(TypeText(ResText, "Res: " + currentRes));
+            if (currentDayIndex > 0)
             {
-                yield return StartCoroutine(TypeText(ResText, "Res: " + currentRes));
-                yield return new WaitForSeconds(0.2f);
-                yield return StartCoroutine(TypeText(moneyText, "Money: $" + currentMoney));
-                yield return new WaitForSeconds(0.2f);
+                resDeltaText.text = BuildDelta(economy.resourcesAdded, economy.resourcesDeducted, "res");
+                yield return StartCoroutine(FadeInText(resDeltaText, deltaFadeDuration));
             }
-            else
-            {
-                yield return StartCoroutine(TypeText(ResText, "Res: " + currentRes + "  (+" + resourceIncome + " delivered)"));
-                yield return new WaitForSeconds(0.2f);
-                yield return StartCoroutine(TypeText(moneyText, "Money: $" + currentMoney + "  (-$" + rationCost + " rations)"));
-                yield return new WaitForSeconds(0.2f);
-            }
+            yield return new WaitForSeconds(0.2f);
 
+            // Type money then fade in delta
+            yield return StartCoroutine(TypeText(moneyText, "$ " + currentMoney));
+            if (currentDayIndex > 0)
+            {
+                moneyDeltaText.text = BuildDelta(economy.moneyAdded, economy.moneyDeducted, "rations");
+                yield return StartCoroutine(FadeInText(moneyDeltaText, deltaFadeDuration));
+            }
+            yield return new WaitForSeconds(0.2f);
+
+            // Pause so player can read
             yield return new WaitForSeconds(statsPauseDuration);
 
+            // Fade stats out
             yield return StartCoroutine(FadeCanvasGroup(statsGroup, 1f, 0f, statsFadeDuration));
             statsGroup.SetActive(false);
             CanvasGroup statsCG = statsGroup.GetComponent<CanvasGroup>();
             if (statsCG != null) statsCG.alpha = 1f;
 
+            // Flavour text
             dayFlavourText.text = "";
             foreach (DayFlavourLine flavour in CurrentDay.flavourLines)
             {
@@ -173,6 +201,7 @@ public class DayManager : MonoBehaviour
                 yield return new WaitForSeconds(flavour.pauseAfter);
             }
 
+            // Fade flavour out
             yield return StartCoroutine(FadeCanvasGroup(dayFlavourText.gameObject, 1f, 0f, statsFadeDuration));
             dayFlavourText.text = "";
             CanvasGroup flavourCG = dayFlavourText.gameObject.GetComponent<CanvasGroup>();
@@ -182,11 +211,13 @@ public class DayManager : MonoBehaviour
             yield return StartCoroutine(Fade(1f, 0f));
             dayStartCanvas.SetActive(false);
         }
+        else
+        {
+            // Skip canvas but still apply economy
+            HospitalManager.Instance.ApplyDayEconomy(CurrentDay.economy);
+        }
 
-        // always runs regardless of skipDayCanvas
-        FamilyManager.Instance.paused = false;
-        HospitalManager.Instance.AddDailyIncome();
-
+        // Always runs
         if (currentDayIndex < dayPatientGroups.Length)
         {
             GameObject group = dayPatientGroups[currentDayIndex];
@@ -200,14 +231,40 @@ public class DayManager : MonoBehaviour
             }
         }
 
-        if (!skipDayCanvas)
-            StartCoroutine(ResumeHealthDrain());
+        StartCoroutine(ResumeHealthDrain());
     }
 
     IEnumerator ResumeHealthDrain()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(skipDayCanvas ? 0f : 2f);
         FamilyManager.Instance.paused = false;
+    }
+
+    IEnumerator FadeInText(TextMeshProUGUI textField, float duration)
+    {
+        Color c = textField.color;
+        c.a = 0f;
+        textField.color = c;
+
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            c.a = Mathf.Lerp(0f, 1f, elapsed / duration);
+            textField.color = c;
+            yield return null;
+        }
+
+        c.a = 1f;
+        textField.color = c;
+    }
+
+    string BuildDelta(int added, int deducted, string label)
+    {
+        string result = "";
+        if (added > 0)    result += "+" + added + " ";
+        if (deducted > 0) result += "-" + deducted + " " + label;
+        return result.Trim();
     }
 
     IEnumerator Fade(float from, float to)

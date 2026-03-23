@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76161f442c78f3e42868c77a350ab73d, type: 3}
-  m_Name: Day2
+  m_Name: Day3
   m_EditorClassIdentifier: 
-  dayNumber: 2
+  dayNumber: 3
   maxPatientsToAdmit: 4
   flavourLines:
-  - line: Prev day wasnt really that bad
-    pauseAfter: 1.5
-  - line: the doc feels generous today. 4 patients he told.
-    pauseAfter: 2
+  - line: 
+    pauseAfter: 0
   economy:
     resourcesAdded: 10
     resourcesDeducted: 0

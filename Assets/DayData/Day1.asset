@@ -23,4 +23,8 @@ MonoBehaviour:
     pauseAfter: 2
   - line: Just cuz i was "tier2"
     pauseAfter: 2.5
-  familySicknessOverrides: []
+  economy:
+    resourcesAdded: 10
+    resourcesDeducted: 0
+    moneyAdded: 0
+    moneyDeducted: 20

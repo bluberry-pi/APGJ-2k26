@@ -6,9 +6,6 @@ public class FamilyManager : MonoBehaviour
 {
     public static FamilyManager Instance;
 
-    [Header("Rations")]
-    public int dailyRationCost = 20;
-
     [Header("Medicine")]
     public int medicineCostPerPerson = 5;
 
@@ -145,22 +142,14 @@ public class FamilyManager : MonoBehaviour
 
         Debug.Log($"Sent meds to {member.memberName}. Health: {member.currentHealth}");
     }
-
+    public void EndOfDayUpdate()
+    {
+        // rations and economy are handled by DayData economy in DayManager
+        // add any other end of day family logic here later if needed
+    }
     // =============================================
     // END OF DAY — deduct rations
     // =============================================
-    public void EndOfDayUpdate()
-    {
-        if (HospitalManager.Instance.CanAfford(dailyRationCost))
-        {
-            HospitalManager.Instance.SpendMoney(dailyRationCost);
-            Debug.Log("Rations sent.");
-        }
-        else
-        {
-            Debug.Log("Cannot afford rations.");
-        }
-    }
 }
 
 [System.Serializable]
