@@ -10,11 +10,13 @@ public class FamilyManager : MonoBehaviour
     public int dailyRationCost = 20;
 
     [Header("Medicine")]
-    public int medicineCostPerPerson = 10;
+    public int medicineCostPerPerson = 5;
 
-    [Header("Sickness Probability")]
-    [Range(0f, 1f)]
-    public float sicknessProbability = 0.2f;
+    [Header("Health Drain")]
+    public float healthDrainPerSecond = 1f; // how fast health drains while playing
+
+    [Header("Medicine Heal Amount")]
+    public int healAmount = 20; // how much health restored per med send
 
     [Header("Family Members")]
     public FamilyMember wife;
@@ -22,16 +24,28 @@ public class FamilyManager : MonoBehaviour
     public FamilyMember daughter;
 
     [Header("Family Icon UI")]
-    public GameObject familyIconButton;      // the bottom left icon button
-    public GameObject exclamationMark;       // red ! on the icon
+    public GameObject familyIconButton;
+    public GameObject exclamationMark;
 
     [Header("Family Panel UI")]
-    public GameObject familyPanel;           // the paper panel
-    public TextMeshProUGUI wifeStatusText;
-    public TextMeshProUGUI sonStatusText;
-    public TextMeshProUGUI daughterStatusText;
-    public Button sendMedsButton;
-    public TextMeshProUGUI sendMedsCostText;
+    public GameObject familyPanel;
+
+    // Wife UI
+    public Slider wifeHealthBar;
+    public TextMeshProUGUI wifeNameText;
+    public Button wifeMedsButton;
+
+    // Son UI
+    public Slider sonHealthBar;
+    public TextMeshProUGUI sonNameText;
+    public Button sonMedsButton;
+
+    // Daughter UI
+    public Slider daughterHealthBar;
+    public TextMeshProUGUI daughterNameText;
+    public Button daughterMedsButton;
+
+    private bool gameOver = false;
 
     void Awake() => Instance = this;
 
@@ -39,15 +53,104 @@ public class FamilyManager : MonoBehaviour
     {
         familyPanel.SetActive(false);
         exclamationMark.SetActive(false);
-        UpdateFamilyUI();
+
+        // Init sliders
+        InitMember(wife, wifeHealthBar, wifeNameText);
+        InitMember(son, sonHealthBar, sonNameText);
+        InitMember(daughter, daughterHealthBar, daughterNameText);
+    }
+
+    void InitMember(FamilyMember member, Slider bar, TextMeshProUGUI nameText)
+    {
+        member.currentHealth = member.maxHealth;
+        bar.maxValue = member.maxHealth;
+        bar.value = member.currentHealth;
+        nameText.text = member.memberName;
+    }
+
+    void Update()
+    {
+        if (gameOver) return;
+
+        // Drain health every frame
+        DrainHealth(wife, wifeHealthBar);
+        DrainHealth(son, sonHealthBar);
+        DrainHealth(daughter, daughterHealthBar);
+
+        // Check deaths
+        CheckDeath(wife);
+        CheckDeath(son);
+        CheckDeath(daughter);
+
+        // Update exclamation — show when anyone is low
+        UpdateExclamation();
+    }
+
+    void DrainHealth(FamilyMember member, Slider bar)
+    {
+        if (member.isDead) return;
+        member.currentHealth -= healthDrainPerSecond * Time.deltaTime;
+        member.currentHealth = Mathf.Clamp(member.currentHealth, 0, member.maxHealth);
+        bar.value = member.currentHealth;
+    }
+
+    void CheckDeath(FamilyMember member)
+    {
+        if (member.isDead) return;
+        if (member.currentHealth <= 0)
+        {
+            member.isDead = true;
+            Debug.Log($"{member.memberName} has died. GAME OVER.");
+            gameOver = true;
+            // TODO: trigger game over screen here
+        }
+    }
+
+    void UpdateExclamation()
+    {
+        bool anyoneLow = (wife.currentHealth < wife.maxHealth * 0.3f && !wife.isDead) ||
+                         (son.currentHealth < son.maxHealth * 0.3f && !son.isDead) ||
+                         (daughter.currentHealth < daughter.maxHealth * 0.3f && !daughter.isDead);
+        exclamationMark.SetActive(anyoneLow);
     }
 
     // =============================================
-    // Called every end of day by DayManager
+    // FAMILY ICON BUTTON
+    // =============================================
+    public void OnFamilyIconPressed()
+    {
+        familyPanel.SetActive(!familyPanel.activeSelf);
+    }
+
+    // =============================================
+    // SEND MEDS BUTTONS — one per member
+    // =============================================
+    public void SendMedsWife()     => SendMeds(wife, wifeHealthBar);
+    public void SendMedsSon()      => SendMeds(son, sonHealthBar);
+    public void SendMedsDaughter() => SendMeds(daughter, daughterHealthBar);
+
+    void SendMeds(FamilyMember member, Slider bar)
+    {
+        if (member.isDead) return;
+
+        if (!HospitalManager.Instance.CanAfford(medicineCostPerPerson))
+        {
+            Debug.Log("Not enough money for medicine.");
+            return;
+        }
+
+        HospitalManager.Instance.SpendMoney(medicineCostPerPerson);
+        member.currentHealth = Mathf.Clamp(member.currentHealth + healAmount, 0, member.maxHealth);
+        bar.value = member.currentHealth;
+
+        Debug.Log($"Sent meds to {member.memberName}. Health: {member.currentHealth}");
+    }
+
+    // =============================================
+    // END OF DAY — deduct rations
     // =============================================
     public void EndOfDayUpdate()
     {
-        // Pay rations
         if (HospitalManager.Instance.CanAfford(dailyRationCost))
         {
             HospitalManager.Instance.SpendMoney(dailyRationCost);
@@ -57,147 +160,6 @@ public class FamilyManager : MonoBehaviour
         {
             Debug.Log("Cannot afford rations.");
         }
-
-        // Roll random sickness only for members not already sick
-        // and not manually overridden this day
-        RollSickness(wife);
-        RollSickness(son);
-        RollSickness(daughter);
-
-        // Check if anyone died from untreated sickness
-        CheckDeath(wife);
-        CheckDeath(son);
-        CheckDeath(daughter);
-
-        UpdateFamilyUI();
-        UpdateExclamation();
-    }
-
-    // =============================================
-    // Manual override — call from DayData or inspector
-    // set a member sick on a specific day
-    // =============================================
-    public void ForceSetSick(string memberName, bool sick)
-    {
-        FamilyMember m = GetMember(memberName);
-        if (m == null || m.isDead) return;
-        m.isSick = sick;
-        m.manuallySetThisDay = true; // prevents random roll overriding it
-        UpdateFamilyUI();
-        UpdateExclamation();
-    }
-
-    void RollSickness(FamilyMember member)
-    {
-        if (member.isDead) return;
-        if (member.manuallySetThisDay)
-        {
-            member.manuallySetThisDay = false; // reset for next day
-            return;
-        }
-        if (!member.isSick && Random.value < sicknessProbability)
-        {
-            member.isSick = true;
-            Debug.Log($"{member.memberName} got sick!");
-        }
-    }
-
-    void CheckDeath(FamilyMember member)
-    {
-        if (member.isSick && !member.isDead && member.daysUntreated >= 1)
-        {
-            member.isDead = true;
-            Debug.Log($"{member.memberName} has died.");
-            // add consequences here later
-        }
-        else if (member.isSick && !member.isDead)
-        {
-            member.daysUntreated++;
-        }
-    }
-
-    // =============================================
-    // FAMILY ICON BUTTON — opens/closes panel
-    // =============================================
-    public void OnFamilyIconPressed()
-    {
-        bool isOpen = familyPanel.activeSelf;
-        familyPanel.SetActive(!isOpen);
-        UpdateFamilyUI();
-    }
-
-    // =============================================
-    // SEND MEDS BUTTON
-    // =============================================
-    public void OnSendMedsPressed()
-    {
-        int totalCost = 0;
-
-        if (wife.isSick && !wife.isDead)     totalCost += medicineCostPerPerson;
-        if (son.isSick && !son.isDead)       totalCost += medicineCostPerPerson;
-        if (daughter.isSick && !daughter.isDead) totalCost += medicineCostPerPerson;
-
-        if (!HospitalManager.Instance.CanAfford(totalCost))
-        {
-            Debug.Log("Cannot afford medicine.");
-            return;
-        }
-
-        HospitalManager.Instance.SpendMoney(totalCost);
-
-        if (wife.isSick)     { wife.isSick = false;     wife.daysUntreated = 0; }
-        if (son.isSick)      { son.isSick = false;      son.daysUntreated = 0; }
-        if (daughter.isSick) { daughter.isSick = false; daughter.daysUntreated = 0; }
-
-        Debug.Log($"Medicine sent. Cost: ${totalCost}");
-
-        UpdateFamilyUI();
-        UpdateExclamation();
-    }
-
-    void UpdateExclamation()
-    {
-        bool anyoneSick = (wife.isSick && !wife.isDead) ||
-                          (son.isSick && !son.isDead) ||
-                          (daughter.isSick && !daughter.isDead);
-        exclamationMark.SetActive(anyoneSick);
-    }
-
-    void UpdateFamilyUI()
-    {
-        wifeStatusText.text     = GetStatusText(wife);
-        sonStatusText.text      = GetStatusText(son);
-        daughterStatusText.text = GetStatusText(daughter);
-
-        // Send meds button only active if someone is sick and alive
-        bool anyoneSick = (wife.isSick && !wife.isDead) ||
-                          (son.isSick && !son.isDead) ||
-                          (daughter.isSick && !daughter.isDead);
-
-        sendMedsButton.interactable = anyoneSick;
-
-        // Show total medicine cost
-        int totalCost = 0;
-        if (wife.isSick && !wife.isDead)         totalCost += medicineCostPerPerson;
-        if (son.isSick && !son.isDead)           totalCost += medicineCostPerPerson;
-        if (daughter.isSick && !daughter.isDead) totalCost += medicineCostPerPerson;
-
-        sendMedsCostText.text = totalCost > 0 ? "Send Meds: $" + totalCost : "No meds needed";
-    }
-
-    string GetStatusText(FamilyMember m)
-    {
-        if (m.isDead)  return m.memberName + " — Deceased";
-        if (m.isSick)  return m.memberName + " — Sick";
-        return m.memberName + " — OK";
-    }
-
-    FamilyMember GetMember(string name)
-    {
-        if (wife.memberName == name)      return wife;
-        if (son.memberName == name)       return son;
-        if (daughter.memberName == name)  return daughter;
-        return null;
     }
 }
 
@@ -205,8 +167,7 @@ public class FamilyManager : MonoBehaviour
 public class FamilyMember
 {
     public string memberName;
-    public bool isSick = false;
-    public bool isDead = false;
-    public int daysUntreated = 0;
-    [HideInInspector] public bool manuallySetThisDay = false;
+    public float maxHealth = 100f;
+    [HideInInspector] public float currentHealth;
+    [HideInInspector] public bool isDead = false;
 }

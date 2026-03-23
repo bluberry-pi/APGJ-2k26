@@ -12,25 +12,25 @@ public class HospitalManager : MonoBehaviour
     public int currentMoney;
     public TextMeshProUGUI moneyDisplay;
 
-    [Header("Resources")]
-    public int startingResources = 100;
-    public int currentResources;
+    [Header("Res")]
+    public int startingRes = 100;
+    public int currentRes;
     public TextMeshProUGUI resourceDisplay;
 
     [Header("Daily Income")]
-    public int resourcesPerDay = 20; // added every new day
+    public int ResPerDay = 20; // added every new day
     public int moneyPerDay = 0;      // optional, set to 0 if not needed
 
     void Awake()
     {
         Instance = this;
         currentMoney = startingMoney;
-        currentResources = startingResources;
+        currentRes = startingRes;
     }
 
     void Start() => UpdateDisplay();
 
-    public bool CanAfford(int cost) => currentResources >= cost;
+    public bool CanAfford(int cost) => currentRes >= cost;
 
     public void AddMoney(int amount)
     {
@@ -47,9 +47,9 @@ public class HospitalManager : MonoBehaviour
     // Called by DayManager at the start of each new day
     public void AddDailyIncome()
     {
-        currentResources += resourcesPerDay;
+        currentRes += ResPerDay;
         currentMoney += moneyPerDay;
-        Debug.Log($"Daily income added. Resources: {currentResources}, Money: {currentMoney}");
+        Debug.Log($"Daily income added. Res: {currentRes}, Money: {currentMoney}");
         UpdateDisplay();
     }
 
@@ -58,7 +58,7 @@ public class HospitalManager : MonoBehaviour
         if (moneyDisplay != null)
             moneyDisplay.text = "Money: $" + currentMoney;
         if (resourceDisplay != null)
-            resourceDisplay.text = "Resources: " + currentResources;
+            resourceDisplay.text = "Res: " + currentRes;
     }
 
     // =============================================
@@ -77,7 +77,7 @@ public class HospitalManager : MonoBehaviour
 
         if (!CanAfford(p.resourceCost))
         {
-            Debug.Log("Not enough resources.");
+            Debug.Log("Not enough Res.");
             return;
         }
 
@@ -98,7 +98,7 @@ public class HospitalManager : MonoBehaviour
 
     void CompleteAdmit(PatientData p)
     {
-        currentResources -= p.resourceCost;
+        currentRes -= p.resourceCost;
         AddMoney(p.rewardMoney);
 
         GameObject patientObj = PatientUIManager.Instance.currentPatientController?.gameObject;
