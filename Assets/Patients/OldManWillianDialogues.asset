@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88d9c26c071469419d3a276e7805658, type: 3}
+  m_Name: OldManWillianDialogues
+  m_EditorClassIdentifier: 
+  personalityNote: 
+  sequences:
+  - sequenceID: onOpen_Day1
+    lines:
+    - line: "Breathing\u2019s worse"
+      portrait: {fileID: 8984056015003274920, guid: 2aabc36d853c8b3418666bce99ce4441, type: 3}
+    - line: "I thought it was nothing. It wasn\u2019t"
+      portrait: {fileID: -1178209908186862254, guid: 104f8087d097f4047a0e68d130efa56f, type: 3}
+    - line: "These things don\u2019t stay small, do they?"
+      portrait: {fileID: 8984056015003274920, guid: 2aabc36d853c8b3418666bce99ce4441, type: 3}
+  - sequenceID: onAdmit
+    lines:
+    - line: "\u2026thank you"
+      portrait: {fileID: 8984056015003274920, guid: 2aabc36d853c8b3418666bce99ce4441, type: 3}
+    - line: "Cuz, i\u2019ve had mine"
+      portrait: {fileID: -3226163663251382699, guid: 9d041bf973a32e74aaefd2bd7c0ae95f, type: 3}
+  - sequenceID: onDeny_Day1
+    lines:
+    - line: Take your time
+      portrait: {fileID: -3226163663251382699, guid: 9d041bf973a32e74aaefd2bd7c0ae95f, type: 3}
+    - line: "Cuz, i\u2019ve had min\r\n"
+      portrait: {fileID: -3226163663251382699, guid: 9d041bf973a32e74aaefd2bd7c0ae95f, type: 3}

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e40345eded6216428dedef27879861a, type: 3}
-  m_Name: Dog
+  m_Name: OldManWilliam
   m_EditorClassIdentifier: 
-  patientName: Dog
-  age: 6
+  patientName: William
+  age: 0
   condition: 
-  bio: is being a dog
+  bio: Retiered school principal
   tier: 2
   rewardMoney: 0
-  maxHealth: 50
+  maxHealth: 100
   deteriorationPerDay: 20
-  deadSprite: {fileID: 21300000, guid: b6b07eac2a53138449170fb56e9e9dfc, type: 3}
-  resourceCost: 10
-  dialogue: {fileID: 11400000, guid: 10fbcb082bde0c54aaf4ea22f2e641b2, type: 2}
+  deadSprite: {fileID: -5199177558571983074, guid: 994e0115c0c0cba4bad7c1bfe97ec682, type: 3}
+  resourceCost: 0
+  dialogue: {fileID: 0}

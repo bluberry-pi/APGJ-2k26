@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e40345eded6216428dedef27879861a, type: 3}
+  m_Name: Charles
+  m_EditorClassIdentifier: 
+  patientName: Charles
+  age: 26
+  condition: Spinal Inflammation
+  bio: Member of the disaster response team. Worked near the epicenter during initial
+    rescue operations.
+  tier: 1
+  rewardMoney: 10
+  maxHealth: 40
+  deteriorationPerDay: 20
+  deadSprite: {fileID: 21300000, guid: 15c5b1980e5856d44ad44c474a0b768d, type: 3}
+  resourceCost: 0
+  dialogue: {fileID: 11400000, guid: a67a3ed31b1f49b4cabeef2fda67a63b, type: 2}

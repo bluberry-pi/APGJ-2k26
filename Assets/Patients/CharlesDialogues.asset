@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88d9c26c071469419d3a276e7805658, type: 3}
+  m_Name: CharlesDialogues
+  m_EditorClassIdentifier: 
+  personalityNote: 
+  sequences:
+  - sequenceID: onOpen_Day1
+    lines:
+    - line: "Spinal injury\u2026 that\u2019s what they said."
+      portrait: {fileID: 0}
+    - line: convenient, considering I passed out.
+      portrait: {fileID: 0}
+    - line: that factory never felt right
+      portrait: {fileID: 0}
+    - line: They said my tier would be demoted
+      portrait: {fileID: 0}
+    - line: As i can no longer walk...
+      portrait: {fileID: 0}
+  - sequenceID: onDeny_Day1
+    lines:
+    - line: Consider it again, i dont wanna die like this.
+      portrait: {fileID: 0}
+  - sequenceID: onDeny_Day1
+    lines:
+    - line: Carful warden, the system only keeps its monsters until it runs out of
+        meat
+      portrait: {fileID: 0}
+  - sequenceID: onAdmit
+    lines:
+    - line: I hope i survive long enough to discover my truth
+      portrait: {fileID: 0}
