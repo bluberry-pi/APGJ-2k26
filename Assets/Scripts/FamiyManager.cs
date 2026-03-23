@@ -25,8 +25,6 @@ public class FamilyManager : MonoBehaviour
 
     [Header("Family Icon UI")]
     public GameObject familyIconButton;
-    public GameObject exclamationMark;
-
     [Header("Family Panel UI")]
     public GameObject familyPanel;
 
@@ -48,12 +46,11 @@ public class FamilyManager : MonoBehaviour
     private bool gameOver = false;
 
     void Awake() => Instance = this;
+    [HideInInspector] public bool paused = false;
 
     void Start()
     {
         familyPanel.SetActive(false);
-        exclamationMark.SetActive(false);
-
         // Init sliders
         InitMember(wife, wifeHealthBar, wifeNameText);
         InitMember(son, sonHealthBar, sonNameText);
@@ -70,6 +67,15 @@ public class FamilyManager : MonoBehaviour
 
     void Update()
     {
+        if (gameOver || paused) return;
+
+        DrainHealth(wife, wifeHealthBar);
+        DrainHealth(son, sonHealthBar);
+        DrainHealth(daughter, daughterHealthBar);
+
+        CheckDeath(wife);
+        CheckDeath(son);
+        CheckDeath(daughter);
         if (gameOver) return;
 
         // Drain health every frame
@@ -81,9 +87,6 @@ public class FamilyManager : MonoBehaviour
         CheckDeath(wife);
         CheckDeath(son);
         CheckDeath(daughter);
-
-        // Update exclamation — show when anyone is low
-        UpdateExclamation();
     }
 
     void DrainHealth(FamilyMember member, Slider bar)
@@ -106,27 +109,24 @@ public class FamilyManager : MonoBehaviour
         }
     }
 
-    void UpdateExclamation()
-    {
-        bool anyoneLow = (wife.currentHealth < wife.maxHealth * 0.3f && !wife.isDead) ||
-                         (son.currentHealth < son.maxHealth * 0.3f && !son.isDead) ||
-                         (daughter.currentHealth < daughter.maxHealth * 0.3f && !daughter.isDead);
-        exclamationMark.SetActive(anyoneLow);
-    }
-
     // =============================================
     // FAMILY ICON BUTTON
     // =============================================
     public void OnFamilyIconPressed()
     {
         familyPanel.SetActive(!familyPanel.activeSelf);
+        Debug.Log("Family icon pressed");
+    }
+    public void OnCrossPress()
+    {
+        familyPanel.SetActive(false);
     }
 
     // =============================================
     // SEND MEDS BUTTONS — one per member
     // =============================================
-    public void SendMedsWife()     => SendMeds(wife, wifeHealthBar);
-    public void SendMedsSon()      => SendMeds(son, sonHealthBar);
+    public void SendMedsWife() => SendMeds(wife, wifeHealthBar);
+    public void SendMedsSon() => SendMeds(son, sonHealthBar);
     public void SendMedsDaughter() => SendMeds(daughter, daughterHealthBar);
 
     void SendMeds(FamilyMember member, Slider bar)

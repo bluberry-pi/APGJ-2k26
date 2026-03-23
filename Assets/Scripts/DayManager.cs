@@ -39,6 +39,8 @@ public class DayManager : MonoBehaviour
     [Header("Patient Tracking")]
     public List<GameObject> activePatients = new List<GameObject>();
     private int patientsAdmittedToday = 0;
+    [Header("Debug")]
+    public bool skipDayCanvas = false;
 
     void Awake() => Instance = this;
 
@@ -104,87 +106,85 @@ public class DayManager : MonoBehaviour
 
     IEnumerator TransitionToNextDay()
     {
-        yield return StartCoroutine(Fade(0f, 1f));
-
-        dayStartCanvas.SetActive(true);
-        statsGroup.SetActive(true);
-        dayFlavourText.text = "";
-
-        yield return StartCoroutine(StartDay());
-    }
-
-    IEnumerator StartDay()
-    {
-        if (currentDayIndex == 0)
+        if (!skipDayCanvas)
         {
+            FamilyManager.Instance.paused = true;
             yield return StartCoroutine(Fade(0f, 1f));
             dayStartCanvas.SetActive(true);
             statsGroup.SetActive(true);
             dayFlavourText.text = "";
         }
 
-        // ── Phase 1: Stats ──────────────────────────────
-        int currentRes = HospitalManager.Instance.currentRes;
-        int currentMoney = HospitalManager.Instance.currentMoney;
-        int resourceIncome = HospitalManager.Instance.ResPerDay;
-        int rationCost = FamilyManager.Instance.dailyRationCost;
-
-        dayTitleText.text = "";
-        ResText.text = "";
-        moneyText.text = "";
-
-        yield return StartCoroutine(TypeText(dayTitleText, "Day " + (currentDayIndex + 1)));
-        yield return new WaitForSeconds(0.3f);
-
-        if (currentDayIndex == 0)
+        yield return StartCoroutine(StartDay());
+    }
+    IEnumerator StartDay()
+    {
+        if (!skipDayCanvas)
         {
-            yield return StartCoroutine(TypeText(ResText, "Res: " + currentRes));
-            yield return new WaitForSeconds(0.2f);
-            yield return StartCoroutine(TypeText(moneyText, "Money: $" + currentMoney));
-            yield return new WaitForSeconds(0.2f);
-        }
-        else
-        {
-            yield return StartCoroutine(TypeText(ResText, "Res: " + currentRes + "  (+" + resourceIncome + " delivered)"));
-            yield return new WaitForSeconds(0.2f);
-            yield return StartCoroutine(TypeText(moneyText, "Money: $" + currentMoney + "  (-$" + rationCost + " rations)"));
-            yield return new WaitForSeconds(0.2f);
-        }
+            if (currentDayIndex == 0)
+            {
+                FamilyManager.Instance.paused = true;
+                yield return StartCoroutine(Fade(0f, 1f));
+                dayStartCanvas.SetActive(true);
+                statsGroup.SetActive(true);
+                dayFlavourText.text = "";
+            }
 
-        // Pause so player can read
-        yield return new WaitForSeconds(statsPauseDuration);
+            // stats phase
+            int currentRes = HospitalManager.Instance.currentRes;
+            int currentMoney = HospitalManager.Instance.currentMoney;
+            int resourceIncome = HospitalManager.Instance.ResPerDay;
+            int rationCost = FamilyManager.Instance.dailyRationCost;
 
-        // Fade stats out
-        yield return StartCoroutine(FadeCanvasGroup(statsGroup, 1f, 0f, statsFadeDuration));
-        statsGroup.SetActive(false);
+            dayTitleText.text = "";
+            ResText.text = "";
+            moneyText.text = "";
 
-        // ── Phase 2: Flavour text ───────────────────────
-        dayFlavourText.text = "";
-        foreach (DayFlavourLine flavour in CurrentDay.flavourLines)
-        {
+            yield return StartCoroutine(TypeText(dayTitleText, "Day " + (currentDayIndex + 1)));
+            yield return new WaitForSeconds(0.3f);
+
+            if (currentDayIndex == 0)
+            {
+                yield return StartCoroutine(TypeText(ResText, "Res: " + currentRes));
+                yield return new WaitForSeconds(0.2f);
+                yield return StartCoroutine(TypeText(moneyText, "Money: $" + currentMoney));
+                yield return new WaitForSeconds(0.2f);
+            }
+            else
+            {
+                yield return StartCoroutine(TypeText(ResText, "Res: " + currentRes + "  (+" + resourceIncome + " delivered)"));
+                yield return new WaitForSeconds(0.2f);
+                yield return StartCoroutine(TypeText(moneyText, "Money: $" + currentMoney + "  (-$" + rationCost + " rations)"));
+                yield return new WaitForSeconds(0.2f);
+            }
+
+            yield return new WaitForSeconds(statsPauseDuration);
+
+            yield return StartCoroutine(FadeCanvasGroup(statsGroup, 1f, 0f, statsFadeDuration));
+            statsGroup.SetActive(false);
+            CanvasGroup statsCG = statsGroup.GetComponent<CanvasGroup>();
+            if (statsCG != null) statsCG.alpha = 1f;
+
             dayFlavourText.text = "";
-            yield return StartCoroutine(TypeText(dayFlavourText, flavour.line));
-            yield return new WaitForSeconds(flavour.pauseAfter);
+            foreach (DayFlavourLine flavour in CurrentDay.flavourLines)
+            {
+                dayFlavourText.text = "";
+                yield return StartCoroutine(TypeText(dayFlavourText, flavour.line));
+                yield return new WaitForSeconds(flavour.pauseAfter);
+            }
+
+            yield return StartCoroutine(FadeCanvasGroup(dayFlavourText.gameObject, 1f, 0f, statsFadeDuration));
+            dayFlavourText.text = "";
+            CanvasGroup flavourCG = dayFlavourText.gameObject.GetComponent<CanvasGroup>();
+            if (flavourCG != null) flavourCG.alpha = 1f;
+
+            yield return new WaitForSeconds(0.5f);
+            yield return StartCoroutine(Fade(1f, 0f));
+            dayStartCanvas.SetActive(false);
         }
 
-        yield return StartCoroutine(FadeCanvasGroup(dayFlavourText.gameObject, 1f, 0f, statsFadeDuration));
-        dayFlavourText.text = "";
-        dayFlavourText.gameObject.GetComponent<CanvasGroup>().alpha = 1f; // reset for next day
-
-        yield return new WaitForSeconds(0.5f);
-
-        // Fade back in to reveal the scene
-        yield return StartCoroutine(Fade(1f, 0f));
-
-        yield return new WaitForSeconds(0.5f);
-
-        yield return StartCoroutine(Fade(1f, 0f));
-
-        dayStartCanvas.SetActive(false);
-
-        foreach (FamilySicknessEvent e in CurrentDay.familySicknessOverrides)
-            FamilyManager.Instance.ForceSetSick(e.memberName, e.forceSick);
-
+        // always runs regardless of skipDayCanvas
+        FamilyManager.Instance.paused = false;
         HospitalManager.Instance.AddDailyIncome();
 
         if (currentDayIndex < dayPatientGroups.Length)
@@ -199,6 +199,15 @@ public class DayManager : MonoBehaviour
                     activePatients.Add(child.gameObject);
             }
         }
+
+        if (!skipDayCanvas)
+            StartCoroutine(ResumeHealthDrain());
+    }
+
+    IEnumerator ResumeHealthDrain()
+    {
+        yield return new WaitForSeconds(2f);
+        FamilyManager.Instance.paused = false;
     }
 
     IEnumerator Fade(float from, float to)
