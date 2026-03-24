@@ -15,12 +15,16 @@ MonoBehaviour:
   dayNumber: 2
   maxPatientsToAdmit: 4
   flavourLines:
-  - line: Prev day wasnt really that bad
+  - line: "Yesterday wasn\u2019t so bad."
     pauseAfter: 1.5
-  - line: the doc feels generous today. 4 patients he told.
+  - line: "I\u2019m getting used to this."
+    pauseAfter: 1.5
+  - line: Beds available for only 4 patients today
+    pauseAfter: 1.5
+  - line: generous.
     pauseAfter: 2
   economy:
     resourcesAdded: 10
     resourcesDeducted: 0
     moneyAdded: 0
-    moneyDeducted: 20
+    moneyDeducted: 15

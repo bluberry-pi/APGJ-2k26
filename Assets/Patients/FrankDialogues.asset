@@ -17,20 +17,18 @@ MonoBehaviour:
   - sequenceID: onOpen_Day1
     lines:
     - line: I was part of the- um- disaster resque team
-      portrait: {fileID: 0}
+      portrait: {fileID: -8471989607786808988, guid: ea3d7a7b1d2e73e47afd751986301a79, type: 3}
     - line: i'm also tier 1 btw
-      portrait: {fileID: 0}
-    - line: but i dont have money right now
-      portrait: {fileID: 0}
-    - line: i promise to pay later, admit me quick
-      portrait: {fileID: 0}
+      portrait: {fileID: -8471989607786808988, guid: ea3d7a7b1d2e73e47afd751986301a79, type: 3}
+    - line: i cant give enough money tho
+      portrait: {fileID: -8471989607786808988, guid: ea3d7a7b1d2e73e47afd751986301a79, type: 3}
   - sequenceID: onDeny_Day1
     lines:
     - line: "Please\u2026"
-      portrait: {fileID: 0}
+      portrait: {fileID: -7367812787139293388, guid: f965f6ec37fc05c478047a8e9cea3e3d, type: 3}
     - line: I request, i dont feel very good
-      portrait: {fileID: 0}
+      portrait: {fileID: -7367812787139293388, guid: f965f6ec37fc05c478047a8e9cea3e3d, type: 3}
   - sequenceID: onAdmit
     lines:
     - line: nice.
-      portrait: {fileID: 0}
+      portrait: {fileID: -8471989607786808988, guid: ea3d7a7b1d2e73e47afd751986301a79, type: 3}
