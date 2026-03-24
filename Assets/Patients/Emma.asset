@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e40345eded6216428dedef27879861a, type: 3}
+  m_Name: Emma
+  m_EditorClassIdentifier: 
+  patientName: Emma
+  age: 35
+  condition: Rapid pulse; Labored breathing.
+  bio: 6 month old pregnant lady
+  tier: 1
+  rewardMoney: 10
+  maxHealth: 30
+  deteriorationPerDay: 20
+  deadSprite: {fileID: 0}
+  resourceCost: 30
+  dialogue: {fileID: 11400000, guid: 37e3d296a88ac5e4eab68f15dc0b6d86, type: 2}

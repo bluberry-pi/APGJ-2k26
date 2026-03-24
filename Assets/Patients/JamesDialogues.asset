@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88d9c26c071469419d3a276e7805658, type: 3}
+  m_Name: JamesDialogues
+  m_EditorClassIdentifier: 
+  personalityNote: 
+  sequences:
+  - sequenceID: onOpen_Day1
+    lines:
+    - line: ...
+      portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
+    - line: excuse me mister
+      portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
+    - line: mommy and daddy havent returned home for past 3 days
+      portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
+    - line: my stomach has been hurting very much lately
+      portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
+    - line: mrs madison told me to come here
+      portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
+  - sequenceID: onAdmit
+    lines:
+    - line: thank you kind sir
+      portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
+  - sequenceID: onDeny_Day1
+    lines:
+    - line: please sir, i cant bear the pain
+      portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
+  - sequenceID: onDeny_Day1
+    lines:
+    - line: please sir, i cant bear the pain
+      portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}

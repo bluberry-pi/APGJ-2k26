@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e40345eded6216428dedef27879861a, type: 3}
+  m_Name: DonaldBorris
+  m_EditorClassIdentifier: 
+  patientName: Donald Borris
+  age: 55
+  condition: Expensive suit.
+  bio: local mayor
+  tier: 0
+  rewardMoney: 20
+  maxHealth: 50
+  deteriorationPerDay: 20
+  deadSprite: {fileID: 0}
+  resourceCost: 0
+  dialogue: {fileID: 11400000, guid: 3dcb5f3c7903f964bb43d0e41f7061fc, type: 2}

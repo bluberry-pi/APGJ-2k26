@@ -43,8 +43,17 @@ public class DayManager : MonoBehaviour
     public List<GameObject> activePatients = new List<GameObject>();
     private int patientsAdmittedToday = 0;
 
+    [Header("Purge Day Settings")]
+    [Tooltip("Day NUMBER (1-based) on which all patients except 'Dad&Daughter' are destroyed. Set to 0 to disable.")]
+    public int purgeDayNumber = 5;
+
     [Header("Debug")]
     public bool skipDayCanvas = false;
+
+    // True while the purge day end is being processed.
+    // PatientHealth.Die() checks this to suppress game-over for patients
+    // that are about to be force-destroyed anyway.
+    [HideInInspector] public bool isPurgeDay = false;
 
     void Awake() => Instance = this;
 
@@ -58,6 +67,9 @@ public class DayManager : MonoBehaviour
     }
 
     public DayData CurrentDay => allDays[currentDayIndex];
+
+    // currentDayIndex is 0-based; purgeDayNumber is 1-based (matches "Day 5" in the Inspector).
+    bool IsCurrentDayPurgeDay => purgeDayNumber > 0 && (currentDayIndex + 1) == purgeDayNumber;
 
     public bool CanAdmitMore()
     {
@@ -85,14 +97,44 @@ public class DayManager : MonoBehaviour
 
     public void EndDay()
     {
-        List<GameObject> patientsCopy = new List<GameObject>(activePatients);
-        foreach (GameObject p in patientsCopy)
+        if (IsCurrentDayPurgeDay)
         {
-            if (p != null)
-                p.GetComponent<PatientHealth>()?.Deteriorate();
-        }
+            // ── PURGE DAY ──────────────────────────────────────────────────────
+            // Raise the flag so PatientHealth.Die() knows not to trigger game-over
+            // for patients that are being silently wiped this day.
+            isPurgeDay = true;
 
-        activePatients.RemoveAll(p => p == null);
+            List<GameObject> patientsCopy = new List<GameObject>(activePatients);
+            foreach (GameObject p in patientsCopy)
+            {
+                if (p == null) continue;
+
+                // Spare any patient tagged "Dad&Daughter" — they continue to next day.
+                if (p.CompareTag("Dad&Daughter")) continue;
+
+                // Remove from the tracking list first so no stale references remain.
+                activePatients.Remove(p);
+                Destroy(p);
+            }
+
+            // Clean up any remaining nulls (e.g. Dad&Daughter if they somehow died).
+            activePatients.RemoveAll(p => p == null);
+
+            isPurgeDay = false;
+            // ──────────────────────────────────────────────────────────────────
+        }
+        else
+        {
+            // Normal day-end: apply deterioration to every remaining patient.
+            List<GameObject> patientsCopy = new List<GameObject>(activePatients);
+            foreach (GameObject p in patientsCopy)
+            {
+                if (p != null)
+                    p.GetComponent<PatientHealth>()?.Deteriorate();
+            }
+
+            activePatients.RemoveAll(p => p == null);
+        }
 
         FamilyManager.Instance.EndOfDayUpdate();
 
