@@ -15,10 +15,18 @@ MonoBehaviour:
   dayNumber: 3
   maxPatientsToAdmit: 4
   flavourLines:
-  - line: 
-    pauseAfter: 0
+  - line: "The doc didn\u2019t show up today."
+    pauseAfter: 1.5
+  - line: Neither the resource truck
+    pauseAfter: 1.5
+  - line: 4 beds available, need to fill them.
+    pauseAfter: 1.5
+  - line: 'lets see how it goes
+
+'
+    pauseAfter: 1.5
   economy:
-    resourcesAdded: 10
+    resourcesAdded: 0
     resourcesDeducted: 0
     moneyAdded: 0
-    moneyDeducted: 20
+    moneyDeducted: 10

@@ -13,13 +13,11 @@ public class PatientHealth : MonoBehaviour
         data = patientData;
         currentHealth = patientData.maxHealth;
         spriteRenderer = GetComponent<SpriteRenderer>();
-        // no sprite set here — whatever is on the prefab stays
     }
 
     public void Deteriorate()
     {
         if (isDead) return;
-
         currentHealth -= data.deteriorationPerDay;
         Debug.Log($"{data.patientName} health: {currentHealth}");
 
@@ -32,19 +30,6 @@ public class PatientHealth : MonoBehaviour
         isDead = true;
         currentHealth = 0;
 
-        // If this death is happening during the purge day, skip all death consequences
-        // (sprite swap, game-over, etc.) for patients that are about to be destroyed anyway.
-        // Dad&Daughter are never destroyed on purge day, so their deaths still count normally.
-        if (DayManager.Instance != null &&
-            DayManager.Instance.isPurgeDay &&
-            !gameObject.CompareTag("Dad&Daughter"))
-        {
-            Debug.Log($"{data.patientName} wiped on purge day — death suppressed.");
-            DayManager.Instance.RemovePatient(gameObject);
-            return;
-        }
-
-        // Normal death flow
         if (spriteRenderer != null && data.deadSprite != null)
             spriteRenderer.sprite = data.deadSprite;
 
@@ -53,10 +38,8 @@ public class PatientHealth : MonoBehaviour
             npc.currentState = TopDownNPC.State.Waiting;
 
         Debug.Log($"{data.patientName} has died.");
-
         DayManager.Instance.RemovePatient(gameObject);
     }
 
-    // DEBUG
     public void DebugForceDeteriorate() => Deteriorate();
 }

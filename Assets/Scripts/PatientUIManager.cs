@@ -23,15 +23,24 @@ public class PatientUIManager : MonoBehaviour
     [Header("Buttons")]
     public Button admitButton;
     public Button denyButton;
-    //public Button cancelButton;
 
     [HideInInspector] public PatientData currentPatient;
     [HideInInspector] public PatientController currentPatientController;
 
-    void Awake() => Instance = this;
+    void Awake()
+    {
+        Instance = this;
+        Debug.Log("PatientUIManager instance on: " + gameObject.name);
+    }
 
     public void ShowPatient(PatientData data)
     {
+        if (data == null)
+        {
+            Debug.LogError("ShowPatient called with NULL data!");
+            return;
+        }
+
         currentPatient = data;
         currentPatientController = FindCurrentPatientController();
 
@@ -40,9 +49,7 @@ public class PatientUIManager : MonoBehaviour
         conditionText.text = "Condition: " + data.condition;
         bioText.text = "Bio: " + data.bio;
         resourceCostText.text = "Resources required: " + data.resourceCost;
-        tierText.text = "Tier: " + ((int)data.tier + 1).ToString();
-
-        // portrait removed — handled by DialogueManager per line
+        tierText.text = "Tier: " + ((int)data.tier + 1);
 
         SetButtonsInteractable(false);
 
@@ -59,9 +66,39 @@ public class PatientUIManager : MonoBehaviour
 
     public void SetButtonsInteractable(bool state)
     {
-        admitButton.interactable = true && HospitalManager.Instance.CanAfford(currentPatient.resourceCost);
+        if (admitButton == null || denyButton == null)
+        {
+            Debug.LogError("Buttons not assigned in Inspector!");
+            return;
+        }
+
+        // Disable everything if state is false
+        if (!state)
+        {
+            admitButton.interactable = false;
+            denyButton.interactable = false;
+            return;
+        }
+
+        // Safe guards
+        if (currentPatient == null)
+        {
+            Debug.LogError("currentPatient is NULL!");
+            admitButton.interactable = false;
+            denyButton.interactable = false;
+            return;
+        }
+
+        if (HospitalManager.Instance == null)
+        {
+            Debug.LogError("HospitalManager Instance is NULL!");
+            admitButton.interactable = false;
+            denyButton.interactable = false;
+            return;
+        }
+
+        admitButton.interactable = HospitalManager.Instance.CanAfford(currentPatient.resourceCost);
         denyButton.interactable = true;
-        //cancelButton.interactable = true;
     }
 
     public void HideInterface()

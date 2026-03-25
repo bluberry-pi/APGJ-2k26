@@ -28,6 +28,7 @@ public class DayManager : MonoBehaviour
 
     [Header("Flavour UI")]
     public TextMeshProUGUI dayFlavourText;
+    public GameObject flavourNextButton;
 
     [Header("Typewriter Settings")]
     public float typewriterSpeed = 0.03f;
@@ -43,17 +44,11 @@ public class DayManager : MonoBehaviour
     public List<GameObject> activePatients = new List<GameObject>();
     private int patientsAdmittedToday = 0;
 
-    [Header("Purge Day Settings")]
-    [Tooltip("Day NUMBER (1-based) on which all patients except 'Dad&Daughter' are destroyed. Set to 0 to disable.")]
-    public int purgeDayNumber = 5;
-
     [Header("Debug")]
     public bool skipDayCanvas = false;
 
-    // True while the purge day end is being processed.
-    // PatientHealth.Die() checks this to suppress game-over for patients
-    // that are about to be force-destroyed anyway.
-    [HideInInspector] public bool isPurgeDay = false;
+    // ✅ NEW FLAG
+    private bool flavourNextPressed = false;
 
     void Awake() => Instance = this;
 
@@ -68,8 +63,10 @@ public class DayManager : MonoBehaviour
 
     public DayData CurrentDay => allDays[currentDayIndex];
 
-    // currentDayIndex is 0-based; purgeDayNumber is 1-based (matches "Day 5" in the Inspector).
-    bool IsCurrentDayPurgeDay => purgeDayNumber > 0 && (currentDayIndex + 1) == purgeDayNumber;
+    public void OnFlavourNextPressed()
+    {
+        flavourNextPressed = true;
+    }
 
     public bool CanAdmitMore()
     {
@@ -97,45 +94,16 @@ public class DayManager : MonoBehaviour
 
     public void EndDay()
     {
-        if (IsCurrentDayPurgeDay)
+        List<GameObject> patientsCopy = new List<GameObject>(activePatients);
+        foreach (GameObject p in patientsCopy)
         {
-            // ── PURGE DAY ──────────────────────────────────────────────────────
-            // Raise the flag so PatientHealth.Die() knows not to trigger game-over
-            // for patients that are being silently wiped this day.
-            isPurgeDay = true;
-
-            List<GameObject> patientsCopy = new List<GameObject>(activePatients);
-            foreach (GameObject p in patientsCopy)
-            {
-                if (p == null) continue;
-
-                // Spare any patient tagged "Dad&Daughter" — they continue to next day.
-                if (p.CompareTag("Dad&Daughter")) continue;
-
-                // Remove from the tracking list first so no stale references remain.
-                activePatients.Remove(p);
-                Destroy(p);
-            }
-
-            // Clean up any remaining nulls (e.g. Dad&Daughter if they somehow died).
-            activePatients.RemoveAll(p => p == null);
-
-            isPurgeDay = false;
-            // ──────────────────────────────────────────────────────────────────
-        }
-        else
-        {
-            // Normal day-end: apply deterioration to every remaining patient.
-            List<GameObject> patientsCopy = new List<GameObject>(activePatients);
-            foreach (GameObject p in patientsCopy)
-            {
-                if (p != null)
-                    p.GetComponent<PatientHealth>()?.Deteriorate();
-            }
-
-            activePatients.RemoveAll(p => p == null);
+            if (p != null)
+                p.GetComponent<PatientHealth>()?.Deteriorate();
         }
 
+        activePatients.RemoveAll(p => p == null);
+
+        PatientTracker.Instance.CheckAndFlagClear();
         FamilyManager.Instance.EndOfDayUpdate();
 
         patientsAdmittedToday = 0;
@@ -177,21 +145,18 @@ public class DayManager : MonoBehaviour
                 dayFlavourText.text = "";
             }
 
-            // Apply economy for this day
             HospitalManager.Instance.ApplyDayEconomy(CurrentDay.economy);
 
             int currentRes = HospitalManager.Instance.currentResources;
             int currentMoney = HospitalManager.Instance.currentMoney;
             DayEconomy economy = CurrentDay.economy;
 
-            // Clear all texts
             dayTitleText.text = "";
             ResText.text = "";
             resDeltaText.text = "";
             moneyText.text = "";
             moneyDeltaText.text = "";
 
-            // Make deltas invisible and hide on day 1
             resDeltaText.gameObject.SetActive(currentDayIndex > 0);
             moneyDeltaText.gameObject.SetActive(currentDayIndex > 0);
 
@@ -203,11 +168,9 @@ public class DayManager : MonoBehaviour
                 moneyDeltaText.color = invisible;
             }
 
-            // Type day title
             yield return StartCoroutine(TypeText(dayTitleText, "Day " + (currentDayIndex + 1)));
             yield return new WaitForSeconds(0.3f);
 
-            // Type resources then fade in delta
             yield return StartCoroutine(TypeText(ResText, "Res: " + currentRes));
             if (currentDayIndex > 0)
             {
@@ -216,7 +179,6 @@ public class DayManager : MonoBehaviour
             }
             yield return new WaitForSeconds(0.2f);
 
-            // Type money then fade in delta
             yield return StartCoroutine(TypeText(moneyText, "$ " + currentMoney));
             if (currentDayIndex > 0)
             {
@@ -225,27 +187,49 @@ public class DayManager : MonoBehaviour
             }
             yield return new WaitForSeconds(0.2f);
 
-            // Pause so player can read
             yield return new WaitForSeconds(statsPauseDuration);
 
-            // Fade stats out
             yield return StartCoroutine(FadeCanvasGroup(statsGroup, 1f, 0f, statsFadeDuration));
             statsGroup.SetActive(false);
+
             CanvasGroup statsCG = statsGroup.GetComponent<CanvasGroup>();
             if (statsCG != null) statsCG.alpha = 1f;
 
-            // Flavour text
+            // ✅ NEW FLAVOUR SYSTEM
             dayFlavourText.text = "";
+            flavourNextButton.SetActive(true);
+
             foreach (DayFlavourLine flavour in CurrentDay.flavourLines)
             {
+                flavourNextPressed = false;
                 dayFlavourText.text = "";
-                yield return StartCoroutine(TypeText(dayFlavourText, flavour.line));
-                yield return new WaitForSeconds(flavour.pauseAfter);
+
+                foreach (char c in flavour.line)
+                {
+                    if (flavourNextPressed) break;
+
+                    dayFlavourText.text += c;
+                    yield return new WaitForSeconds(typewriterSpeed);
+                }
+
+                if (flavourNextPressed)
+                {
+                    dayFlavourText.text = flavour.line;
+                    flavourNextPressed = false;
+
+                    yield return new WaitUntil(() => flavourNextPressed);
+                }
+                else
+                {
+                    yield return new WaitUntil(() => flavourNextPressed);
+                }
             }
 
-            // Fade flavour out
+            flavourNextButton.SetActive(false);
+
             yield return StartCoroutine(FadeCanvasGroup(dayFlavourText.gameObject, 1f, 0f, statsFadeDuration));
             dayFlavourText.text = "";
+
             CanvasGroup flavourCG = dayFlavourText.gameObject.GetComponent<CanvasGroup>();
             if (flavourCG != null) flavourCG.alpha = 1f;
 
@@ -255,11 +239,12 @@ public class DayManager : MonoBehaviour
         }
         else
         {
-            // Skip canvas but still apply economy
             HospitalManager.Instance.ApplyDayEconomy(CurrentDay.economy);
         }
 
-        // Always runs
+        if (PatientTracker.Instance.shouldClearNextDay)
+            PatientTracker.Instance.ClearNonTaggedPatients();
+
         if (currentDayIndex < dayPatientGroups.Length)
         {
             GameObject group = dayPatientGroups[currentDayIndex];
@@ -304,7 +289,7 @@ public class DayManager : MonoBehaviour
     string BuildDelta(int added, int deducted, string label)
     {
         string result = "";
-        if (added > 0)    result += "+" + added + " ";
+        if (added > 0) result += "+" + added + " ";
         if (deducted > 0) result += "-" + deducted + " " + label;
         return result.Trim();
     }
@@ -354,6 +339,7 @@ public class DayManager : MonoBehaviour
     }
 
     public void DebugSkipDay() => EndDay();
+
     public void DebugForceAllDeteriorate()
     {
         foreach (GameObject p in activePatients)

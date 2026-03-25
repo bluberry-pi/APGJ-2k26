@@ -15,13 +15,16 @@ MonoBehaviour:
   dayNumber: 1
   maxPatientsToAdmit: 3
   flavourLines:
-  - line: Day 1 and the doc's already acting like a b*tch
+  - line: The head doctor is a half-witted nincompoop
     pauseAfter: 2
-  - line: He says no more than 3 patients today
+  - line: He says no more than 3 patients today.
     pauseAfter: 2
-  - line: They haven't even given me proper prevention kit
+  - line: "I haven\u2019t been given any liberty or proper prevention kits to deal
+      with my patients"
     pauseAfter: 2
-  - line: Just cuz i was "tier2"
+  - line: "because of my \u2018tier-2 ranking\u2019"
+    pauseAfter: 2
+  - line: "Limiting care in times like these\u2026.how inhumane."
     pauseAfter: 2.5
   economy:
     resourcesAdded: 10
