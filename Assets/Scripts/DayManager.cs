@@ -134,6 +134,7 @@ public class DayManager : MonoBehaviour
 
     IEnumerator StartDay()
     {
+        MusicManager.Instance.PlayDayAmbient(currentDayIndex);
         if (!skipDayCanvas)
         {
             if (currentDayIndex == 0)
