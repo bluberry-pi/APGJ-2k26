@@ -6,7 +6,7 @@ public class PatientHealth : MonoBehaviour
     public int currentHealth;
     private PatientData data;
     private SpriteRenderer spriteRenderer;
-    private bool isDead = false;
+    public bool isDead = false; // changed to public so TopDownNPC can check it
 
     public void Init(PatientData patientData)
     {
@@ -33,6 +33,8 @@ public class PatientHealth : MonoBehaviour
         if (spriteRenderer != null && data.deadSprite != null)
             spriteRenderer.sprite = data.deadSprite;
 
+        // Set state to Waiting so they stop moving
+        // but also flag as dead so clicks are blocked
         TopDownNPC npc = GetComponent<TopDownNPC>();
         if (npc != null)
             npc.currentState = TopDownNPC.State.Waiting;

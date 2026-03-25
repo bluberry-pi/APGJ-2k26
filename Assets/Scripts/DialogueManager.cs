@@ -32,8 +32,23 @@ public class DialogueManager : MonoBehaviour
 
     public void PlaySequence(DialogueData data, string sequenceID, System.Action onComplete = null)
     {
+        StopAllCoroutines();
+        dialogueBox.SetActive(false);
+        nextArrow.SetActive(false);
+        isTyping = false;
+        dialogueActive = false;
+
+        Debug.Log($"[DIALOGUE] PlaySequence called. Data: {(data != null ? data.name : "NULL")} | SequenceID: {sequenceID}");
+
+        if (portraitImage != null)
+        {
+            portraitImage.sprite = null;
+            portraitImage.gameObject.SetActive(false);
+        }
+
         if (data == null)
         {
+            Debug.Log("[DIALOGUE] Data is NULL — firing callback immediately.");
             onComplete?.Invoke();
             return;
         }
@@ -42,9 +57,12 @@ public class DialogueManager : MonoBehaviour
 
         if (seq == null || seq.lines.Length == 0)
         {
+            Debug.Log($"[DIALOGUE] Sequence '{sequenceID}' not found or empty — firing callback immediately.");
             onComplete?.Invoke();
             return;
         }
+
+        Debug.Log($"[DIALOGUE] Found sequence '{sequenceID}' with {seq.lines.Length} lines.");
 
         currentLines = seq.lines;
         currentLineIndex = 0;
@@ -59,10 +77,24 @@ public class DialogueManager : MonoBehaviour
 
     void ShowLine(int index)
     {
-        // Change portrait first, then type the line
-        if (portraitImage != null && currentLines[index].portrait != null)
-            portraitImage.sprite = currentLines[index].portrait;
+        Debug.Log($"[DIALOGUE] Showing line {index}: \"{currentLines[index].line}\"");
 
+        if (portraitImage != null)
+        {
+            if (currentLines[index].portrait != null)
+            {
+                portraitImage.sprite = currentLines[index].portrait;
+                portraitImage.gameObject.SetActive(true);
+                Debug.Log($"[PORTRAIT] Showing portrait: {currentLines[index].portrait.name}");
+            }
+            else
+            {
+                portraitImage.gameObject.SetActive(false);
+                Debug.Log($"[PORTRAIT] No portrait assigned for line {index} — hiding image.");
+            }
+        }
+
+        nextArrow.SetActive(true);
         StartCoroutine(TypeLine(currentLines[index].line));
     }
 

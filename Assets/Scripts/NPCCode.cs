@@ -231,16 +231,37 @@ public class TopDownNPC : MonoBehaviour
     }
     void OnMouseDown()
     {
-        if (currentState == State.Waiting) return;
-        if (PatientUIManager.Instance != null && PatientUIManager.Instance.yourInterface.activeSelf) return;
+        Debug.Log($"[CLICK] {gameObject.name} clicked. State: {currentState}");
+
+        if (currentState == State.Waiting)
+        {
+            Debug.Log($"[BLOCKED] {gameObject.name} is Waiting — click ignored.");
+            return;
+        }
+
+        // Block clicks on dead patients
+        PatientHealth health = GetComponent<PatientHealth>();
+        if (health != null && health.isDead)
+        {
+            Debug.Log($"[BLOCKED] {gameObject.name} is dead — click ignored.");
+            return;
+        }
+
+        if (PatientUIManager.Instance != null && PatientUIManager.Instance.yourInterface.activeSelf)
+        {
+            Debug.Log($"[BLOCKED] Interface is open — click ignored.");
+            return;
+        }
 
         if (CounterPosition.Instance != null)
             clickMoveTarget = CounterPosition.Instance.transform.position;
+        else
+            Debug.LogWarning("[WARNING] CounterPosition.Instance is null!");
 
+        Debug.Log($"[MOVING] {gameObject.name} moving to counter at {clickMoveTarget}");
         movingToTarget = true;
         isClickMoving = true;
     }
-
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Obstacle"))

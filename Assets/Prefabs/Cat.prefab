@@ -274,7 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b10176e9e516f4409d7dce40de7bde6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: badba2c7133cb8046b46df0a4cc008a5, type: 2}
 --- !u!114 &7591659657515530888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,3 +288,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
+  isDead: 0

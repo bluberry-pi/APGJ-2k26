@@ -7,12 +7,19 @@ public class PatientController : MonoBehaviour
     void Start()
     {
         GetComponent<PatientHealth>()?.Init(data);
-        // No self registration needed, DayManager handles it
     }
 
     public void OnReachedCounter()
     {
-        PatientUIManager.Instance.ShowPatient(data);
+        Debug.Log($"[COUNTER] {gameObject.name} reached counter. Data: {(data != null ? data.patientName : "NULL")}");
+
+        if (data == null)
+        {
+            Debug.LogError($"[ERROR] {gameObject.name} has no PatientData assigned!");
+            return;
+        }
+
+        PatientUIManager.Instance.ShowPatient(data, this); // pass self directly
     }
 
     public void ResumeWalking()
@@ -20,5 +27,6 @@ public class PatientController : MonoBehaviour
         TopDownNPC npc = GetComponent<TopDownNPC>();
         npc.currentState = TopDownNPC.State.Walking;
         npc.ForcePickNewDirection();
+        Debug.Log($"[WALK] {gameObject.name} resumed walking.");
     }
 }

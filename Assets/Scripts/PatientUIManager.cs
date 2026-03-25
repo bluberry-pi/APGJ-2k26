@@ -33,8 +33,9 @@ public class PatientUIManager : MonoBehaviour
         Debug.Log("PatientUIManager instance on: " + gameObject.name);
     }
 
-    public void ShowPatient(PatientData data)
+    public void ShowPatient(PatientData data, PatientController controller)
     {
+        Debug.Log($"[UI] ShowPatient called. Patient: {data.patientName} | Dialogue asset: {(data.dialogue != null ? data.dialogue.name : "NULL")}");
         if (data == null)
         {
             Debug.LogError("ShowPatient called with NULL data!");
@@ -42,7 +43,9 @@ public class PatientUIManager : MonoBehaviour
         }
 
         currentPatient = data;
-        currentPatientController = FindCurrentPatientController();
+        currentPatientController = controller; // set directly, no searching
+
+        Debug.Log($"[UI] Showing patient: {data.patientName}");
 
         nameText.text = "Name: " + data.patientName;
         ageText.text = "Age: " + data.age;
@@ -55,7 +58,13 @@ public class PatientUIManager : MonoBehaviour
 
         string daySequenceID = "onOpen_Day" + (DayManager.Instance.currentDayIndex + 1);
         DialogueSequence seq = data.dialogue?.GetSequence(daySequenceID);
-        string sequenceToPlay = seq != null ? daySequenceID : "onOpen";
+
+        if (seq == null)
+            seq = data.dialogue?.GetSequence("onOpen_Day1");
+
+        string sequenceToPlay = seq != null ? seq.sequenceID : "onOpen";
+
+        Debug.Log($"[DIALOGUE] Playing sequence: {sequenceToPlay}");
 
         DialogueManager.Instance.PlaySequence(
             data.dialogue,
@@ -106,16 +115,5 @@ public class PatientUIManager : MonoBehaviour
         yourInterface.SetActive(false);
         currentPatient = null;
         currentPatientController = null;
-    }
-
-    PatientController FindCurrentPatientController()
-    {
-        foreach (PatientController pc in Object.FindObjectsByType<PatientController>(FindObjectsSortMode.None))
-        {
-            TopDownNPC npc = pc.GetComponent<TopDownNPC>();
-            if (npc != null && npc.currentState == TopDownNPC.State.Waiting)
-                return pc;
-        }
-        return null;
     }
 }
