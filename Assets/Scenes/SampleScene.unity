@@ -5019,8 +5019,10 @@ MonoBehaviour:
   allDays:
   - {fileID: 11400000, guid: d442c7b120c1b164e9bdb3447487c7c0, type: 2}
   - {fileID: 11400000, guid: a6f1e58e7d0260d419e0bcc37a054120, type: 2}
-  - {fileID: 11400000, guid: a6f1e58e7d0260d419e0bcc37a054120, type: 2}
-  - {fileID: 11400000, guid: a6f1e58e7d0260d419e0bcc37a054120, type: 2}
+  - {fileID: 11400000, guid: 869f1bd6be6c8b043b9f186cab690299, type: 2}
+  - {fileID: 11400000, guid: 31aa7c14683375e4c9e4a971de075be7, type: 2}
+  - {fileID: 11400000, guid: d9245c115b5b66340b1324b418a87edd, type: 2}
+  - {fileID: 11400000, guid: 0d22db96f5231a0488561613b202dea2, type: 2}
   currentDayIndex: 0
   fadeOverlay: {fileID: 320982316}
   dayStartCanvas: {fileID: 254272413}

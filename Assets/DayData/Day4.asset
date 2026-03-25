@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76161f442c78f3e42868c77a350ab73d, type: 3}
-  m_Name: Day2
+  m_Name: Day4
   m_EditorClassIdentifier: 
-  dayNumber: 2
+  dayNumber: 4
   maxPatientsToAdmit: 4
   flavourLines:
-  - line: Yesterday could have been miles better
-    pauseAfter: 1.5
-  - line: " but I\u2019ve got no choice but to work with what I\u2019ve been given"
-    pauseAfter: 1.5
-  - line: " Today\u2019s limit is 4 patients."
-    pauseAfter: 1.5
-  - line: This is getting troublesome,
+  - line: 'The hospital was quieter today. '
     pauseAfter: 2
-  - line: "how can I decide who gets treatment and who doesn\u2019t?"
+  - line: ' Someone will have to come wheel the bodies to the morgue and call the
+      families.'
+    pauseAfter: 2
+  - line: "The resource truck just dropped off new shipment so that\u2019s some good
+      news. "
+    pauseAfter: 2
+  - line: " I\u2019ve been told to admit 2 patients at most."
     pauseAfter: 2
   economy:
-    resourcesAdded: 30
+    resourcesAdded: 20
     resourcesDeducted: 0
     moneyAdded: 0
-    moneyDeducted: 15
+    moneyDeducted: 14
