@@ -133,32 +133,33 @@ public class HospitalManager : MonoBehaviour
     // =============================================
     // DENY BUTTON
     // =============================================
-    private int denyPressCount = 0;
 
     public void OnDenyPressed()
     {
         PatientData p = PatientUIManager.Instance.currentPatient;
-        if (p == null) return;
+        PatientController controller = PatientUIManager.Instance.currentPatientController;
+
+        if (p == null || controller == null) return;
 
         PatientUIManager.Instance.SetButtonsInteractable(false);
+        string denyID = "onDeny_Day" + (controller.denyCount + 1);
+        DialogueSequence seq = p.dialogue?.GetSequence(denyID);
 
-        string day = (DayManager.Instance.currentDayIndex + 1).ToString();
-        string denyID = denyPressCount == 0 ? "onDeny" : "onDenyFinal";
-        string dayDenyID = denyPressCount == 0 ? "onDeny_Day" + day : "onDenyFinal_Day" + day;
+        if (seq == null)
+            seq = p.dialogue?.GetSequence("onDeny_Day1");
 
-        DialogueSequence seq = p.dialogue?.GetSequence(dayDenyID);
-        string sequenceToPlay = seq != null ? dayDenyID : denyID;
+        string sequenceToPlay = seq != null ? seq.sequenceID : "onDeny";
 
-        denyPressCount++;
-
+        controller.denyCount++;
         DialogueManager.Instance.PlaySequence(
             p.dialogue,
             sequenceToPlay,
             onComplete: () =>
             {
-                if (denyID == "onDenyFinal")
+                // If you reach a "final" deny (optional)
+                if (sequenceToPlay == "onDenyFinal")
                 {
-                    denyPressCount = 0;
+                    controller.denyCount = 0;
                     PatientUIManager.Instance.currentPatientController?.ResumeWalking();
                     PatientUIManager.Instance.HideInterface();
                 }
@@ -168,16 +169,5 @@ public class HospitalManager : MonoBehaviour
                 }
             }
         );
-    }
-
-    // =============================================
-    // CANCEL BUTTON
-    // =============================================
-    public void OnCancelPressed()
-    {
-        denyPressCount = 0;
-        PatientUIManager.Instance.currentPatientController?.ResumeWalking();
-        PatientUIManager.Instance.HideInterface();
-        Debug.Log("Cancelled.");
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class PatientController : MonoBehaviour
 {
     public PatientData data;
-
+    [HideInInspector] public int denyCount = 0;
     void Start()
     {
         GetComponent<PatientHealth>()?.Init(data);
