@@ -233,6 +233,10 @@ public class TopDownNPC : MonoBehaviour
     {
         if (currentState == State.Waiting) return;
         if (PatientUIManager.Instance != null && PatientUIManager.Instance.yourInterface.activeSelf) return;
+
+        if (CounterPosition.Instance != null)
+            clickMoveTarget = CounterPosition.Instance.transform.position;
+
         movingToTarget = true;
         isClickMoving = true;
     }

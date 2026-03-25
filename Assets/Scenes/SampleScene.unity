@@ -4281,7 +4281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7484990985073359376, guid: 60ce3ecc9e8d90f44a991eb7315231b4, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5650,6 +5650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ad15a61d8353a4a8d7de044ff70367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skipAllCutscenes: 1
   videoPlayer: {fileID: 364089124}
   videoPanel: {fileID: 364089120}
   nextButton: {fileID: 1542590585}
@@ -7445,8 +7446,8 @@ PolygonCollider2D:
       - {x: -7.8471527, y: 0.38330203}
       - {x: -8.085237, y: 0.80138135}
       - {x: -8.783237, y: 0.52356017}
-      - {x: -8.928531, y: -4.210423}
-      - {x: 8.891856, y: -4.263954}
+      - {x: -8.824307, y: -3.5503407}
+      - {x: 8.874485, y: -3.760209}
       - {x: 8.820686, y: -0.9514455}
       - {x: 7.0863357, y: -1.2366569}
   m_UseDelaunayMesh: 0
@@ -8110,6 +8111,7 @@ GameObject:
   - component: {fileID: 1353943000}
   - component: {fileID: 1353942999}
   - component: {fileID: 1353942998}
+  - component: {fileID: 1353943001}
   m_Layer: 0
   m_Name: Counter
   m_TagString: Counter
@@ -8233,6 +8235,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1353943001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353942997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ec8f6cb2acd0045a9aab9bd35db85e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1363300065
 GameObject:
   m_ObjectHideFlags: 0
@@ -8935,7 +8949,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1534795543
 Transform:
   m_ObjectHideFlags: 0
@@ -11377,7 +11391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2041249901
 Transform:
   m_ObjectHideFlags: 0
@@ -11969,6 +11983,10 @@ PrefabInstance:
       propertyPath: yourInterface
       value: 
       objectReference: {fileID: 2044431904}
+    - target: {fileID: 2072052766625547882, guid: 8ff0524d60ed7ae4f864822c2f91fda9, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4629871255284458306, guid: 8ff0524d60ed7ae4f864822c2f91fda9, type: 3}
       propertyPath: m_Name
       value: Dog
@@ -12258,7 +12276,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3579700389933592820, guid: 1f36f6e71d6d47e4d8c3218e733b4ad2, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5389868192766352900, guid: 1f36f6e71d6d47e4d8c3218e733b4ad2, type: 3}
       propertyPath: mainCamera
@@ -12510,6 +12528,10 @@ PrefabInstance:
     - target: {fileID: 6022538953379976075, guid: 092921395bfb2724495bfeb323d45551, type: 3}
       propertyPath: m_Name
       value: Clerk
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878575461213891441, guid: 092921395bfb2724495bfeb323d45551, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
