@@ -239,11 +239,23 @@ public class TopDownNPC : MonoBehaviour
             return;
         }
 
-        // Block clicks on dead patients
+        if (currentState == State.Talking)
+        {
+            Debug.Log($"[BLOCKED] {gameObject.name} is Talking — click ignored.");
+            return;
+        }
+
         PatientHealth health = GetComponent<PatientHealth>();
         if (health != null && health.isDead)
         {
             Debug.Log($"[BLOCKED] {gameObject.name} is dead — click ignored.");
+            return;
+        }
+
+        // Block during day transition
+        if (DayManager.Instance != null && DayManager.Instance.isDayTransitioning)
+        {
+            Debug.Log($"[BLOCKED] Day is transitioning — click ignored.");
             return;
         }
 
@@ -296,10 +308,23 @@ public class TopDownNPC : MonoBehaviour
                 rb.linearVelocity = Vector2.zero;
                 currentState = State.Waiting;
 
-                if (yourInterface != null)
-                    yourInterface.SetActive(true);
+                Debug.Log($"[COUNTER HIT] {gameObject.name} reached counter.");
+                Debug.Log($"[INTERFACE CHECK] yourInterface is: {(yourInterface != null ? yourInterface.name : "NULL")}");
 
-                GetComponent<PatientController>()?.OnReachedCounter();
+                if (yourInterface != null)
+                {
+                    yourInterface.SetActive(true);
+                    Debug.Log($"[INTERFACE] Turned on: {yourInterface.name}");
+                }
+                else
+                {
+                    Debug.LogError($"[ERROR] yourInterface is NULL on {gameObject.name} — drag YourInterface into the TopDownNPC component!");
+                }
+
+                PatientController pc = GetComponent<PatientController>();
+                Debug.Log($"[PATIENT CONTROLLER] {(pc != null ? "Found" : "NULL — missing PatientController on " + gameObject.name)}");
+
+                pc?.OnReachedCounter();
             }
             return;
         }

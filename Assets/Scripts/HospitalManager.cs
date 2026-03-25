@@ -32,7 +32,21 @@ public class HospitalManager : MonoBehaviour
     }
 
     void Start() => UpdateDisplay();
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            AddDebugResources(10);
+        }
+    }
+    void AddDebugResources(int amount)
+    {
+        currentResources += amount;
 
+        Debug.Log($"[DEBUG] Added {amount} resources. Total: {currentResources}");
+
+        UpdateDisplay();
+    }
     public bool CanAfford(int cost) => currentResources >= cost;
 
     public void AddMoney(int amount)

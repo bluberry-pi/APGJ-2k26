@@ -196,7 +196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b10176e9e516f4409d7dce40de7bde6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 82888e55493c62f46930622a4c8cda7f, type: 2}
+  denyCountThisVisit: 0
+  totalDenies: 0
+  lastDeniedDay: -1
 --- !u!114 &8405586449534216968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,6 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
+  isDead: 0
 --- !u!1 &7905132795016400465
 GameObject:
   m_ObjectHideFlags: 0

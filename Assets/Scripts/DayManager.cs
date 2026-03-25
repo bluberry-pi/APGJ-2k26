@@ -6,6 +6,7 @@ using TMPro;
 
 public class DayManager : MonoBehaviour
 {
+    [HideInInspector] public bool isDayTransitioning = false;
     public static DayManager Instance;
     [Header("Intro UI")]
     public GameObject introUIToDestroy;
@@ -95,6 +96,7 @@ public class DayManager : MonoBehaviour
 
     public void EndDay()
     {
+        isDayTransitioning = true;
         List<GameObject> patientsCopy = new List<GameObject>(activePatients);
         foreach (GameObject p in patientsCopy)
         {
@@ -266,7 +268,7 @@ public class DayManager : MonoBehaviour
                     activePatients.Add(child.gameObject);
             }
         }
-
+        isDayTransitioning = false;
         StartCoroutine(ResumeHealthDrain());
     }
 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Day4
   m_EditorClassIdentifier: 
   dayNumber: 4
-  maxPatientsToAdmit: 4
+  maxPatientsToAdmit: 3
   flavourLines:
   - line: 'The hospital was quieter today. '
     pauseAfter: 2
@@ -26,7 +26,7 @@ MonoBehaviour:
   - line: " I\u2019ve been told to admit 2 patients at most."
     pauseAfter: 2
   economy:
-    resourcesAdded: 20
+    resourcesAdded: 40
     resourcesDeducted: 0
     moneyAdded: 0
     moneyDeducted: 14
