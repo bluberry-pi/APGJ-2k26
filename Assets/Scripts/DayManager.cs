@@ -60,7 +60,6 @@ public class DayManager : MonoBehaviour
         fadeOverlay.color = new Color(0, 0, 0, 0);
         StartCoroutine(StartDay());
     }
-
     public DayData CurrentDay => allDays[currentDayIndex];
 
     public void OnFlavourNextPressed()

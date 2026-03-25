@@ -7,6 +7,8 @@ using System.IO;
 
 public class CutsceneManager : MonoBehaviour
 {
+    [Header("Debug")]
+    public bool skipAllCutscenes = false;
     private bool isTyping = false;
     private bool skipRequested = false;
     private int currentLineIndex = 0;
@@ -55,11 +57,17 @@ public class CutsceneManager : MonoBehaviour
         Time.timeScale = 0f;
 
         textCutscenePanel.SetActive(false);
-
         nextButton.gameObject.SetActive(true);
         skipButton.gameObject.SetActive(false);
 
-        fadeOverlay.color = new Color(0, 0, 0, 0); // start transparent
+        fadeOverlay.color = new Color(0, 0, 0, 0);
+
+        // DEBUG — skip everything and start game immediately
+        if (skipAllCutscenes)
+        {
+            StartGame();
+            return;
+        }
 
         PlayVideo();
     }
