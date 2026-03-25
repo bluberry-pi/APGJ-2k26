@@ -16,21 +16,17 @@ MonoBehaviour:
   sequences:
   - sequenceID: onOpen_Day1
     lines:
-    - line: "Breathing\u2019s worse"
+    - line: It's getting harder to breathe.
       portrait: {fileID: 8984056015003274920, guid: 2aabc36d853c8b3418666bce99ce4441, type: 3}
-    - line: "I thought it was nothing. It wasn\u2019t"
+    - line: I thought it was just my allergies but I'm sure it isn't.
       portrait: {fileID: -1178209908186862254, guid: 104f8087d097f4047a0e68d130efa56f, type: 3}
-    - line: "These things don\u2019t stay small, do they?"
+    - line: These things only escalate, right?
       portrait: {fileID: 8984056015003274920, guid: 2aabc36d853c8b3418666bce99ce4441, type: 3}
   - sequenceID: onAdmit
     lines:
-    - line: "\u2026thank you"
-      portrait: {fileID: 8984056015003274920, guid: 2aabc36d853c8b3418666bce99ce4441, type: 3}
-    - line: "Cuz, i\u2019ve had mine"
+    - line: Thank You, child.
       portrait: {fileID: -3226163663251382699, guid: 9d041bf973a32e74aaefd2bd7c0ae95f, type: 3}
   - sequenceID: onDeny_Day1
     lines:
-    - line: Take your time
-      portrait: {fileID: -3226163663251382699, guid: 9d041bf973a32e74aaefd2bd7c0ae95f, type: 3}
-    - line: "Cuz, i\u2019ve had min\r\n"
+    - line: Take your time, I have nothing but that.
       portrait: {fileID: -3226163663251382699, guid: 9d041bf973a32e74aaefd2bd7c0ae95f, type: 3}

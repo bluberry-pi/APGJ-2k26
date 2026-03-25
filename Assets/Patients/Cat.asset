@@ -22,4 +22,5 @@ MonoBehaviour:
   deteriorationPerDay: 20
   deadSprite: {fileID: 21300000, guid: 31f3377dca7370e4f92de84a7365c05a, type: 3}
   resourceCost: 0
+  deathValue: 20
   dialogue: {fileID: 11400000, guid: 99b2bbe334dad834f8810cfb7d1edcc0, type: 2}

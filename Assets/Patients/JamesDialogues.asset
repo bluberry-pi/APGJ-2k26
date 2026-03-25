@@ -16,25 +16,22 @@ MonoBehaviour:
   sequences:
   - sequenceID: onOpen_Day1
     lines:
-    - line: ...
+    - line: Excuse me, mister?
       portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
-    - line: excuse me mister
+    - line: 'Are mommy and daddy here? '
       portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
-    - line: mommy and daddy havent returned home for past 3 days
+    - line: They haven't been home in 3 days.
       portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
-    - line: my stomach has been hurting very much lately
+    - line: My tummy hurts a lot and I need mommy right now.
       portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
-    - line: mrs madison told me to come here
+    - line: Mrs Madison told me to come here.
       portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
   - sequenceID: onAdmit
     lines:
-    - line: thank you kind sir
+    - line: Thank you, mister.
       portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
   - sequenceID: onDeny_Day1
     lines:
-    - line: please sir, i cant bear the pain
-      portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
-  - sequenceID: onDeny_Day1
-    lines:
-    - line: please sir, i cant bear the pain
+    - line: But it hurts and mommy always takes me here to make it stop. I miss my
+        mommy.
       portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}

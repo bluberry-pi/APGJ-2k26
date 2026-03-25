@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: James
   m_EditorClassIdentifier: 
   patientName: James
-  age: 0
+  age: 5
   condition: Unknown
-  bio: 
+  bio: Elementary school student
   tier: 2
   rewardMoney: 0
   maxHealth: 30
   deteriorationPerDay: 20
   deadSprite: {fileID: 0}
   resourceCost: 10
+  deathValue: 10
   dialogue: {fileID: 11400000, guid: 9c92413708c3de944a0c5fbe677be553, type: 2}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OldManWilliam
   m_EditorClassIdentifier: 
   patientName: William
-  age: 0
+  age: 67
   condition: Chest pain
   bio: Retiered school principal
   tier: 2
@@ -22,4 +22,5 @@ MonoBehaviour:
   deteriorationPerDay: 22
   deadSprite: {fileID: -5199177558571983074, guid: 994e0115c0c0cba4bad7c1bfe97ec682, type: 3}
   resourceCost: 10
+  deathValue: 15
   dialogue: {fileID: 11400000, guid: 3e079f974a8c568488539ddc5d4cf8e4, type: 2}

@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e40345eded6216428dedef27879861a, type: 3}
   m_Name: Beggar
   m_EditorClassIdentifier: 
-  patientName: 
+  patientName: Trump
   age: 30
   condition: Condition Unkown
   bio: Homeless.
   tier: 2
-  rewardMoney: 50
+  rewardMoney: 30
   maxHealth: 50
   deteriorationPerDay: 30
   deadSprite: {fileID: 8876322970762344885, guid: 70b589ca9f574624898262aa2522ccbd, type: 3}
   resourceCost: 10
+  deathValue: 5
   dialogue: {fileID: 11400000, guid: fc61321dab7a2e546968ff391bd66de1, type: 2}

@@ -16,15 +16,15 @@ MonoBehaviour:
   sequences:
   - sequenceID: onOpen_Day1
     lines:
-    - line: I used to sit at a desk just like yours
+    - line: I used to sit at a desk just like yours.
       portrait: {fileID: -6082383976254816021, guid: f6b8a161b127ca546bd75801c8767152, type: 3}
-    - line: "Here let me tell you something warden\u2026"
+    - line: "Let me tell you something, warden\u2026"
       portrait: {fileID: -3388724655930522408, guid: 77d9fdebcec4c454d9c2d08207e17305, type: 3}
-    - line: Soon no one will try to even argue or question
+    - line: Soon, no one will attempt to argue or question.
       portrait: {fileID: -6303745035558499566, guid: 65d7d4fa45bef4b429f4d5413862360f, type: 3}
-    - line: "It\u2019s not respect."
+    - line: "It\u2019s not respect"
       portrait: {fileID: -3388724655930522408, guid: 77d9fdebcec4c454d9c2d08207e17305, type: 3}
-    - line: "it\u2019s just that they would run out of things to say to a wall."
+    - line: just that they would run out of things to say to a wall.
       portrait: {fileID: -6303745035558499566, guid: 65d7d4fa45bef4b429f4d5413862360f, type: 3}
-    - line: "Enjoy the chaos\u201D while it lasts"
+    - line: So enjoy the chaos while it lasts.
       portrait: {fileID: -6303745035558499566, guid: 65d7d4fa45bef4b429f4d5413862360f, type: 3}

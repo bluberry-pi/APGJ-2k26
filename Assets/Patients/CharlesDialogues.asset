@@ -16,15 +16,17 @@ MonoBehaviour:
   sequences:
   - sequenceID: onOpen_Day1
     lines:
-    - line: "Spinal injury\u2026 that\u2019s what they said."
+    - line: "It\u2019s all very odd. "
       portrait: {fileID: 2767511075820430995, guid: 4b874dd21bd79a44280dfad2a5ba738b, type: 3}
-    - line: convenient, considering I passed out.
+    - line: "I\u2019ve been told I have a spinal injury by the on-site medic"
       portrait: {fileID: 5161694994509901157, guid: c39aca68d368fd641a234595bcdc5968, type: 3}
-    - line: that factory never felt right
+    - line: "I passed out during my shift at the factory\u2026"
       portrait: {fileID: 5161694994509901157, guid: c39aca68d368fd641a234595bcdc5968, type: 3}
-    - line: They said my tier would be demoted
+    - line: 'last thing I remember was the smell of those suffocating fumes. '
       portrait: {fileID: -47796579202056098, guid: da49546b1aa4b4c4d81bd83806fd11e0, type: 3}
-    - line: As i can no longer walk...
+    - line: "I\u2019ll definitely be demoted from my tier"
+      portrait: {fileID: -47796579202056098, guid: da49546b1aa4b4c4d81bd83806fd11e0, type: 3}
+    - line: "I don\u2019t think I\u2019ll walk again.."
       portrait: {fileID: -47796579202056098, guid: da49546b1aa4b4c4d81bd83806fd11e0, type: 3}
   - sequenceID: onDeny_Day1
     lines:
@@ -37,5 +39,5 @@ MonoBehaviour:
       portrait: {fileID: -47796579202056098, guid: da49546b1aa4b4c4d81bd83806fd11e0, type: 3}
   - sequenceID: onAdmit
     lines:
-    - line: I hope i survive long enough to discover my truth
+    - line: I hope i survive long enough to uncover what happened to me.
       portrait: {fileID: 2767511075820430995, guid: 4b874dd21bd79a44280dfad2a5ba738b, type: 3}

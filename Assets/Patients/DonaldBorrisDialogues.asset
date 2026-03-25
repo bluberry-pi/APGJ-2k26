@@ -16,9 +16,21 @@ MonoBehaviour:
   sequences:
   - sequenceID: onOpen_Day1
     lines:
-    - line: Don't bother with the vitals, Warden. Just look at the tier
+    - line: Don't bother with the vitals, warden. Just look at the tier.
       portrait: {fileID: 684387272440540207, guid: 3e0ee1d06631f3c4d9133241d6841793, type: 3}
-    - line: I'm the local mayor
+    - line: I'm the local mayor;
       portrait: {fileID: 4763682119692265990, guid: 982cea4bfdd695e44834d69dc8cb5172, type: 3}
-    - line: ' the reason this building gets electricity is because of me.'
+    - line: I'm the reason your hospital still has acess to resources
+      portrait: {fileID: 4763682119692265990, guid: 982cea4bfdd695e44834d69dc8cb5172, type: 3}
+  - sequenceID: onDeny_Day1
+    lines:
+    - line: Do your eyes not work? Look at my tier.
+      portrait: {fileID: 4763682119692265990, guid: 982cea4bfdd695e44834d69dc8cb5172, type: 3}
+  - sequenceID: onDeny_Day1
+    lines:
+    - line: Are you looking for trouble?
+      portrait: {fileID: 4763682119692265990, guid: 982cea4bfdd695e44834d69dc8cb5172, type: 3}
+    - line: "I\u2019ll have you fired!"
+      portrait: {fileID: 4763682119692265990, guid: 982cea4bfdd695e44834d69dc8cb5172, type: 3}
+    - line: Good luck finding work anywhere in this city.
       portrait: {fileID: 4763682119692265990, guid: 982cea4bfdd695e44834d69dc8cb5172, type: 3}

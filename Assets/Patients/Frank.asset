@@ -15,11 +15,12 @@ MonoBehaviour:
   patientName: Frank
   age: 39
   condition: Respiratory distress
-  bio: Event photographer.
+  bio: Event photographer
   tier: 2
   rewardMoney: 5
   maxHealth: 40
   deteriorationPerDay: 20
   deadSprite: {fileID: -1830072904869363648, guid: ece282a65aea6a84eb50c94e8e986836, type: 3}
   resourceCost: 13
+  deathValue: 10
   dialogue: {fileID: 11400000, guid: d3215e39d53cfdd448724bbee2faffd1, type: 2}

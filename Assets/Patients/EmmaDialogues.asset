@@ -16,16 +16,16 @@ MonoBehaviour:
   sequences:
   - sequenceID: onOpen_Day1
     lines:
-    - line: I woke up tasting copper this morning
+    - line: I woke up tasting copper this morning.
       portrait: {fileID: 3776113320542421703, guid: 9aadb86796877344aa7342d30353beea, type: 3}
-    - line: wouldn't have come if it was just me.
+    - line: "That can\u2019t be normal, right? I hope my baby is safe."
       portrait: {fileID: 3776113320542421703, guid: 9aadb86796877344aa7342d30353beea, type: 3}
-    - line: My husband died working in sector 4
+    - line: "My husband died working in Sector-4, it\u2019s just us now."
       portrait: {fileID: 3776113320542421703, guid: 9aadb86796877344aa7342d30353beea, type: 3}
   - sequenceID: onDeny_Day1
     lines:
-    - line: i don't care atp
+    - line: This is ridiculous.
       portrait: {fileID: 3776113320542421703, guid: 9aadb86796877344aa7342d30353beea, type: 3}
-    - line: "because I refuse to let my child\u2019s first breath be the gray rot
-        coming off those refinery stacks"
+    - line: If anything happens to my baby you will be the reason for both of our
+        deaths.
       portrait: {fileID: 3776113320542421703, guid: 9aadb86796877344aa7342d30353beea, type: 3}

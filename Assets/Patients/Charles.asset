@@ -15,12 +15,12 @@ MonoBehaviour:
   patientName: Charles
   age: 26
   condition: Spinal Inflammation
-  bio: Member of the disaster response team. Worked near the epicenter during initial
-    rescue operations.
+  bio: Worked at a factory located near the pandemic's epicentre
   tier: 1
-  rewardMoney: 10
+  rewardMoney: 15
   maxHealth: 40
   deteriorationPerDay: 20
   deadSprite: {fileID: 21300000, guid: 15c5b1980e5856d44ad44c474a0b768d, type: 3}
-  resourceCost: 0
+  resourceCost: 15
+  deathValue: 5
   dialogue: {fileID: 11400000, guid: a67a3ed31b1f49b4cabeef2fda67a63b, type: 2}
