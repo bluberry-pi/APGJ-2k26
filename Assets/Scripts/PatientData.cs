@@ -26,6 +26,9 @@ public class PatientData : ScriptableObject
     [Header("Resources")]
     public int resourceCost;
 
+    [Header("Death Value")]
+    public int deathValue = 10; // added to total when this patient dies
+
     [Header("Dialogue")]
     public DialogueData dialogue;
 }

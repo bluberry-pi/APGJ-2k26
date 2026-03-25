@@ -100,9 +100,12 @@ public class FamilyManager : MonoBehaviour
         if (member.currentHealth <= 0)
         {
             member.isDead = true;
-            Debug.Log($"{member.memberName} has died. GAME OVER.");
+            Debug.Log($"{member.memberName} has died.");
             gameOver = true;
-            // TODO: trigger game over screen here
+
+            // Trigger family death game over
+            if (GameOverScreen.Instance != null)
+                GameOverScreen.Instance.TriggerFamilyDeath();
         }
     }
 

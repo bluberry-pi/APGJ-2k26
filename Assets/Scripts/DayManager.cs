@@ -7,6 +7,8 @@ using TMPro;
 public class DayManager : MonoBehaviour
 {
     public static DayManager Instance;
+    [Header("Intro UI")]
+    public GameObject introUIToDestroy;
 
     [Header("Day Setup")]
     public DayData[] allDays;
@@ -236,6 +238,13 @@ public class DayManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(Fade(1f, 0f));
             dayStartCanvas.SetActive(false);
+            yield return StartCoroutine(Fade(1f, 0f));
+            dayStartCanvas.SetActive(false);
+            if (introUIToDestroy != null)
+            {
+                Destroy(introUIToDestroy);
+                introUIToDestroy = null;
+            }
         }
         else
         {
