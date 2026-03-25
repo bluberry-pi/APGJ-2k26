@@ -39,11 +39,14 @@ public class PatientHealth : MonoBehaviour
 
         Debug.Log($"{data.patientName} has died. Death value: {data.deathValue}");
 
-        // Add death value to game over tracker
         if (GameOverScreen.Instance != null)
             GameOverScreen.Instance.AddDeathValue(data.deathValue);
 
         DayManager.Instance.RemovePatient(gameObject);
+        if (GameEnding.Instance != null)
+        {
+            GameEnding.Instance.CheckForEnding();
+        }
     }
 
     public void DebugForceDeteriorate() => Deteriorate();

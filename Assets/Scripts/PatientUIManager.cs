@@ -10,6 +10,7 @@ public class PatientUIManager : MonoBehaviour
     public GameObject yourInterface;
 
     [Header("Text Fields")]
+    public TextMeshProUGUI deathValueText;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI ageText;
     public TextMeshProUGUI conditionText;
@@ -53,6 +54,7 @@ public class PatientUIManager : MonoBehaviour
         bioText.text = "Bio: " + data.bio;
         resourceCostText.text = "Resources required: " + data.resourceCost;
         tierText.text = "Tier: " + ((int)data.tier + 1);
+        deathValueText.text = "Death Value: " + data.deathValue;
 
         SetButtonsInteractable(false);
 

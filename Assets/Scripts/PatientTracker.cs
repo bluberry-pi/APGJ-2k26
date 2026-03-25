@@ -21,7 +21,12 @@ public class PatientTracker : MonoBehaviour
         int count = 0;
         foreach (GameObject p in allPatients)
         {
-            if (p != null) count++;
+            if (p != null)
+            {
+                PatientHealth ph = p.GetComponent<PatientHealth>();
+                if (ph != null && !ph.isDead)
+                    count++;
+            }
         }
         return count;
     }
