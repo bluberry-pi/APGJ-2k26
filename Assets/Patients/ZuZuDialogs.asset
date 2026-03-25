@@ -22,11 +22,11 @@ MonoBehaviour:
       portrait: {fileID: 3256418576102314640, guid: 096afda84e7523449a699548b60e1c9b, type: 3}
     - line: La la la la mimimi
       portrait: {fileID: -8962363664761059841, guid: 02d24e36f9498bf4ca5592597000f66a, type: 3}
-  - sequenceID: OnAdmit
+  - sequenceID: onAdmit
     lines:
     - line: ZU! ZU! ZU!
       portrait: {fileID: 4145676393375694285, guid: ed3c424bdc3640b4bb4289e57c33a76c, type: 3}
-  - sequenceID: OnDeny_Day1
+  - sequenceID: onDeny_Day1_1
     lines:
     - line: Zitch
       portrait: {fileID: 7830008194224868219, guid: 0b92de4b5ae982d42aa24654c2a5eb2e, type: 3}

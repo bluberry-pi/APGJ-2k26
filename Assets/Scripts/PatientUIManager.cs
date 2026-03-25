@@ -36,17 +36,8 @@ public class PatientUIManager : MonoBehaviour
 
     public void ShowPatient(PatientData data, PatientController controller)
     {
-        Debug.Log($"[UI] ShowPatient called. Patient: {data.patientName} | Dialogue asset: {(data.dialogue != null ? data.dialogue.name : "NULL")}");
-        if (data == null)
-        {
-            Debug.LogError("ShowPatient called with NULL data!");
-            return;
-        }
-
         currentPatient = data;
-        currentPatientController = controller; // set directly, no searching
-
-        Debug.Log($"[UI] Showing patient: {data.patientName}");
+        currentPatientController = controller;
 
         nameText.text = "Name: " + data.patientName;
         ageText.text = "Age: " + data.age;
@@ -56,7 +47,7 @@ public class PatientUIManager : MonoBehaviour
         tierText.text = "Tier: " + ((int)data.tier + 1);
         deathValueText.text = "Death Value: " + data.deathValue;
 
-        SetButtonsInteractable(false);
+        SetButtonsInteractable(true);
 
         string daySequenceID = "onOpen_Day" + (DayManager.Instance.currentDayIndex + 1);
         DialogueSequence seq = data.dialogue?.GetSequence(daySequenceID);
@@ -66,13 +57,7 @@ public class PatientUIManager : MonoBehaviour
 
         string sequenceToPlay = seq != null ? seq.sequenceID : "onOpen";
 
-        Debug.Log($"[DIALOGUE] Playing sequence: {sequenceToPlay}");
-
-        DialogueManager.Instance.PlaySequence(
-            data.dialogue,
-            sequenceToPlay,
-            onComplete: () => SetButtonsInteractable(true)
-        );
+        DialogueManager.Instance.PlaySequence(data.dialogue, sequenceToPlay);
     }
 
     public void SetButtonsInteractable(bool state)

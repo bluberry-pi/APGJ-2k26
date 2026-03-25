@@ -24,10 +24,10 @@ MonoBehaviour:
       portrait: {fileID: 7376015192825665178, guid: 5ea7cf2900529fb499cbbb261331f7be, type: 3}
     - line: almost everyone in my campus caught it
       portrait: {fileID: 4606157284126940538, guid: b2b65ff4bc257194d8a66c57733f3905, type: 3}
-  - sequenceID: onDenyFinal_Day1
+  - sequenceID: onDeny_Day1_1
     lines:
-    - line: no rush...i understand its busy
-      portrait: {fileID: 4606157284126940538, guid: 3c261d927024d074698abaf402e4f252, type: 3}
+    - line: seriously? why...
+      portrait: {fileID: 4606157284126940538, guid: b2b65ff4bc257194d8a66c57733f3905, type: 3}
   - sequenceID: onAdmit
     lines:
     - line: Alright, thank you.

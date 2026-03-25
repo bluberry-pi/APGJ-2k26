@@ -24,7 +24,7 @@ MonoBehaviour:
       portrait: {fileID: 6085446420299918530, guid: 0a8559139ab0ebc4cb1f5ecd0e55970b, type: 3}
     - line: Now shut up and admit me
       portrait: {fileID: 2943602449079829810, guid: e2789c5646210174597666802210644c, type: 3}
-  - sequenceID: onDeny_Day1
+  - sequenceID: onDeny_Day1_1
     lines:
     - line: "I\u2019ll give you a second chance to reconsider"
       portrait: {fileID: 4878049849927775485, guid: d543a7fdc1beeed46b8a4641e72cbaec, type: 3}

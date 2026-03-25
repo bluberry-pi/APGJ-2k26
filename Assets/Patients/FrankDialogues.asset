@@ -24,7 +24,7 @@ MonoBehaviour:
       portrait: {fileID: -8471989607786808988, guid: ea3d7a7b1d2e73e47afd751986301a79, type: 3}
     - line: "I don\u2019t have much money to give you though."
       portrait: {fileID: -8471989607786808988, guid: ea3d7a7b1d2e73e47afd751986301a79, type: 3}
-  - sequenceID: onDeny_Day1
+  - sequenceID: onDeny_Day1_1
     lines:
     - line: "N-No? But I\u2019m \u2019tier-1\u2019 you have to treat me!"
       portrait: {fileID: -7367812787139293388, guid: f965f6ec37fc05c478047a8e9cea3e3d, type: 3}

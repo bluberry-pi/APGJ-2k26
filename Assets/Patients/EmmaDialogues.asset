@@ -22,7 +22,7 @@ MonoBehaviour:
       portrait: {fileID: 3776113320542421703, guid: 9aadb86796877344aa7342d30353beea, type: 3}
     - line: "My husband died working in Sector-4, it\u2019s just us now."
       portrait: {fileID: 3776113320542421703, guid: 9aadb86796877344aa7342d30353beea, type: 3}
-  - sequenceID: onDeny_Day1
+  - sequenceID: onDeny_Day1_1
     lines:
     - line: This is ridiculous.
       portrait: {fileID: 3776113320542421703, guid: 9aadb86796877344aa7342d30353beea, type: 3}

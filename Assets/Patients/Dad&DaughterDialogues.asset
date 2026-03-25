@@ -24,7 +24,7 @@ MonoBehaviour:
       portrait: {fileID: 7986923097283423509, guid: 2ff33ef6316762045a20b72a3108b37e, type: 3}
     - line: I will only be admitted if you treat my daughter too.
       portrait: {fileID: -5556050023837524733, guid: 9f2760b870789c54da2874bf53f850ae, type: 3}
-  - sequenceID: onDeny_Day1
+  - sequenceID: onDeny_Day1_1
     lines:
     - line: 'I thought this place helped people.
 
@@ -32,7 +32,7 @@ MonoBehaviour:
       portrait: {fileID: -3127505059345813034, guid: c80ca50a717b2c64390c20e158ab2e4f, type: 3}
     - line: "\u2026but I guess it just decides."
       portrait: {fileID: 1826077327187480495, guid: 212bfb78c30e3124e85262e682eb0aad, type: 3}
-  - sequenceID: onDeny_Day2
+  - sequenceID: onDeny_Day2_1
     lines:
     - line: Please, my daughter needs help. I cannot watch her suffer like this.
       portrait: {fileID: -3127505059345813034, guid: c80ca50a717b2c64390c20e158ab2e4f, type: 3}

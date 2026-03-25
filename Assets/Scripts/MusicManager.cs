@@ -51,24 +51,43 @@ public class MusicManager : MonoBehaviour
     // ─────────────────────────────────────────────
     // 🌆 AMBIENT WITH FADE
     // ─────────────────────────────────────────────
+    IEnumerator FadeOutAmbient()
+    {
+        float startVolume = ambientSource.volume;
+        float t = 0f;
+
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            ambientSource.volume = Mathf.Lerp(startVolume, 0f, t / fadeDuration);
+            yield return null;
+        }
+
+        ambientSource.Stop();
+        ambientSource.volume = startVolume; // reset for next time
+    }
     public void PlayDayAmbient(int dayIndex)
     {
         if (currentDay == dayIndex) return;
         currentDay = dayIndex;
 
-        if (dayIndex >= dayAmbientClips.Length)
-        {
-            Debug.LogWarning("No ambient for day " + dayIndex);
-            return;
-        }
-
-        AudioClip newClip = dayAmbientClips[dayIndex];
-        if (newClip == null) return;
-
-        // Stop previous fade if running
+        // Stop any running fade
         if (fadeRoutine != null)
             StopCoroutine(fadeRoutine);
 
+        AudioClip newClip = null;
+
+        if (dayIndex < dayAmbientClips.Length)
+            newClip = dayAmbientClips[dayIndex];
+
+        // 🚨 If no clip → fade out and stop
+        if (newClip == null)
+        {
+            fadeRoutine = StartCoroutine(FadeOutAmbient());
+            return;
+        }
+
+        // 🎵 If clip exists → fade to new clip
         fadeRoutine = StartCoroutine(FadeAmbient(newClip));
     }
 

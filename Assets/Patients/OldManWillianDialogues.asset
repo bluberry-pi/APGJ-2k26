@@ -26,7 +26,7 @@ MonoBehaviour:
     lines:
     - line: Thank You, child.
       portrait: {fileID: -3226163663251382699, guid: 9d041bf973a32e74aaefd2bd7c0ae95f, type: 3}
-  - sequenceID: onDeny_Day1
+  - sequenceID: onDeny_Day1_1
     lines:
     - line: Take your time, I have nothing but that.
       portrait: {fileID: -3226163663251382699, guid: 9d041bf973a32e74aaefd2bd7c0ae95f, type: 3}

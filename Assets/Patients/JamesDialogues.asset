@@ -30,7 +30,7 @@ MonoBehaviour:
     lines:
     - line: Thank you, mister.
       portrait: {fileID: -8408129490410009404, guid: 8b94669867145ff40be9ebc65632b0e8, type: 3}
-  - sequenceID: onDeny_Day1
+  - sequenceID: onDeny_Day1_1
     lines:
     - line: But it hurts and mommy always takes me here to make it stop. I miss my
         mommy.

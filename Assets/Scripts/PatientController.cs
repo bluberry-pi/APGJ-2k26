@@ -3,7 +3,14 @@ using UnityEngine;
 public class PatientController : MonoBehaviour
 {
     public PatientData data;
-    [HideInInspector] public int denyCount = 0;
+
+    // 🔹 Dialogue (per visit)
+    [HideInInspector] public int denyCountThisVisit = 0;
+
+    // 🔹 Memory (persistent)
+    [HideInInspector] public int totalDenies = 0;
+    [HideInInspector] public int lastDeniedDay = -1;
+
     void Start()
     {
         GetComponent<PatientHealth>()?.Init(data);
@@ -11,15 +18,18 @@ public class PatientController : MonoBehaviour
 
     public void OnReachedCounter()
     {
-        Debug.Log($"[COUNTER] {gameObject.name} reached counter. Data: {(data != null ? data.patientName : "NULL")}");
+        // ✅ Reset ONLY per visit
+        denyCountThisVisit = 0;
+
+        Debug.Log($"[COUNTER] {gameObject.name} reached counter.");
 
         if (data == null)
         {
-            Debug.LogError($"[ERROR] {gameObject.name} has no PatientData assigned!");
+            Debug.LogError($"[ERROR] {gameObject.name} has no PatientData!");
             return;
         }
 
-        PatientUIManager.Instance.ShowPatient(data, this); // pass self directly
+        PatientUIManager.Instance.ShowPatient(data, this);
     }
 
     public void ResumeWalking()
@@ -27,6 +37,7 @@ public class PatientController : MonoBehaviour
         TopDownNPC npc = GetComponent<TopDownNPC>();
         npc.currentState = TopDownNPC.State.Walking;
         npc.ForcePickNewDirection();
+
         Debug.Log($"[WALK] {gameObject.name} resumed walking.");
     }
 }

@@ -97,10 +97,9 @@ public class HospitalManager : MonoBehaviour
             return;
         }
 
-        PatientUIManager.Instance.SetButtonsInteractable(false);
-
         string dayAdmitID = "onAdmit_Day" + (DayManager.Instance.currentDayIndex + 1);
         DialogueSequence seq = p.dialogue?.GetSequence(dayAdmitID);
+
         string sequenceToPlay = seq != null ? dayAdmitID : "onAdmit";
 
         DialogueManager.Instance.PlaySequence(
@@ -141,40 +140,61 @@ public class HospitalManager : MonoBehaviour
 
         if (p == null || controller == null) return;
 
-        PatientUIManager.Instance.SetButtonsInteractable(false);
+        int currentDay = DayManager.Instance.currentDayIndex;
 
-        // 🧠 Build progressive deny ID
-        string denyID = "onDeny_Day" + (controller.denyCount + 1);
+        // ✅ Count only ONCE per day
+        if (controller.lastDeniedDay != currentDay)
+        {
+            controller.totalDenies++;
+            controller.lastDeniedDay = currentDay;
+        }
+
+        // 🔹 Build ID (Day based on TOTAL denies)
+        string denyID = $"onDeny_Day{controller.totalDenies}_{controller.denyCountThisVisit + 1}";
+        Debug.Log("Trying sequence: " + denyID);
 
         DialogueSequence seq = p.dialogue?.GetSequence(denyID);
 
+        // ❌ If no dialogue → leave
         if (seq == null)
-            seq = p.dialogue?.GetSequence("onDeny_Day1");
+        {
+            PatientUIManager.Instance.currentPatientController?.ResumeWalking();
+            PatientUIManager.Instance.HideInterface();
+            return;
+        }
 
-        string sequenceToPlay = seq != null ? seq.sequenceID : "onDeny";
+        // ✅ Increase variation count (per visit)
+        controller.denyCountThisVisit++;
 
-        controller.denyCount++;
-
-        // 🚨 CHECK POLITICIAN SPECIAL CONDITION
+        // 🚨 Mayor logic (based on TOTAL denies)
         bool isPolitician = controller.CompareTag("Politician");
-        bool triggerMayorEnding = isPolitician && controller.denyCount >= 2;
+        bool triggerMayorEnding = isPolitician && controller.totalDenies >= 2;
 
         DialogueManager.Instance.PlaySequence(
             p.dialogue,
-            sequenceToPlay,
+            seq.sequenceID,
             onComplete: () =>
             {
-                // 🎯 Trigger easter egg AFTER dialogue finishes
+                // 🎯 Mayor override
                 if (triggerMayorEnding)
                 {
-                    if (GameOverScreen.Instance != null)
-                        GameOverScreen.Instance.TriggerMayorFired();
-
+                    GameOverScreen.Instance?.TriggerMayorFired();
                     return;
                 }
 
-                // normal flow
-                PatientUIManager.Instance.SetButtonsInteractable(true);
+                // 🔹 Check next variation
+                string nextID = $"onDeny_Day{controller.totalDenies}_{controller.denyCountThisVisit + 1}";
+                DialogueSequence nextSeq = p.dialogue?.GetSequence(nextID);
+
+                if (nextSeq != null)
+                {
+                    // 👉 More dialogue exists → stay
+                    return;
+                }
+
+                // 👉 No more → leave
+                PatientUIManager.Instance.currentPatientController?.ResumeWalking();
+                PatientUIManager.Instance.HideInterface();
             }
         );
     }

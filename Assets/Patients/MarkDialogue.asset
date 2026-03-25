@@ -24,7 +24,7 @@ MonoBehaviour:
       portrait: {fileID: 3908291731744268417, guid: c86053ba0e11c0e4781cc3299073fce0, type: 3}
     - line: "If I miss the next run, they\u2019ll have to wait till morning.\r\n"
       portrait: {fileID: 3908291731744268417, guid: c86053ba0e11c0e4781cc3299073fce0, type: 3}
-  - sequenceID: onDeny_Day1
+  - sequenceID: onDeny_Day1_1
     lines:
     - line: I'll manage
       portrait: {fileID: -1311541229341687916, guid: 574cd9e50c3917642b1d479682541546, type: 3}

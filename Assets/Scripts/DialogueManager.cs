@@ -11,7 +11,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject dialogueBox;
     public TextMeshProUGUI dialogueText;
     public GameObject nextArrow;
-    public Image portraitImage; // drag the portrait Image here
+    public Image portraitImage;
 
     [Header("Typewriter Settings")]
     public float typewriterSpeed = 0.03f;
@@ -21,6 +21,8 @@ public class DialogueManager : MonoBehaviour
     private bool isTyping = false;
     private bool dialogueActive = false;
     private System.Action onDialogueComplete;
+
+    Coroutine typingCoroutine;
 
     void Awake() => Instance = this;
 
@@ -32,13 +34,14 @@ public class DialogueManager : MonoBehaviour
 
     public void PlaySequence(DialogueData data, string sequenceID, System.Action onComplete = null)
     {
+        // 🔥 Interrupt safely
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
         StopAllCoroutines();
-        dialogueBox.SetActive(false);
-        nextArrow.SetActive(false);
+
         isTyping = false;
         dialogueActive = false;
-
-        Debug.Log($"[DIALOGUE] PlaySequence called. Data: {(data != null ? data.name : "NULL")} | SequenceID: {sequenceID}");
 
         if (portraitImage != null)
         {
@@ -48,7 +51,6 @@ public class DialogueManager : MonoBehaviour
 
         if (data == null)
         {
-            Debug.Log("[DIALOGUE] Data is NULL — firing callback immediately.");
             onComplete?.Invoke();
             return;
         }
@@ -57,12 +59,9 @@ public class DialogueManager : MonoBehaviour
 
         if (seq == null || seq.lines.Length == 0)
         {
-            Debug.Log($"[DIALOGUE] Sequence '{sequenceID}' not found or empty — firing callback immediately.");
             onComplete?.Invoke();
             return;
         }
-
-        Debug.Log($"[DIALOGUE] Found sequence '{sequenceID}' with {seq.lines.Length} lines.");
 
         currentLines = seq.lines;
         currentLineIndex = 0;
@@ -77,25 +76,23 @@ public class DialogueManager : MonoBehaviour
 
     void ShowLine(int index)
     {
-        Debug.Log($"[DIALOGUE] Showing line {index}: \"{currentLines[index].line}\"");
-
         if (portraitImage != null)
         {
             if (currentLines[index].portrait != null)
             {
                 portraitImage.sprite = currentLines[index].portrait;
                 portraitImage.gameObject.SetActive(true);
-                Debug.Log($"[PORTRAIT] Showing portrait: {currentLines[index].portrait.name}");
             }
             else
             {
                 portraitImage.gameObject.SetActive(false);
-                Debug.Log($"[PORTRAIT] No portrait assigned for line {index} — hiding image.");
             }
         }
 
-        nextArrow.SetActive(true);
-        StartCoroutine(TypeLine(currentLines[index].line));
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
+        typingCoroutine = StartCoroutine(TypeLine(currentLines[index].line));
     }
 
     public void OnNextPressed()
@@ -104,8 +101,9 @@ public class DialogueManager : MonoBehaviour
 
         if (isTyping)
         {
-            // Skip typewriter
-            StopAllCoroutines();
+            if (typingCoroutine != null)
+                StopCoroutine(typingCoroutine);
+
             dialogueText.text = currentLines[currentLineIndex].line;
             isTyping = false;
             nextArrow.SetActive(true);
@@ -116,7 +114,6 @@ public class DialogueManager : MonoBehaviour
 
         if (currentLineIndex < currentLines.Length)
         {
-            nextArrow.SetActive(false);
             ShowLine(currentLineIndex);
         }
         else
@@ -146,6 +143,7 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.SetActive(false);
         nextArrow.SetActive(false);
         currentLines = null;
+
         onDialogueComplete?.Invoke();
     }
 }

@@ -674,6 +674,11 @@ MonoBehaviour:
   backgroundMusic: {fileID: 8300000, guid: 8087ee98586f71846a1482d863c36499, type: 3}
   dayAmbientClips:
   - {fileID: 8300000, guid: a14f5637ee0d93b45b140e269227907d, type: 3}
+  - {fileID: 8300000, guid: a6198eeee876c794eb0ed7744871549b, type: 3}
+  - {fileID: 8300000, guid: a6198eeee876c794eb0ed7744871549b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   fadeDuration: 1.5
 --- !u!4 &73341625
 Transform:
@@ -1014,7 +1019,6 @@ GameObject:
   - component: {fileID: 145037248}
   - component: {fileID: 145037247}
   - component: {fileID: 145037246}
-  - component: {fileID: 145037250}
   m_Layer: 5
   m_Name: GameOverScreen
   m_TagString: Untagged
@@ -1110,24 +1114,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &145037250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 145037245}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fa7280b6a7bba54bbd97a36fd1f4eae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mayorFiredText: {fileID: 1267131434}
-  gameOverScreen: {fileID: 145037245}
-  familyDiedText: {fileID: 460969684}
-  deathValueText: {fileID: 1478345306}
-  maxDeathValue: 50
-  currentDeathValue: 0
 --- !u!1 &151981960
 GameObject:
   m_ObjectHideFlags: 0
@@ -5780,10 +5766,18 @@ MonoBehaviour:
   cutsceneText: {fileID: 1966583246}
   skipButton: {fileID: 1225835292}
   textLines:
-  - Hello
-  - You have hired for to be a hospital warden
+  - Hello...
+  - You have hired to be the hospital warden
   - You know the rules...
-  typewriterSpeed: 0.02
+  - If not, i can tell again
+  - As you already know, the govt have given death values and tiers for each individual
+  - Higher tiers have higher death value, simple.
+  - Be very optimial in decing whom to allow and whom to deny
+  - You need to take care of your family too don't you?
+  - Keep checking on your family by cliking your family photo on bottom right
+  - Send them meds time to time, to keep them alive. They cost 5$ btw
+  - I know this is hard, but good luck
+  typewriterSpeed: 0.0000001
   pauseAfterLine: 2
   midMusicSource: {fileID: 851867643}
   midMusicClip: {fileID: 8300000, guid: 89885bd9e179c62498f43429206f3b2f, type: 3}
@@ -6765,7 +6759,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   medicineCostPerPerson: 5
-  healthDrainPerSecond: 0.1
+  healthDrainPerSecond: 5
   healAmount: 15
   wife:
     memberName: Wife
@@ -8864,7 +8858,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -9133,7 +9127,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -9622,7 +9616,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 145037250}
+      - m_Target: {fileID: 2034028372}
         m_TargetAssemblyTypeName: GameOverScreen, Assembly-CSharp
         m_MethodName: onRestartPress
         m_Mode: 1
@@ -12003,6 +11997,56 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &2034028371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2034028373}
+  - component: {fileID: 2034028372}
+  m_Layer: 0
+  m_Name: GameOverManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2034028372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034028371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fa7280b6a7bba54bbd97a36fd1f4eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mayorFiredText: {fileID: 1267131434}
+  gameOverScreen: {fileID: 145037245}
+  familyDiedText: {fileID: 460969684}
+  deathValueText: {fileID: 1478345306}
+  maxDeathValue: 50
+  currentDeathValue: 0
+--- !u!4 &2034028373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034028371}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -18.429865, y: 0.20515767, z: -0.14716753}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2040352634
 GameObject:
   m_ObjectHideFlags: 0
@@ -12190,7 +12234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2044431905
 Transform:
   m_ObjectHideFlags: 0
@@ -12872,7 +12916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6612945676980477888, guid: d4c39596baa25ec4993f6641099612d5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.15940028
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6612945676980477888, guid: d4c39596baa25ec4993f6641099612d5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13554,17 +13598,18 @@ SceneRoots:
   - {fileID: 1677083889}
   - {fileID: 622895209}
   - {fileID: 1129823570}
-  - {fileID: 742813443}
   - {fileID: 1000398649}
   - {fileID: 1595909916}
   - {fileID: 1688694359}
   - {fileID: 145037249}
   - {fileID: 1218579468}
   - {fileID: 107704657}
-  - {fileID: 851867642}
   - {fileID: 876024784}
   - {fileID: 216725374}
   - {fileID: 899185906}
   - {fileID: 73341625}
   - {fileID: 1723958587}
   - {fileID: 1181385428}
+  - {fileID: 851867642}
+  - {fileID: 742813443}
+  - {fileID: 2034028373}

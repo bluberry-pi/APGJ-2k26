@@ -26,7 +26,7 @@ MonoBehaviour:
       portrait: {fileID: -6118522970096299973, guid: acb7627b44d9c054191cb4280b9fcc79, type: 3}
     - line: My Symptoms started this morning
       portrait: {fileID: -6118522970096299973, guid: acb7627b44d9c054191cb4280b9fcc79, type: 3}
-  - sequenceID: onDeny_Day1
+  - sequenceID: onDeny_Day1_1
     lines:
     - line: 'Please, i dont wanna die like this
 
