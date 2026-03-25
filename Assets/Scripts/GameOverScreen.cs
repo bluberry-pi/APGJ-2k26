@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class GameOverScreen : MonoBehaviour
 {
+    [Header("Special Ending")]
+    public GameObject mayorFiredText;
     public static GameOverScreen Instance;
-
     public GameObject gameOverScreen;
 
     [Header("Game Over Reason Texts")]
@@ -26,7 +27,17 @@ public class GameOverScreen : MonoBehaviour
         if (currentDeathValue >= maxDeathValue)
             TriggerGameOver(false);
     }
+    void HideAllTexts()
+    {
+        if (familyDiedText != null)
+            familyDiedText.SetActive(false);
 
+        if (deathValueText != null)
+            deathValueText.SetActive(false);
+
+        if (mayorFiredText != null)
+            mayorFiredText.SetActive(false);
+    }
     // Call when a family member dies
     public void TriggerFamilyDeath()
     {
@@ -39,13 +50,32 @@ public class GameOverScreen : MonoBehaviour
         gameOverScreen.SetActive(true);
 
         // Show correct text based on reason
-        if (familyDiedText != null)
-            familyDiedText.SetActive(familyDied);
+        HideAllTexts();
 
-        if (deathValueText != null)
-            deathValueText.SetActive(!familyDied);
+        if (familyDied)
+        {
+            if (familyDiedText != null)
+                familyDiedText.SetActive(true);
+        }
+        else
+        {
+            if (deathValueText != null)
+                deathValueText.SetActive(true);
+        }
 
         Debug.Log($"[GAME OVER] Reason: {(familyDied ? "Family died" : "Death value exceeded")}");
+    }
+    public void TriggerMayorFired()
+    {
+        Time.timeScale = 0f;
+        gameOverScreen.SetActive(true);
+
+        HideAllTexts();
+
+        if (mayorFiredText != null)
+            mayorFiredText.SetActive(true);
+
+        Debug.Log("[GAME OVER] Reason: Mayor fired you");
     }
 
     public void onRestartPress()

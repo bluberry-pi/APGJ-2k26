@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dayNumber: 5
   maxPatientsToAdmit: 4
-  flavourLines: []
+  flavourLines:
+  - line: We have enough beds availabe to admit today
+    pauseAfter: 2
+  - line: Funny cuz i don't think we would have enough patients to even fill them.
+    pauseAfter: 2
   economy:
     resourcesAdded: 15
     resourcesDeducted: 0

@@ -18,7 +18,7 @@ MonoBehaviour:
   bio: Engineering Student.
   tier: 1
   rewardMoney: 10
-  maxHealth: 50
+  maxHealth: 45
   deteriorationPerDay: 20
   deadSprite: {fileID: -1971895167832793635, guid: bcc3accee0aea7e438aad89faf92f43e, type: 3}
   resourceCost: 20

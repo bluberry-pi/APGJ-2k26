@@ -26,7 +26,7 @@ MonoBehaviour:
     lines:
     - line: Do your eyes not work? Look at my tier.
       portrait: {fileID: 4763682119692265990, guid: 982cea4bfdd695e44834d69dc8cb5172, type: 3}
-  - sequenceID: onDeny_Day1
+  - sequenceID: onDeny_Day2
     lines:
     - line: Are you looking for trouble?
       portrait: {fileID: 4763682119692265990, guid: 982cea4bfdd695e44834d69dc8cb5172, type: 3}

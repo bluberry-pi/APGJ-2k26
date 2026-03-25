@@ -14,7 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dayNumber: 6
   maxPatientsToAdmit: 4
-  flavourLines: []
+  flavourLines:
+  - line: Patients started loosing hope.
+    pauseAfter: 2
+  - line: The sight is just dreadful.
+    pauseAfter: 2
+  - line: Deadbodies everywhere.
+    pauseAfter: 2
+  - line: Everyone either just left to die outside.
+    pauseAfter: 2
+  - line: Or stayed to die inside.
+    pauseAfter: 2
   economy:
     resourcesAdded: 20
     resourcesDeducted: 0

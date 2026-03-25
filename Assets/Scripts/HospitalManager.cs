@@ -142,7 +142,10 @@ public class HospitalManager : MonoBehaviour
         if (p == null || controller == null) return;
 
         PatientUIManager.Instance.SetButtonsInteractable(false);
+
+        // 🧠 Build progressive deny ID
         string denyID = "onDeny_Day" + (controller.denyCount + 1);
+
         DialogueSequence seq = p.dialogue?.GetSequence(denyID);
 
         if (seq == null)
@@ -151,22 +154,27 @@ public class HospitalManager : MonoBehaviour
         string sequenceToPlay = seq != null ? seq.sequenceID : "onDeny";
 
         controller.denyCount++;
+
+        // 🚨 CHECK POLITICIAN SPECIAL CONDITION
+        bool isPolitician = controller.CompareTag("Politician");
+        bool triggerMayorEnding = isPolitician && controller.denyCount >= 2;
+
         DialogueManager.Instance.PlaySequence(
             p.dialogue,
             sequenceToPlay,
             onComplete: () =>
             {
-                // If you reach a "final" deny (optional)
-                if (sequenceToPlay == "onDenyFinal")
+                // 🎯 Trigger easter egg AFTER dialogue finishes
+                if (triggerMayorEnding)
                 {
-                    controller.denyCount = 0;
-                    PatientUIManager.Instance.currentPatientController?.ResumeWalking();
-                    PatientUIManager.Instance.HideInterface();
+                    if (GameOverScreen.Instance != null)
+                        GameOverScreen.Instance.TriggerMayorFired();
+
+                    return;
                 }
-                else
-                {
-                    PatientUIManager.Instance.SetButtonsInteractable(true);
-                }
+
+                // normal flow
+                PatientUIManager.Instance.SetButtonsInteractable(true);
             }
         );
     }
