@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personalityNote: 
   sequences:
-  - sequenceID: onOpen_Day1_1
+  - sequenceID: onOpen_Day1
     lines:
     - line: I used to sit at a desk just like yours.
       portrait: {fileID: -6082383976254816021, guid: f6b8a161b127ca546bd75801c8767152, type: 3}

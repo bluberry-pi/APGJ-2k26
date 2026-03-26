@@ -37,16 +37,25 @@ public class PatientHealth : MonoBehaviour
         if (npc != null)
             npc.currentState = TopDownNPC.State.Waiting;
 
-        Debug.Log($"{data.patientName} has died. Death value: {data.deathValue}");
+        Debug.Log($"{data.patientName} has died.");
 
-        if (GameOverScreen.Instance != null)
-            GameOverScreen.Instance.AddDeathValue(data.deathValue);
+        // Only add death value if NOT Dad&Daughter
+        if (!gameObject.CompareTag("Dad&Daughter"))
+        {
+            Debug.Log($"Death value added: {data.deathValue}");
+            if (GameOverScreen.Instance != null)
+                GameOverScreen.Instance.AddDeathValue(data.deathValue);
+        }
+        else
+        {
+            Debug.Log($"{data.patientName} died but death value skipped (Dad&Daughter tag).");
+        }
 
         DayManager.Instance.RemovePatient(gameObject);
+
+        // Always check for ending regardless of tag
         if (GameEnding.Instance != null)
-        {
             GameEnding.Instance.CheckForEnding();
-        }
     }
 
     public void DebugForceDeteriorate() => Deteriorate();

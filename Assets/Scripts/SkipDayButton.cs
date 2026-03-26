@@ -1,9 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SkipDayButton : MonoBehaviour
 {
     public Button button;
+
+    [Header("Settings")]
+    public int finalDayIndex = 5;
 
     void Update()
     {
@@ -21,6 +25,13 @@ public class SkipDayButton : MonoBehaviour
 
         if (DayManager.Instance.isDayTransitioning) return;
 
+        if (DayManager.Instance.currentDayIndex >= finalDayIndex)
+        {
+            Debug.Log("Final day reached → Loading next scene");
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            return;
+        }
         DayManager.Instance.EndDay();
     }
 }

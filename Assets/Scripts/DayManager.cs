@@ -97,11 +97,13 @@ public class DayManager : MonoBehaviour
     public void EndDay()
     {
         isDayTransitioning = true;
+
         List<GameObject> patientsCopy = new List<GameObject>(activePatients);
         foreach (GameObject p in patientsCopy)
         {
-            if (p != null)
-                p.GetComponent<PatientHealth>()?.Deteriorate();
+            if (p == null) continue;
+
+            p.GetComponent<PatientHealth>()?.Deteriorate();
         }
 
         activePatients.RemoveAll(p => p == null);
@@ -114,7 +116,9 @@ public class DayManager : MonoBehaviour
 
         if (currentDayIndex >= allDays.Length)
         {
-            Debug.Log("Game over");
+            Debug.Log("No more days — checking for ending.");
+            if (GameEnding.Instance != null)
+                GameEnding.Instance.CheckForEnding();
             return;
         }
 
@@ -166,10 +170,8 @@ public class DayManager : MonoBehaviour
 
             if (currentDayIndex > 0)
             {
-                Color invisible = resDeltaText.color;
-                invisible.a = 0f;
-                resDeltaText.color = invisible;
-                moneyDeltaText.color = invisible;
+                resDeltaText.color = new Color(0.075f, 0.851f, 0f, 0f);
+                moneyDeltaText.color = new Color(1f, 0.235f, 0.235f, 0f);
             }
 
             yield return StartCoroutine(TypeText(dayTitleText, "Day " + (currentDayIndex + 1)));
@@ -268,6 +270,25 @@ public class DayManager : MonoBehaviour
                     activePatients.Add(child.gameObject);
             }
         }
+
+        // Kill Dad&Daughter on day 6 start (index 5)
+        if (currentDayIndex == 5)
+        {
+            foreach (GameObject p in activePatients)
+            {
+                if (p == null) continue;
+                if (!p.CompareTag("Dad&Daughter")) continue;
+
+                PatientHealth ph = p.GetComponent<PatientHealth>();
+                if (ph != null && !ph.isDead)
+                {
+                    Debug.Log("[DAY 6] Killing Dad&Daughter on day start.");
+                    ph.currentHealth = 0;
+                    ph.Deteriorate();
+                }
+            }
+        }
+
         isDayTransitioning = false;
         StartCoroutine(ResumeHealthDrain());
     }
