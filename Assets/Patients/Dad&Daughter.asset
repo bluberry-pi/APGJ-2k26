@@ -21,6 +21,6 @@ MonoBehaviour:
   maxHealth: 50
   deteriorationPerDay: 10
   deadSprite: {fileID: 3518581157654854654, guid: 2dc2c1cf3a7a3cb4bb406a8579e1bb53, type: 3}
-  resourceCost: 40
+  resourceCost: 60
   deathValue: 40
   dialogue: {fileID: 11400000, guid: beec40ca70e12f24f86208ea8eaeaa50, type: 2}

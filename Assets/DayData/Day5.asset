@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Day5
   m_EditorClassIdentifier: 
   dayNumber: 5
-  maxPatientsToAdmit: 4
+  maxPatientsToAdmit: 10
   flavourLines:
   - line: We have enough beds availabe to admit today
     pauseAfter: 2

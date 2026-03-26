@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Day3
   m_EditorClassIdentifier: 
   dayNumber: 3
-  maxPatientsToAdmit: 2
+  maxPatientsToAdmit: 4
   flavourLines:
   - line: "Looks like the resource truck isn\u2019t  delivering today\u2026 just
       great."
@@ -21,7 +21,7 @@ MonoBehaviour:
   - line: "I\u2019ll have to make do with the remaining kits we received two days
       ago."
     pauseAfter: 1.5
-  - line: 4 beds available, need to fill them.
+  - line: 3 beds available, need to fill them.
     pauseAfter: 1.5
   - line: " The head doctor hasn\u2019t shown up and the staff is already struggling. "
     pauseAfter: 1.5
@@ -29,7 +29,7 @@ MonoBehaviour:
       Again. \r\n"
     pauseAfter: 1.5
   economy:
-    resourcesAdded: 0
+    resourcesAdded: 10
     resourcesDeducted: 0
     moneyAdded: 0
-    moneyDeducted: 10
+    moneyDeducted: 20

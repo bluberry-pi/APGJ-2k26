@@ -2416,7 +2416,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &254272414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5260,6 +5260,7 @@ MonoBehaviour:
   - {fileID: 1677083888}
   activePatients: []
   skipDayCanvas: 0
+  skipDayButton: {fileID: 0}
 --- !u!4 &742813443
 Transform:
   m_ObjectHideFlags: 0
@@ -5739,8 +5740,7 @@ MonoBehaviour:
   - Keep checking on your family by cliking your family photo on bottom right
   - Send them meds time to time, to keep them alive. They cost 5$ btw
   - I know this is hard, but good luck
-  typewriterSpeed: 0.0000001
-  pauseAfterLine: 2
+  typewriterSpeed: 0.03
   midMusicSource: {fileID: 851867643}
   midMusicClip: {fileID: 8300000, guid: 89885bd9e179c62498f43429206f3b2f, type: 3}
   midMusicFadeDuration: 1.5
@@ -6716,8 +6716,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   medicineCostPerPerson: 5
-  healthDrainPerSecond: 0.1
-  healAmount: 15
+  healthDrainPerSecond: 2
+  healAmount: 10
   wife:
     memberName: Wife
     maxHealth: 100
@@ -10150,6 +10150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 0}
+  finalDayIndex: 5
 --- !u!1 &1677083888
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,6 +8,7 @@ public class DayManager : MonoBehaviour
 {
     [HideInInspector] public bool isDayTransitioning = false;
     public static DayManager Instance;
+
     [Header("Intro UI")]
     public GameObject introUIToDestroy;
 
@@ -50,7 +51,9 @@ public class DayManager : MonoBehaviour
     [Header("Debug")]
     public bool skipDayCanvas = false;
 
-    // ✅ NEW FLAG
+    [Header("Skip Day Button")]
+    public SkipDayButton skipDayButton;
+
     private bool flavourNextPressed = false;
 
     void Awake() => Instance = this;
@@ -63,6 +66,7 @@ public class DayManager : MonoBehaviour
         fadeOverlay.color = new Color(0, 0, 0, 0);
         StartCoroutine(StartDay());
     }
+
     public DayData CurrentDay => allDays[currentDayIndex];
 
     public void OnFlavourNextPressed()
@@ -79,7 +83,10 @@ public class DayManager : MonoBehaviour
     {
         patientsAdmittedToday++;
         if (patientsAdmittedToday >= CurrentDay.maxPatientsToAdmit)
+        {
+            skipDayButton?.DisableImmediately();
             StartCoroutine(DelayedEndDay());
+        }
     }
 
     public void RemovePatient(GameObject patient)
@@ -102,7 +109,6 @@ public class DayManager : MonoBehaviour
         foreach (GameObject p in patientsCopy)
         {
             if (p == null) continue;
-
             p.GetComponent<PatientHealth>()?.Deteriorate();
         }
 
@@ -201,7 +207,6 @@ public class DayManager : MonoBehaviour
             CanvasGroup statsCG = statsGroup.GetComponent<CanvasGroup>();
             if (statsCG != null) statsCG.alpha = 1f;
 
-            // ✅ NEW FLAVOUR SYSTEM
             dayFlavourText.text = "";
             flavourNextButton.SetActive(true);
 
@@ -222,7 +227,6 @@ public class DayManager : MonoBehaviour
                 {
                     dayFlavourText.text = flavour.line;
                     flavourNextPressed = false;
-
                     yield return new WaitUntil(() => flavourNextPressed);
                 }
                 else
@@ -242,8 +246,7 @@ public class DayManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             yield return StartCoroutine(Fade(1f, 0f));
             dayStartCanvas.SetActive(false);
-            yield return StartCoroutine(Fade(1f, 0f));
-            dayStartCanvas.SetActive(false);
+
             if (introUIToDestroy != null)
             {
                 Destroy(introUIToDestroy);
@@ -290,6 +293,7 @@ public class DayManager : MonoBehaviour
         }
 
         isDayTransitioning = false;
+        skipDayButton?.ResetForNewDay();  // re-enable skip button for the new day
         StartCoroutine(ResumeHealthDrain());
     }
 

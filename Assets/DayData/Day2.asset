@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: Day2
   m_EditorClassIdentifier: 
   dayNumber: 2
-  maxPatientsToAdmit: 4
+  maxPatientsToAdmit: 5
   flavourLines:
   - line: Yesterday could have been miles better
     pauseAfter: 1.5
   - line: " but I\u2019ve got no choice but to work with what I\u2019ve been given"
     pauseAfter: 1.5
-  - line: " Today\u2019s limit is 4 patients."
+  - line: " Today\u2019s limit is 5 patients."
     pauseAfter: 1.5
   - line: This is getting troublesome,
     pauseAfter: 2
   - line: "how can I decide who gets treatment and who doesn\u2019t?"
     pauseAfter: 2
   economy:
-    resourcesAdded: 40
+    resourcesAdded: 75
     resourcesDeducted: 0
     moneyAdded: 0
     moneyDeducted: 15

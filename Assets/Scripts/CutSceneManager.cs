@@ -9,28 +9,25 @@ public class CutsceneManager : MonoBehaviour
 {
     [Header("Debug")]
     public bool skipAllCutscenes = false;
-    private bool isTyping = false;
-    private bool skipRequested = false;
-    private int currentLineIndex = 0;
+
     [Header("Video")]
     public VideoPlayer videoPlayer;
     public GameObject videoPanel;
     public Button nextButton;
 
     [Header("Fade")]
-    public Image fadeOverlay; // FULLSCREEN BLACK IMAGE
+    public Image fadeOverlay;
     public float fadeDuration = 1f;
 
     [Header("Text Cutscene")]
     public GameObject textCutscenePanel;
     public TextMeshProUGUI cutsceneText;
-    public Button skipButton;
+    public Button skipButton; // this is the "Next" button for text lines
 
     [Header("Text Lines")]
     [TextArea(2, 4)]
     public string[] textLines;
     public float typewriterSpeed = 0.03f;
-    public float pauseAfterLine = 2f;
 
     [Header("Mid Cutscene Music")]
     public AudioSource midMusicSource;
@@ -50,7 +47,10 @@ public class CutsceneManager : MonoBehaviour
     };
 
     private int currentIndex = 0;
-    private bool skipped = false;
+
+    // ── Flavour-style next tracking (mirrors DayManager) ──
+    private bool nextPressed = false;
+    private bool isTyping = false;
 
     void Start()
     {
@@ -62,7 +62,6 @@ public class CutsceneManager : MonoBehaviour
 
         fadeOverlay.color = new Color(0, 0, 0, 0);
 
-        // DEBUG — skip everything and start game immediately
         if (skipAllCutscenes)
         {
             StartGame();
@@ -72,7 +71,13 @@ public class CutsceneManager : MonoBehaviour
         PlayVideo();
     }
 
-    // ── VIDEO ───────────────────────────────
+    // ── Called by the Next button during text cutscene ──────────────────
+    public void OnSkipPressed()
+    {
+        nextPressed = true;
+    }
+
+    // ── VIDEO ────────────────────────────────────────────────────────────
 
     void PlayVideo()
     {
@@ -104,6 +109,7 @@ public class CutsceneManager : MonoBehaviour
 
         videoPlayer.Play();
     }
+
     void StartMidMusic()
     {
         if (midMusicClip == null || midMusicSource == null) return;
@@ -113,27 +119,22 @@ public class CutsceneManager : MonoBehaviour
         midMusicSource.volume = 1f;
         midMusicSource.Play();
     }
+
     public void NextVideo()
     {
         videoPlayer.Stop();
 
         currentIndex++;
 
-        // 🎵 START MID MUSIC AFTER INTRO (index 1)
         if (currentIndex == 1)
-        {
             StartMidMusic();
-        }
 
         if (currentIndex < videos.Length)
-        {
             PlayVideo();
-        }
         else
-        {
             StartCoroutine(EndCutsceneFlow());
-        }
     }
+
     IEnumerator FadeOutMidMusic()
     {
         float startVolume = midMusicSource.volume;
@@ -147,99 +148,82 @@ public class CutsceneManager : MonoBehaviour
         }
 
         midMusicSource.Stop();
-        midMusicSource.volume = startVolume; // reset for reuse
+        midMusicSource.volume = startVolume;
     }
-    // ── FINAL FLOW ───────────────────────────────
+
+    // ── FINAL FLOW ───────────────────────────────────────────────────────
 
     IEnumerator EndCutsceneFlow()
     {
         nextButton.gameObject.SetActive(false);
 
-        // 🔻 FADE OUT MID MUSIC FIRST
         if (midMusicSource != null && midMusicSource.isPlaying)
-        {
             yield return StartCoroutine(FadeOutMidMusic());
-        }
 
-        // 🔻 FADE SCREEN
         yield return StartCoroutine(Fade(0f, 1f));
 
         videoPlayer.Stop();
         videoPanel.SetActive(false);
 
-        // 🔔 RING
         SoundFXManager.instance.PlaySoundFXClip(ringring, transform, 1f);
 
         if (ringring != null)
             yield return new WaitForSecondsRealtime(ringring.length);
 
-        // 💀 DESTROY FADE
         if (fadeOverlay != null)
             Destroy(fadeOverlay.gameObject);
 
-        // 🎵 MAIN BGM STARTS
         if (MusicManager.Instance != null)
-        {
             MusicManager.Instance.StartBackgroundMusic();
-        }
 
         skipButton.gameObject.SetActive(true);
         StartCoroutine(PlayTextCutscene());
     }
 
-    // ── TEXT CUTSCENE ───────────────────────────────
+    // ── TEXT CUTSCENE — mirrors DayManager flavour text exactly ──────────
 
     IEnumerator PlayTextCutscene()
     {
         textCutscenePanel.SetActive(true);
 
-        currentLineIndex = 0;
-
-        while (currentLineIndex < textLines.Length)
+        for (int i = 0; i < textLines.Length; i++)
         {
-            yield return StartCoroutine(TypeLine(textLines[currentLineIndex]));
+            string line = textLines[i];
 
-            // Wait for player to press skip to go next
-            skipRequested = false;
-            yield return new WaitUntil(() => skipRequested);
+            // Reset flags for this line
+            nextPressed = false;
+            isTyping = true;
+            cutsceneText.text = "";
 
-            currentLineIndex++;
+            // Typewrite character by character
+            foreach (char c in line)
+            {
+                if (nextPressed) break; // first press skips typing → show full line
+
+                cutsceneText.text += c;
+                yield return new WaitForSecondsRealtime(typewriterSpeed);
+            }
+
+            isTyping = false;
+
+            // If next was pressed mid-type: snap to full line, wait for ANOTHER press
+            if (nextPressed)
+            {
+                cutsceneText.text = line;
+                nextPressed = false;            // consume the skip press
+                yield return new WaitUntil(() => nextPressed); // wait for real "next"
+            }
+            else
+            {
+                // Typing finished naturally — wait for player to press Next
+                yield return new WaitUntil(() => nextPressed);
+            }
         }
 
         StartGame();
     }
 
-    IEnumerator TypeLine(string line)
-    {
-        cutsceneText.text = "";
-        isTyping = true;
-
-        foreach (char c in line)
-        {
-            if (!isTyping) break;
-
-            cutsceneText.text += c;
-            yield return new WaitForSecondsRealtime(typewriterSpeed);
-        }
-
-        // ensure full line is shown
-        cutsceneText.text = line;
-        isTyping = false;
-    }
-
-    public void OnSkipPressed()
-    {
-        if (isTyping)
-        {
-            isTyping = false;
-        }
-        else
-        {
-            skipRequested = true;
-        }
-    }
-
-    // ── FADE FUNCTION ───────────────────────────────
+    // ── FADE ─────────────────────────────────────────────────────────────
 
     IEnumerator Fade(float from, float to)
     {
@@ -256,7 +240,7 @@ public class CutsceneManager : MonoBehaviour
         fadeOverlay.color = new Color(0, 0, 0, to);
     }
 
-    // ── START GAME ───────────────────────────────
+    // ── START GAME ───────────────────────────────────────────────────────
 
     void StartGame()
     {
