@@ -82,9 +82,20 @@ public class DayManager : MonoBehaviour
     public void PatientAdmitted()
     {
         patientsAdmittedToday++;
+        Debug.Log($"[ADMIT] patientsAdmittedToday={patientsAdmittedToday} / maxPatientsToAdmit={CurrentDay.maxPatientsToAdmit}");
+
         if (patientsAdmittedToday >= CurrentDay.maxPatientsToAdmit)
         {
-            skipDayButton?.DisableImmediately();
+            Debug.Log("[ADMIT] Last patient admitted — attempting to disable skip button.");
+
+            if (skipDayButton == null)
+                Debug.LogError("[ADMIT] skipDayButton is NULL — not assigned in Inspector!");
+            else
+            {
+                Debug.Log($"[ADMIT] skipDayButton found: {skipDayButton.gameObject.name} — calling DisableImmediately.");
+                skipDayButton.DisableImmediately();
+            }
+
             StartCoroutine(DelayedEndDay());
         }
     }
@@ -277,7 +288,8 @@ public class DayManager : MonoBehaviour
         // Kill Dad&Daughter on day 6 start (index 5)
         if (currentDayIndex == 5)
         {
-            foreach (GameObject p in activePatients)
+            List<GameObject> activeCopy = new List<GameObject>(activePatients);
+            foreach (GameObject p in activeCopy)
             {
                 if (p == null) continue;
                 if (!p.CompareTag("Dad&Daughter")) continue;

@@ -24,8 +24,15 @@ public class SkipDayButton : MonoBehaviour
     public void DisableImmediately()
     {
         disabledByAdmit = true;
-        if (button != null)
+        Debug.Log("[SKIPBTN] DisableImmediately called — disabledByAdmit=true");
+
+        if (button == null)
+            Debug.LogError("[SKIPBTN] button is NULL — not assigned in Inspector!");
+        else
+        {
             button.interactable = false;
+            Debug.Log($"[SKIPBTN] button.interactable set to false. Current value: {button.interactable}");
+        }
     }
 
     public void ResetForNewDay()
@@ -41,8 +48,18 @@ public class SkipDayButton : MonoBehaviour
             return;
         }
 
-        if (disabledByAdmit || DayManager.Instance.isDayTransitioning) return;
+        Debug.Log($"[SKIPBTN] SkipDay called — disabledByAdmit={disabledByAdmit}, isDayTransitioning={DayManager.Instance.isDayTransitioning}, dayIndex={DayManager.Instance.currentDayIndex}");
 
+        if (disabledByAdmit || DayManager.Instance.isDayTransitioning)
+        {
+            Debug.Log("[SKIPBTN] SkipDay BLOCKED.");
+            return;
+        }
+
+        // currentDayIndex is the day we're ON (0-based)
+        // finalDayIndex is the last valid day index (e.g. 5 for a 6-day game)
+        // After EndDay() on final day, currentDayIndex becomes finalDayIndex+1
+        // So check >= finalDayIndex to catch both: pressing skip on last day, or after it ends
         if (DayManager.Instance.currentDayIndex >= finalDayIndex)
         {
             Debug.Log("Final day reached → Loading next scene");

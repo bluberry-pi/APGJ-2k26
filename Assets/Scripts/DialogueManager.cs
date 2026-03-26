@@ -34,7 +34,7 @@ public class DialogueManager : MonoBehaviour
 
     public void PlaySequence(DialogueData data, string sequenceID, System.Action onComplete = null)
     {
-        // 🔥 Interrupt safely
+        // Interrupt safely
         if (typingCoroutine != null)
             StopCoroutine(typingCoroutine);
 
@@ -42,6 +42,8 @@ public class DialogueManager : MonoBehaviour
 
         isTyping = false;
         dialogueActive = false;
+        dialogueBox.SetActive(false);
+        nextArrow.SetActive(false);
 
         if (portraitImage != null)
         {
@@ -51,7 +53,8 @@ public class DialogueManager : MonoBehaviour
 
         if (data == null)
         {
-            onComplete?.Invoke();
+            // Defer so we're never calling onComplete mid-stack
+            StartCoroutine(DeferredComplete(onComplete));
             return;
         }
 
@@ -59,7 +62,8 @@ public class DialogueManager : MonoBehaviour
 
         if (seq == null || seq.lines.Length == 0)
         {
-            onComplete?.Invoke();
+            // Defer so we're never calling onComplete mid-stack
+            StartCoroutine(DeferredComplete(onComplete));
             return;
         }
 
@@ -72,6 +76,12 @@ public class DialogueManager : MonoBehaviour
         nextArrow.SetActive(false);
 
         ShowLine(currentLineIndex);
+    }
+
+    IEnumerator DeferredComplete(System.Action onComplete)
+    {
+        yield return null; // wait one frame
+        onComplete?.Invoke();
     }
 
     void ShowLine(int index)

@@ -20,7 +20,7 @@ MonoBehaviour:
       portrait: {fileID: -4914427551776496226, guid: 49bcf2961be082e4d9041ff9a06a7f37, type: 3}
     - line: i feel fine tho
       portrait: {fileID: -4914427551776496226, guid: 49bcf2961be082e4d9041ff9a06a7f37, type: 3}
-  - sequenceID: onDenyDay1_1
+  - sequenceID: onDeny_Day1_1
     lines:
     - line: I hate to admit it but ya i kinda liked it
       portrait: {fileID: 3325785250731403120, guid: a932c23053014b94980ac301373a152f, type: 3}

@@ -239,9 +239,10 @@ public class TopDownNPC : MonoBehaviour
             return;
         }
 
-        if (currentState == State.Talking)
+        // Block if dialogue box is open (any patient is currently talking)
+        if (DialogueManager.Instance != null && DialogueManager.Instance.dialogueBox.activeSelf)
         {
-            Debug.Log($"[BLOCKED] {gameObject.name} is Talking — click ignored.");
+            Debug.Log($"[BLOCKED] Dialogue is active — click ignored.");
             return;
         }
 
@@ -255,20 +256,27 @@ public class TopDownNPC : MonoBehaviour
         // Block during day transition
         if (DayManager.Instance != null && DayManager.Instance.isDayTransitioning)
         {
-            Debug.Log($"[BLOCKED] Day is transitioning — click ignored.");
+            Debug.Log($"[BLOCKED] {gameObject.name} — Day is transitioning.");
             return;
         }
 
         if (PatientUIManager.Instance != null && PatientUIManager.Instance.yourInterface.activeSelf)
         {
-            Debug.Log($"[BLOCKED] Interface is open — click ignored.");
+            Debug.Log($"[BLOCKED] {gameObject.name} — Interface is open.");
             return;
         }
 
-        if (CounterPosition.Instance != null)
-            clickMoveTarget = CounterPosition.Instance.transform.position;
-        else
-            Debug.LogWarning("[WARNING] CounterPosition.Instance is null!");
+        if (CounterPosition.Instance == null)
+        {
+            Debug.LogError($"[BLOCKED] {gameObject.name} — CounterPosition.Instance is NULL!");
+            return;
+        }
+
+        clickMoveTarget = CounterPosition.Instance.transform.position;
+
+        // If chitchatting, break out of talk state so they can move
+        if (currentState == State.Talking)
+            currentState = State.Walking;
 
         Debug.Log($"[MOVING] {gameObject.name} moving to counter at {clickMoveTarget}");
         movingToTarget = true;
@@ -303,6 +311,15 @@ public class TopDownNPC : MonoBehaviour
         {
             if (isClickMoving)
             {
+                // If dialogue is already active, bounce away and wait
+                if (DialogueManager.Instance != null && DialogueManager.Instance.dialogueBox.activeSelf)
+                {
+                    Debug.Log($"[BLOCKED] {gameObject.name} reached counter but dialogue is active — bouncing away.");
+                    currentState = State.Walking;
+                    BounceOffObject(collision.gameObject);
+                    return;
+                }
+
                 movingToTarget = false;
                 isClickMoving = false;
                 rb.linearVelocity = Vector2.zero;

@@ -48,6 +48,7 @@ public class HospitalManager : MonoBehaviour
         UpdateDisplay();
     }
     public bool CanAfford(int cost) => currentResources >= cost;
+    public bool CanAffordMoney(int cost) => currentMoney >= cost;
 
     public void AddMoney(int amount)
     {
@@ -94,8 +95,16 @@ public class HospitalManager : MonoBehaviour
     // =============================================
     // ADMIT BUTTON
     // =============================================
+    private bool isAdmitting = false;
+
     public void OnAdmitPressed()
     {
+        if (isAdmitting)
+        {
+            Debug.Log("[ADMIT] Already processing an admit — ignored.");
+            return;
+        }
+
         if (!DayManager.Instance.CanAdmitMore())
         {
             Debug.Log("Max patients admitted today.");
@@ -111,6 +120,9 @@ public class HospitalManager : MonoBehaviour
             return;
         }
 
+        isAdmitting = true;
+        PatientUIManager.Instance.SetButtonsInteractable(false);
+
         string dayAdmitID = "onAdmit_Day" + (DayManager.Instance.currentDayIndex + 1);
         DialogueSequence seq = p.dialogue?.GetSequence(dayAdmitID);
 
@@ -125,6 +137,7 @@ public class HospitalManager : MonoBehaviour
 
     void CompleteAdmit(PatientData p)
     {
+        isAdmitting = false;
         currentResources -= p.resourceCost;
         AddMoney(p.rewardMoney);
 

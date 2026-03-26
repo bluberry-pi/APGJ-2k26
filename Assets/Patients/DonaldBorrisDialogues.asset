@@ -34,3 +34,7 @@ MonoBehaviour:
       portrait: {fileID: 4763682119692265990, guid: 982cea4bfdd695e44834d69dc8cb5172, type: 3}
     - line: Good luck finding work anywhere in this city.
       portrait: {fileID: 4763682119692265990, guid: 982cea4bfdd695e44834d69dc8cb5172, type: 3}
+  - sequenceID: onAdmit
+    lines:
+    - line: Good choice
+      portrait: {fileID: 0}

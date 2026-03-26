@@ -29,7 +29,7 @@ MonoBehaviour:
       Again. \r\n"
     pauseAfter: 1.5
   economy:
-    resourcesAdded: 10
+    resourcesAdded: 0
     resourcesDeducted: 0
     moneyAdded: 0
     moneyDeducted: 20

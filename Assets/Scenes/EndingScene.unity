@@ -615,31 +615,31 @@ MonoBehaviour:
   titleDuration: 1.5
   dayFlavourText: {fileID: 51816223}
   flavourText: '*cough* *cough*'
-  flavourTypeSpeed: 0.0001
+  flavourTypeSpeed: 0.05
   flavourStayDuration: 2
   animationPrefab: {fileID: 6749148609412533832, guid: b4d4e5a2b2a01fd4cb04d68b1a597314, type: 3}
   animationDuration: 10
   finalText: {fileID: 1837012813}
   finalLines:
   - line: "Days passed, and somewhere along the way\u2026 I caught it, the infection."
-    typeSpeed: 0.0001
+    typeSpeed: 0.05
   - line: "I don\u2019t even know when."
-    typeSpeed: 0.0001
+    typeSpeed: 0.05
   - line: "They let me go soon after\u2014said I wasn\u2019t fit to work anymore."
-    typeSpeed: 0.0001
+    typeSpeed: 0.05
   - line: "Funny, isn\u2019t it?"
-    typeSpeed: 0.0001
+    typeSpeed: 0.05
   - line: "I used to stand on the other side of the counter, deciding who gets a
       bed and who doesn\u2019t."
-    typeSpeed: 0.0001
+    typeSpeed: 0.05
   - line: "Now I\u2019ve become the patient. Waiting. Begging."
-    typeSpeed: 0.0001
+    typeSpeed: 0.05
   - line: My family? gone.
-    typeSpeed: 0.0001
+    typeSpeed: 0.05
   - line: And me?
-    typeSpeed: 0.0001
+    typeSpeed: 0.05
   - line: "\u2026I think I already know how this ends."
-    typeSpeed: 0.0001
+    typeSpeed: 0.05
   nextPressed: 0
 --- !u!4 &830679086
 Transform:
