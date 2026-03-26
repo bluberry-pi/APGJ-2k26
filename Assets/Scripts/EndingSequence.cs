@@ -32,7 +32,7 @@ public class EndingSequence : MonoBehaviour
     // ───────────── ANIMATION PREFAB ─────────────
     [Header("ANIMATION PREFAB")]
     public GameObject animationPrefab;
-    public float animationDuration = 10f;
+    public float animationDuration = 17f;
 
     // ───────────── FINAL TEXT ─────────────
     [Header("FINAL TEXT")]
