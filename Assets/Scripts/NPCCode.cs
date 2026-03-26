@@ -385,18 +385,24 @@ public class TopDownNPC : MonoBehaviour
     public IEnumerator TalkRoutine(TopDownNPC partner)
     {
         currentState = State.Talking;
-        partner.currentState = State.Talking;
+        if (partner != null) partner.currentState = State.Talking;
         rb.linearVelocity = Vector2.zero;
-        partner.rb.linearVelocity = Vector2.zero;
+        if (partner != null) partner.rb.linearVelocity = Vector2.zero;
 
         yield return new WaitForSeconds(talkDuration);
 
+        // Self cleanup — always safe
         currentState = State.Walking;
-        partner.currentState = State.Walking;
         PickRandomDirection();
-        partner.PickRandomDirection();
         StartCoroutine(InteractionCooldown());
-        partner.StartCoroutine(partner.InteractionCooldown());
+
+        // Partner cleanup — only if still alive
+        if (partner != null && partner.gameObject != null)
+        {
+            partner.currentState = State.Walking;
+            partner.PickRandomDirection();
+            partner.StartCoroutine(partner.InteractionCooldown());
+        }
     }
 
     public IEnumerator InteractionCooldown()

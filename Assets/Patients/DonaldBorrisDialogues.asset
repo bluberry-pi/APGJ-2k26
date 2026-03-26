@@ -37,4 +37,4 @@ MonoBehaviour:
   - sequenceID: onAdmit
     lines:
     - line: Good choice
-      portrait: {fileID: 0}
+      portrait: {fileID: 684387272440540207, guid: 3e0ee1d06631f3c4d9133241d6841793, type: 3}

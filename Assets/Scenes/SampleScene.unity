@@ -2306,7 +2306,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 344645433}
   - {fileID: 0}
-  clearThreshold: 3
+  clearThreshold: 1
   shouldClearNextDay: 0
 --- !u!4 &216725374
 Transform:
@@ -6716,7 +6716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   medicineCostPerPerson: 5
-  healthDrainPerSecond: 0
+  healthDrainPerSecond: 1
   healAmount: 25
   wife:
     memberName: Wife
