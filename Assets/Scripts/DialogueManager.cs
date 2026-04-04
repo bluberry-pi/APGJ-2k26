@@ -156,4 +156,23 @@ public class DialogueManager : MonoBehaviour
 
         onDialogueComplete?.Invoke();
     }
+    public void ForceClose()
+    {
+        if (typingCoroutine != null)
+            StopCoroutine(typingCoroutine);
+
+        StopAllCoroutines();
+
+        isTyping = false;
+        dialogueActive = false;
+        dialogueBox.SetActive(false);
+        nextArrow.SetActive(false);
+        currentLines = null;
+
+        if (portraitImage != null)
+        {
+            portraitImage.sprite = null;
+            portraitImage.gameObject.SetActive(false);
+        }
+    }
 }

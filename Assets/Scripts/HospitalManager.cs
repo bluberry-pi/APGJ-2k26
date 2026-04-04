@@ -169,59 +169,65 @@ public class HospitalManager : MonoBehaviour
 
         int currentDay = DayManager.Instance.currentDayIndex;
 
-        // ✅ Count only ONCE per day
         if (controller.lastDeniedDay != currentDay)
         {
             controller.totalDenies++;
             controller.lastDeniedDay = currentDay;
         }
 
-        // 🔹 Build ID (Day based on TOTAL denies)
         string denyID = $"onDeny_Day{controller.totalDenies}_{controller.denyCountThisVisit + 1}";
         Debug.Log("Trying sequence: " + denyID);
 
         DialogueSequence seq = p.dialogue?.GetSequence(denyID);
 
-        // ❌ If no dialogue → leave
         if (seq == null)
         {
+            // No dialogue at all for this deny — just leave immediately
             PatientUIManager.Instance.currentPatientController?.ResumeWalking();
             PatientUIManager.Instance.HideInterface();
+            DialogueManager.Instance.ForceClose();
             return;
         }
 
-        // ✅ Increase variation count (per visit)
         controller.denyCountThisVisit++;
 
-        // 🚨 Mayor logic (based on TOTAL denies)
         bool isPolitician = controller.CompareTag("Politician");
         bool triggerMayorEnding = isPolitician && controller.totalDenies >= 2;
 
+        PlayDenySequenceChain(p, controller, seq.sequenceID, triggerMayorEnding);
+    }
+
+    void PlayDenySequenceChain(PatientData p, PatientController controller, string sequenceID, bool triggerMayorEnding)
+    {
         DialogueManager.Instance.PlaySequence(
             p.dialogue,
-            seq.sequenceID,
+            sequenceID,
             onComplete: () =>
             {
-                // 🎯 Mayor override
                 if (triggerMayorEnding)
                 {
                     GameOverScreen.Instance?.TriggerMayorFired();
                     return;
                 }
 
-                // 🔹 Check next variation
+                // Check if there's a next line in the chain
                 string nextID = $"onDeny_Day{controller.totalDenies}_{controller.denyCountThisVisit + 1}";
+                Debug.Log($"[DENY CHAIN] Checking next: {nextID}");
                 DialogueSequence nextSeq = p.dialogue?.GetSequence(nextID);
 
                 if (nextSeq != null)
                 {
-                    // 👉 More dialogue exists → stay
+                    // More dialogue — advance counter and keep playing
+                    controller.denyCountThisVisit++;
+                    PlayDenySequenceChain(p, controller, nextSeq.sequenceID, triggerMayorEnding);
                     return;
                 }
 
-                // 👉 No more → leave
+                // No more dialogue — clean up and let patient leave
+                Debug.Log("[DENY CHAIN] Chain complete — resuming walk.");
                 PatientUIManager.Instance.currentPatientController?.ResumeWalking();
                 PatientUIManager.Instance.HideInterface();
+                DialogueManager.Instance.ForceClose();
             }
         );
     }

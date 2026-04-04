@@ -262,7 +262,7 @@ public class TopDownNPC : MonoBehaviour
 
         if (PatientUIManager.Instance != null && PatientUIManager.Instance.yourInterface.activeSelf)
         {
-            Debug.Log($"[BLOCKED] {gameObject.name} — Interface is open.");
+            Debug.Log($"[BLOCKED] {gameObject.name} — Interface is open. yourInterface={PatientUIManager.Instance.yourInterface.activeSelf}");
             return;
         }
 

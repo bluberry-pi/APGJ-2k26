@@ -133,7 +133,8 @@ public class FamilyManager : MonoBehaviour
     {
         if (member.isDead) return;
 
-        if (!HospitalManager.Instance.CanAfford(medicineCostPerPerson))
+        // CHANGED: Now uses CanAffordMoney instead of CanAfford
+        if (!HospitalManager.Instance.CanAffordMoney(medicineCostPerPerson))
         {
             Debug.Log("Not enough money for medicine.");
             return;
